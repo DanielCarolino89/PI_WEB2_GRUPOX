@@ -1,8 +1,19 @@
 <?php
 
-class PessoaController
+abstract class PessoaController
 {
-    protected 
+    protected LoginRepository $loginRepository;
+
+    protected function RegistrarDadosPessoais(Pessoa $pessoa)
+    {
+        $loginRepository->CadastrarLogin($paciente->get_Login());
+
+        $enderecoRepository = new EnderecoRepository($db);
+        $enderecoRepository->CadastrarEndereco($paciente->get_Endereco());
+
+        $contatoRepository = new ContatoRepository($db);
+        $contatoRepository->CadastrarContato($paciente->get_Contato());
+    }
 
     protected function ValidarDadosPessoais([] $dados, $tipoUsuario)
     {
@@ -26,6 +37,10 @@ class PessoaController
 
         if (empty(trim($dados['senha'])) || strlen($dados['senha']) <= 4){
             $errors['senha'] = "A Senha não pode ser vazio ou em branco. Mínimo de caracteres: 4"
+        }
+
+        if (!isset($errors['usuario']) && $this->loginRepository->ConsultaSeUsuarioJaExiste($dados['usuario'])){
+            $errors['usuario'] = "O usuário {$dados['usuario']} já existe!";
         }
 
         return $errors;

@@ -1,50 +1,59 @@
 <?php
-class MedicoService
+class MedicoController extends PessoaController
 {
     private MedicoRepository $medicoRepository;
-    private LoginRepository $loginRepository;
 
-    public function CadastrarNovoMedico(Medico $medico)
+    public function CadastrarNovoMedico($dados)
     {
         $db = new dbUtils();
-        $this->pacienteRepository = new MedicoRepository($db);
+        $this->medicoRepository = new MedicoRepository($db);
         $this->$loginRepository = new LoginRepository($db);
+
+        $validationResult = ValidarCadastroDoMedico($dados);
+
+        if(!$validationResult['success']){
+            //to do: Error view
+        }
+
+        $medico = new Medico($dados);
+
         $db->BeginTransaction();
 
         try{
-            $loginRepository = new LoginRepository($db);
-            $loginRepository->CadastrarLogin($medico->get_Login());
-
-            $enderecoRepository = new EnderecoRepository($db);
-            $enderecoRepository->CadastrarEndereco($medico->get_Endereco());
-
-            $contatoRepository = new ContatoRepository($db);
-            $contatoRepository->CadastrarContato($medico->get_Contato());
-
-            $pacienteRepository = new PacienteRepository($db);
+            $this->RegistrarDadosPessoais($medico);
             $pacienteRepository->CadastrarMedico($medico);
 
             $db->Commit();
         }
+        catch(Exception ex)
+        {
+            $db->Rollback();
+        }
     }
 
-    private function ValidarCadastroDoMedico(Medico $medico) : bool
+    private function ValidarCadastroDoMedico($dados) : bool
     {
-        if ($this->medicoRepository->ConsultaSeCPFJaExiste($medico->get_CPF())
-        {
-            // to do: retornar aviso de CPF já existente;
-            return false;
+        $errors = $this->ValidarDadosPessoais($dados, "Medico");
+
+        if (empty(trim($dados['crm'])) || strlen($dados['crm']) != 7){
+            $errors['crm'] = "O CRM do Médico é inválido";
         }
 
-        $usuario = $medico->get_Login()->get_Usuario();
-        if ($this->loginRepository->ConsultaSeUsuarioJaExiste($usuario))
-        {
-            // to do: retornar aviso de Usuário já existente;
-            return false;
+        if (empty(trim($dados['especialidade'])) || strlen($dados['especialidade']) <= 4){
+            $errors['especialidade'] = "A especialidade do Médico não pode ser vazia ou em branco!";
         }
+
+        if (!isset($errors['cpf']) && $this->medicoRepository->ConsultaSeCPFJaExiste($dados['cpf']){
+            $errors['cpf'] = "CPF do Médico já cadastrado!";
+        }
+
+        if (!empty($errors)){
+            return [
+                'success' => false,
+                'errors' => $errors;
+            ]
+        }
+        return ['success' => true];
     }
-
-
-}
 }
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-class ContatoRepository
+class ContatoRepository extends Repository
 {
     public function __construct(dbUtils $db)
     {
@@ -11,11 +11,11 @@ class ContatoRepository
     {
         $sql = "INSERT INTO CONTATO VALUES (
             NULL, 
-            '" . $contato->get_Tipo() . "',
-            '" . $contato->get_Descricao() . "');";
+            '{$contato->getTipo()}',
+            '{$contato->getDescricao()}');";
 
         $db->DbCommandExec($sql);
-        $contato->set_Id($this->GetLastInsertId());
+        $contato->setId($this->GetLastInsertId());
     }
 }
 

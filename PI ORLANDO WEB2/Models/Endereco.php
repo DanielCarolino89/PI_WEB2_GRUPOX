@@ -9,59 +9,59 @@ class Endereco
     private string $UF;
     private string $complemento;
 
-     public function get_Id(): int {
+     public function getId(): int {
         return $this->id;
     }
 
-    public function set_Id(int $id) {
+    public function setId(int $id) {
         $this->id = $id;
     }
 
-    public function get_Logradouro(): string {
+    public function getLogradouro(): string {
         return $this->logradouro;
     }
 
-    public function set_Logradouro(string $logradouro) {
+    public function setLogradouro(string $logradouro) {
         $this->logradouro = $logradouro;
     }
 
-    public function get_Numero(): int {
+    public function getNumero(): int {
         return $this->numero;
     }
 
-    public function set_Numero(int $numero): void {
+    public function setNumero(int $numero): void {
         $this->numero = $numero;
     }
 
-    public function get_Bairro(): string {
+    public function getBairro(): string {
         return $this->bairro;
     }
 
-    public function set_Bairro(string $bairro) {
+    public function setBairro(string $bairro) {
         $this->bairro = $bairro;
     }
 
-    public function get_Cidade(): string {
+    public function getCidade(): string {
         return $this->cidade;
     }
 
-    public function set_Cidade(string $cidade) {
+    public function setCidade(string $cidade) {
         $this->cidade = $cidade;
     }
 
-    public function get_UF(): string {
+    public function getUF(): string {
         return $this->UF;
     }
 
-    public function set_UF(string $UF) {
+    public function setUF(string $UF) {
         $this->UF = $UF;
     }
 
-    public function get_Complemento(): string {
+    public function getComplemento(): string {
         return $this->complemento;
     }
 
-    public function set_Complemento(string $complemento) {
+    public function setComplemento(string $complemento) {
         $this->complemento = $complemento;
     }
 }

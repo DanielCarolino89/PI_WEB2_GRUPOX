@@ -13,7 +13,6 @@ class Response
         $this->httpCode = $httpCode;
         $this->content = $content;
         $this->setContentType($contentType);
-        
     }
 
     public function setContentType($contentType){

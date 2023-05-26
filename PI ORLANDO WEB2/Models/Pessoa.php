@@ -19,20 +19,20 @@ abstract class Pessoa
         $this->nascimento = $dados['nascimento'];
         
         $this->contato = new Contato();
-        $this->contato->set_Tipo($dados['tipoContato']);
-        $this->contato->set_Descricao($dados['descricaoContato']);
+        $this->contato->setTipo($dados['tipoContato']);
+        $this->contato->setDescricao($dados['descricaoContato']);
 
         $this->endereco = new Endereco();
-        $this->endereco->set_Logradouro($dados['logradouro']);
-        $this->endereco->set_Numero($dados['numero']);
-        $this->endereco->set_Bairro($dados['bairro']);
-        $this->endereco->set_Cidade($dados['cidade']);
-        $this->endereco->set_UF($dados['uf']);
-        $this->endereco->set_Complemento($dados['complemento']);
+        $this->endereco->setLogradouro($dados['logradouro']);
+        $this->endereco->setNumero($dados['numero']);
+        $this->endereco->setBairro($dados['bairro']);
+        $this->endereco->setCidade($dados['cidade']);
+        $this->endereco->setUF($dados['uf']);
+        $this->endereco->setComplemento($dados['complemento']);
 
         $this->login = new Login();
-        $this->login->set_Usuario($dados['usuario']);
-        $this->login->set_Senha($dados['senha']);
+        $this->login->setUsuario($dados['usuario']);
+        $this->login->setSenha($dados['senha']);
     }
 
     public function getId(){

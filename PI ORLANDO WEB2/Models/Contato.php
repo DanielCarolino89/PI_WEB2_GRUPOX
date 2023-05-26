@@ -6,28 +6,28 @@ class Contato
     private string $tipo;
     private string $descricao;
 
-    public function get_Id(){
+    public function getId(){
         return $this->id;
     }
 
-    public function set_Id($id){
+    public function setId($id){
         $this->id = $id;
     }
 
-    public function get_Tipo(){
+    public function getTipo(){
         return $this->$tipo;
     }
 
-    public function set_Tipo(string $tipo)
+    public function setTipo(string $tipo)
     {
         $this->tipo = $tipo;
     }
 
-    public function get_Descricao(){
+    public function getDescricao(){
         return $this->descricao;
     }
 
-    public function set_Descricao(string $descricao){
+    public function setDescricao(string $descricao){
         $this->descricao = $descricao;
     }
 }

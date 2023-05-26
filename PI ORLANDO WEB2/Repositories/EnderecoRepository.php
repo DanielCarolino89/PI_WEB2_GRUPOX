@@ -12,15 +12,15 @@ class EnderecoRepository
     {
         $sql = "INSERT INTO ENDERECO VALUES (
             NULL,
-            '" . $endereco->get_Logradouro() . "',
-            " . $endereco->get_Numero() . ",      
-            '" . $endereco->get_Bairro() . "',
-            '" . $endereco->get_Cidade() . "',
-            '" . $endereco->get_UF() . "',
-            '" . $endereco->get_Complemento() . "');";
+            '{$endereco->getLogradouro()}',
+            {$endereco->getNumero()},      
+            '{$endereco->getBairro()}',
+            '{$endereco->getCidade()}',
+            '{$endereco->getUF()}',
+            '{$endereco->getComplemento()}');";
 
         $db->DbCommandExec($sql);
-        $endereco->set_Id($this->GetLastInsertId());
+        $endereco->setId($this->GetLastInsertId());
     }
 }
 ?>

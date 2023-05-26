@@ -1,6 +1,6 @@
 <?php
 
-class Repository
+abstract class Repository
 {
     protected dbUtils $db;
     public function __construct(dbUtils $db)
