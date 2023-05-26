@@ -23,6 +23,20 @@ class dbUtils
         $this->conn = null;   
 	} 
 
+    public function BeginTransaction(){
+        $conn->beginTransaction();
+    }
+
+    public function Commit()
+    {
+        $conn->commit();
+    }
+
+    public function Rollback()
+    {
+        $conn->rollback();
+    }
+
     public function DbCommandExec($sql)
     {
         try
@@ -32,10 +46,6 @@ class dbUtils
         catch(PDO_Exception $e)
         {
             return $e->getMessage();
-        }
-        finally
-        {
-            $conn = null;
         }
     }
 
@@ -49,9 +59,17 @@ class dbUtils
         {
             return $e->getMessage();
         }
-        finally
+    }
+
+    public function DbQueryFirstValue($sql)
+    {
+        try
         {
-            $conn = null;
+            return $this->DbCommandQuery($sql)->fetch()[0];
+        }
+        catch(PDO_Exception $e)
+        {
+            return $e->getMessage();
         }
     }
 }

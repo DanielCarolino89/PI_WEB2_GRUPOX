@@ -38,8 +38,8 @@ CREATE TABLE Especialidade (
     Id Integer PRIMARY KEY auto_increment,
     Descricao VARCHAR(100)
 );
-
 CREATE TABLE Paciente (
+
     Id Integer PRIMARY KEY auto_increment,
     Nome VARCHAR(80),
     CPF VARCHAR(11),
