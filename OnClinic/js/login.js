@@ -8,7 +8,7 @@ btn_entrar.addEventListener('click', function(event)
     if(login.value == '' || senha.value == '')
     {
         event.preventDefault();
-        swal("Campos obrigatórios!", "Por favor, preencha login e senha", "error");
+        swal("Campos obrigatórios!", "Por favor, preencha login e senha", "warning");
         login.focus();
     }
 });
