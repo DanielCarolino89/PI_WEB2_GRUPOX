@@ -11,9 +11,21 @@ h2 {
     color: green;
 }
 
+h4 {
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: oblique;
+    padding-left: 20px;
+
+}
+
 hr {
     color: green;
     width: 100%;
+}
+.thb {
+    padding-left: 50px;
+
 }
 
 .Loginsenha {
