@@ -11,7 +11,7 @@ abstract class Pessoa
     protected Endereco $endereco;
     protected Login $login;
 
-    protected function AtribuirDados($dados)
+    protected function atribuirDados($dados)
     {
         $this->nome = $dados['nome'];
         $this->cpf = $dados['cpf'];
@@ -34,6 +34,7 @@ abstract class Pessoa
         $this->login->setUsuario($dados['usuario']);
         $this->login->setSenha($dados['senha']);
     }
+
 
     public function getId(){
         return $this->id;

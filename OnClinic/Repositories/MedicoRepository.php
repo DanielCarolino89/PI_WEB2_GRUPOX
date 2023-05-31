@@ -17,8 +17,6 @@ class MedicoRepository extends Repository
             '{$medico->getDataNascimento()}',
             '{$medico->getAtendimentoRemoto()}',
             '{$medico->getSobre()}',
-             {$medico->getContato()->getId()},
-             {$medico->getEndereco()->getId()},
             '{$medico->getLogin()->getUsuario()}');";
 
         $this->db->executeCommand($sql);

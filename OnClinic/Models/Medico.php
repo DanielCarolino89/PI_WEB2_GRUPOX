@@ -9,16 +9,16 @@ class Medico extends Pessoa
 
     public function __construct($dados)
     {
-        $this->AtribuirDados($dados);
+        $this->atribuirDados($dados);
     }
 
-    protected function AtribuirDados($dados)
+    protected function atribuirDados($dados)
     {
         $this->crm = $dados['crm'];
         $this->atendimentoRemoto = $dados['remoto'];
         $this->sobre = $dados['sobre'];
 
-        parent::AtribuirDados($dados);
+        parent::atribuirDados($dados);
     }
 
     public function getCRM(): string {

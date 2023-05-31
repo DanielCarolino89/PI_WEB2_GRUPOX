@@ -14,7 +14,14 @@ class EspecialidadeRepository extends Repository
             '{$especialidade->getFaixaEtaria()}',
             {$especialidade->getMedicoId()});";
 
-        $this->db->ExecuteCommand($sql);
+        $this->db->executeCommand($sql);
+    }
+
+    public function excluirEspecialidade(int $id)
+    {
+        $sql = "DELETE FROM ESPECIALIDADE WHERE ID = {$id};";
+
+        $this->db->executeCommand($sql);
     }
 }
 
