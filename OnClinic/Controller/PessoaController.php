@@ -4,18 +4,18 @@ abstract class PessoaController
 {
     protected LoginRepository $loginRepository;
 
-    protected function RegistrarDadosPessoais(Pessoa $pessoa)
+    protected function registrarDadosPessoais(Pessoa $pessoa, Database $db)
     {
-        $loginRepository->CadastrarLogin($paciente->get_Login());
+        $this->loginRepository->cadastrarLogin($pessoa->getLogin());
 
         $enderecoRepository = new EnderecoRepository($db);
-        $enderecoRepository->CadastrarEndereco($paciente->get_Endereco());
+        $enderecoRepository->cadastrarEndereco($pessoa->getEndereco());
 
         $contatoRepository = new ContatoRepository($db);
-        $contatoRepository->CadastrarContato($paciente->get_Contato());
+        $contatoRepository->cadastrarContato($pessoa->getContato());
     }
 
-    protected function ValidarDadosPessoais([] $dados, $tipoUsuario)
+    protected function validarDadosPessoais($dados, $tipoUsuario)
     {
         $errors = [];
 
@@ -32,14 +32,14 @@ abstract class PessoaController
         }
 
         if (empty(trim($dados['usuario'])) || strlen($dados['usuario']) <= 4){
-            $errors['usuario'] = "O Usuário não pode ser vazio ou em branco. Mínimo de caracteres: 4"
+            $errors['usuario'] = "O Usuário não pode ser vazio ou em branco. Mínimo de caracteres: 4";
         }
 
         if (empty(trim($dados['senha'])) || strlen($dados['senha']) <= 4){
-            $errors['senha'] = "A Senha não pode ser vazio ou em branco. Mínimo de caracteres: 4"
+            $errors['senha'] = "A Senha não pode ser vazio ou em branco. Mínimo de caracteres: 4";
         }
 
-        if (!isset($errors['usuario']) && $this->loginRepository->ConsultaSeUsuarioJaExiste($dados['usuario'])){
+        if (!isset($errors['usuario']) && $this->loginRepository->consultaSeUsuarioJaExiste($dados['usuario'])){
             $errors['usuario'] = "O usuário {$dados['usuario']} já existe!";
         }
 

@@ -5,11 +5,11 @@ class Medico extends Pessoa
     private string $crm;
     private bool $atendimentoRemoto;
     private string $sobre;
-    private string $especialidade;
+    private $especialidades = [];
 
     public function __construct($dados)
     {
-        AtribuirDados($dados);
+        $this->AtribuirDados($dados);
     }
 
     protected function AtribuirDados($dados)
@@ -17,11 +17,9 @@ class Medico extends Pessoa
         $this->crm = $dados['crm'];
         $this->atendimentoRemoto = $dados['remoto'];
         $this->sobre = $dados['sobre'];
-        $this->especialidade = $dados['especialidade'];
 
         parent::AtribuirDados($dados);
     }
-
 
     public function getCRM(): string {
         return $this->crm;
@@ -35,8 +33,13 @@ class Medico extends Pessoa
         return $this->sobre;
     }
 
-    public function getEspecialidade(): string {
-        return $this->especialidade;
+    public function addEspecialidade(Especialidade $especialidade)
+    {
+        $especialidades[] = $especialidade;
+    }
+
+    public function getEspecialidadesFormatada(){
+        //implementar
     }
 }
 
