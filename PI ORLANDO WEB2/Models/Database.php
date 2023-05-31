@@ -1,6 +1,6 @@
 <?php
 
-class dbUtils
+class Database
 {
 
     private $servername = "127.0.0.1";
@@ -15,7 +15,7 @@ class dbUtils
             $this->conn = new PDO("mysql:host=$this->servername;dbname=$this->dbname", $this->username, $this->password);          
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }catch(PDOException $e){
-            echo $sql . "<br>" . $e->getMessage();
+            echo $e . "<br>" . $e->getMessage();
         }
     }  
 
@@ -23,55 +23,45 @@ class dbUtils
         $this->conn = null;   
 	} 
 
-    public function BeginTransaction(){
-        $conn->beginTransaction();
+    public function beginTransaction(){
+        $this->conn->beginTransaction();
     }
 
-    public function Commit()
+    public function commit()
     {
-        $conn->commit();
+        $this->conn->commit();
     }
 
     public function Rollback()
     {
-        $conn->rollback();
+        $this->conn->rollback();
     }
 
-    public function DbCommandExec($sql)
+    public function executeCommand($sql)
     {
         try
         {
             return $this->conn->exec($sql);           
         }
-        catch(PDO_Exception $e)
+        catch(PDOException $e)
         {
             return $e->getMessage();
         }
     }
 
-    public function DbCommandQuery($sql)
+    public function executeQuery($sql)
     {
         try
         {
             return $this->conn->query($sql);           
         }
-        catch(PDO_Exception $e)
+        catch(PDOException $e)
         {
             return $e->getMessage();
         }
     }
 
-    public function DbQueryFirstValue($sql)
-    {
-        try
-        {
-            return $this->DbCommandQuery($sql)->fetch()[0];
-        }
-        catch(PDO_Exception $e)
-        {
-            return $e->getMessage();
-        }
-    }
+
 }
 
 

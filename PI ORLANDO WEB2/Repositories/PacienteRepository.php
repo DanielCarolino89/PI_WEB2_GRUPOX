@@ -3,30 +3,30 @@
 class PacienteRepository extends Repository
 {
 
-    public function __construct(dbUtils $db){
+    public function __construct(Database $db){
         parent::__construct($db); 
     }
 
-    public function RegistrarPaciente(Paciente $paciente)
+    public function registrarPaciente(Paciente $paciente)
     {
         $sql = "INSERT INTO PACIENTE VALUES (
             null,
-            '{$paciente->get_Nome()}',
-            '{$paciente->get_CPF()}',
-            '{$paciente->get_RG()}',
-            '{$paciente->get_DataNascimento()}',
-             {$paciente->get_Contato()->get_Codigo()},
-             {$paciente->get_Endereco()->get_Codigo()},
-            '{$paciente->get_Login()->get_Usuario()}');";
+            '{$paciente->getNome()}',
+            '{$paciente->getCPF()}',
+            '{$paciente->getRG()}',
+            '{$paciente->getDataNascimento()}',
+             {$paciente->getContato()->getId()},
+             {$paciente->getEndereco()->getId()},
+            '{$paciente->getLogin()->getUsuario()}');";
 
-        $db->DbCommandExec($sql);
+        $this->db->executeCommand($sql);
     }
 
-    public function ConsultaSeCPFJaExiste(string $cpf) : bool
+    public function consultaSeCPFJaExiste(string $cpf) : bool
     {
         $sql = "SELECT 1 from Paciente where CPF = '{$cpf}'";
 
-        return $db->DbQueryFirstValue($sql);
+        return $this->QueryFirstValue($sql);
     }
 }
 

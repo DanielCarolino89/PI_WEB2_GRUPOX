@@ -1,14 +1,14 @@
 <?php
 
-class EnderecoRepository
+class EnderecoRepository extends Repository
 {
 
-    public function __construct(dbUtils $db)
+    public function __construct(Database $db)
     {
         parent::__construct($db); 
     }
 
-    public function CadastrarEndereco(Endereco $endereco)
+    public function cadastrarEndereco(Endereco $endereco)
     {
         $sql = "INSERT INTO ENDERECO VALUES (
             NULL,
@@ -19,8 +19,7 @@ class EnderecoRepository
             '{$endereco->getUF()}',
             '{$endereco->getComplemento()}');";
 
-        $db->DbCommandExec($sql);
-        $endereco->setId($this->GetLastInsertId());
+        $this->db->executeCommand($sql);
     }
 }
 ?>

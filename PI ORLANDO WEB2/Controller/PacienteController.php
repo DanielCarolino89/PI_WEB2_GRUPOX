@@ -3,47 +3,47 @@ class PacienteController extends PessoaController
 {
     private PacienteRepository $pacienteRepository;
 
-    public function CadastrarNovoPaciente($dados)
+    public function cadastrarNovoPaciente($dados)
     {
-        $db = new dbUtils();
+        $db = new Database();
         $this->pacienteRepository = new PacienteRepository($db);
-        $this->$loginRepository = new LoginRepository($db);
+        parent::$loginRepository = new LoginRepository($db);
 
-        $validationResult = ValidarCadastroDoPaciente($dados)
+        $validationResult = $this->validarDadosDoPaciente($dados);
 
-        if (!$validationResult['success'])
+        if (!$validationResult['success']){
             //to do: Error View
         }
 
-        $peciente = new Paciente($dados);
+        $paciente = new Paciente($dados);
 
-        $db->BeginTransaction();
+        $db->beginTransaction();
 
         try{
-            $this->RegistrarDadosPessoais($paciente);            
-            $pacienteRepository->RegistrarPaciente($paciente);
+            $this->registrarDadosPessoais($paciente, $dados);            
+            $this->pacienteRepository->registrarPaciente($paciente);
 
             $db->Commit();
         }
-        catch(Exception ex)
+        catch(Exception $ex)
         {
             $db->Rollback();
         }
     }
 
-    private function ValidarDadosDoPaciente($dados)
+    private function validarDadosDoPaciente($dados)
     {
-        $errors = $this->ValidarDadosPessoais($dados, "Paciente");
+        $errors = $this->validarDadosPessoais($dados, "Paciente");
 
-        if (!isset($errors['cpf']) && $this->pacienteRepository->ConsultaSeCPFJaExiste($dados['cpf']){}
+        if (!isset($errors['cpf']) && $this->pacienteRepository->consultaSeCPFJaExiste($dados['cpf'])){
             $errors['cpf'] = "CPF do Paciente já cadastrado!";
         }
 
         if (!empty($errors)){
             return [
                 'success' => false,
-                'errors' => $errors;
-            ]
+                'errors' => $errors
+            ];
         }
 
         return ['success' => true];

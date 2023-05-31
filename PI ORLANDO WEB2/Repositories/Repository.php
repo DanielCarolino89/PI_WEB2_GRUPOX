@@ -2,16 +2,21 @@
 
 abstract class Repository
 {
-    protected dbUtils $db;
-    public function __construct(dbUtils $db)
+    protected Database $db;
+    public function __construct(Database $db)
     {
         $this->db = $db;
     }
 
-    protected function GetLastInsertId(){
+    protected function getLastInsertId(){
         $sqlId = "Select LAST_INSERT_ID();";
-        $queryResult = $this->database->Query($sqlId);
+        $queryResult = $this->db->executeQuery($sqlId);
         return $queryResult->fetch()[0];
+    }
+
+    protected function queryFirstValue($sql)
+    {
+        return $this->db->executeQuery($sql)->fetch()[0];
     }
 }
 

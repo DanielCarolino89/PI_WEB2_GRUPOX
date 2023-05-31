@@ -2,25 +2,25 @@
 
 class LoginRepository extends Repository
 {
-    public function __construct()
+    public function __construct(Database $db)
     {
         parent::__construct($db); 
     }
 
-    public function CadastrarLogin(Login $login)
+    public function cadastrarLogin(Login $login)
     {
         $sql = "INSERT INTO LOGIN VALUES (
-            '{$login->get_Usuario()}',
-            '{$login->get_Senha()}');";
+            '{$login->getUsuario()}',
+            '{$login->getSenha()}');";
 
-        $db->DbCommandExec($sql);
+        $this->db->executeCommand($sql);
     }
 
-    public function ConsultaSeUsuarioJaExiste(string $usuario) : bool
+    public function consultaSeUsuarioJaExiste(string $usuario) : bool
     {
         $sql = "SELECT 1 FROM LOGIN WHERE USUARIO = '{$usuario}'";
 
-        return $db->DbQueryFirstValue($sql);
+        return $this->queryFirstValue($sql);
     }
 }
 
