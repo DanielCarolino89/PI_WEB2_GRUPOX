@@ -7,120 +7,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
     <title>ON CLINIC</title>
-
-    <style>
-        input {
-            margin-left: 10px;
-            width: 300px
-        }
-
-        .navbar {
-            width: 100%;
-            margin-top: 2px;
-        }
-
-        .navcolor {
-            color: green;
-        }
-
-
-        .texto {
-
-            background-color: green;
-            color: white;
-            text-align: center;
-            width: 550px;
-            line-height: 30px;
-            height: auto;
-            padding: 50px;
-            
-        }
-        .texto2 {
-
-            background-color: green;
-            color: white;
-            text-align: center;
-            width: 550px;
-            line-height: 30px;
-            height: auto;
-            padding: 50px;
-            
-        }
-
-        .btn,
-        .btn:hover {
-            background-color: white;
-            color: green;
-
-        }
-
-        .color,
-        hr {
-            color: green;
-            width: 100%;
-        }
-
-        #img1 {
-            width: 50%;
-            
-        }
-
-        table {
-            width: 100%;
-            align-items: justify;
-            text-align: center;
-        }
-
-        td {
-            align-items: center;
-            text-align: center;
-            
-        }
-        #footer{
-            width: 100%;
-            align-items: justify;
-            text-align: center;
-            padding-top: 30px;
-            padding-bottom: 30px;
-
-        }
-
-        #info {
-            background-image: url(img/Background1.jpg);
-            align-items: justify;
-            text-align: center;
-            width: 100%;
-            height:300px;
-        }
-
-
-
-        #navlogo {
-            margin-left: 100px;
-        }
-
-        #navform {
-            margin-right: 100px;
-        }
-    </style>
 </head>
 
 <body>
 
     <!-- inicio navbar -->
-    <nav class="navbar bg-light">
+    <nav class="nav navbar bg-light">
         <div id="navlogo">
             <img src="img/Logo.png" alt="Bootstrap" width="250px">
         </div>
         <div id="navform">
-            <form class="navbar d-flex">
+            <form class="nav navbar d-flex">
                 <label class="navcolor"><b>Login:</b></label>
-                <input class="form-control me-2" name="login" style="width: 250px;" type="text" placeholder=""
+                <input class=" navform form-control me-2" name="login" style="width: 250px;" type="text" placeholder=""
                     aria-label="">
                 <label class="navcolor"><b>Senha:</b></label>
-                <input class="form-control me-2" name="login" style="width: 250px;" type="password" placeholder=""
-                    aria-label="Search">
+                <input class=" navform form-control me-2" name="login" style="width: 250px;" type="password"
+                    placeholder="" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Entrar</button>
             </form>
         </div>
@@ -128,65 +33,69 @@
         </div>
     </nav>
     <!-- fim navbar -->
-<br>
+    <br>
     <!-- inicio -->
 
-    <table>
-        <th>
-        <td>
-            <img class="img1" src="img/Medicos1.png" alt="Bootstrap" width="500px">
-        </td>
-        <td>
-            <center>
-                <div class="texto">
-                    <h2><b>Para Pacientes: </b><br>Ter acesso a um profissional de saúde a qualquer momento</h2>
-                    <p>Bem-estar para toda sua familia!</p>
-
-                    <div class="d-grid gap-2 col-6 mx-auto">
-                        <a href="cadastro_paciente.html"> <button class="btn" type="button">CADASTRE-SE</button></a>
-                    </div>
-
-                </div>
-            </center>
-            </div>
-        </td>
-        </th>
-    </table>
-    <br>
-    <hr>
-    <br>
-    <table>
-        <th>
-        <td>
-            <center>
-                <div class="texto2">
-                    <h2><b>Médicos e especialistas: </b><p>Cadastre-se para atender nossos pacientes!</p>
+    <table class="container">
+        <tr>
+            <th class="block">
+                <img class="img1" src="img/paciente1.png" alt="Bootstrap" width="500px">
+            </th>
+            <th class="block">
+                <center>
+                    <div class="texto">
+                        <h2 class="h2"><b>Para Pacientes: </b><br>Ter acesso a um profissional de saúde a qualquer
+                            momento</h2>
+                        <p>Bem-estar para toda sua familia!</p>
 
                         <div class="d-grid gap-2 col-6 mx-auto">
-                            <a href="cadastro_medico.html"> <button class="btn" type="button">CADASTRE-SE</button></a>
+                            <a href="cadastro_paciente.html" class="btn btn-light btn-lg"><b>CADASTRE-SE</b></a>
                         </div>
 
+                    </div>
+                </center>
                 </div>
-            </center>
-            </div>
-        </td>
-        <td>
-            <img class="img1" src="img/Medicos2.jpg" alt="Bootstrap" width="500px">
-        </td>
-        </th>
+            </th>
+        </tr>
     </table>
     <br>
     <hr>
     <br>
-    <div id="info">
+    <table class="container">
+        <tr>
+            <th class="block">
+                <center>
+                    <div class="texto">
+                        <h2 class="h2"><b>Médicos e especialistas: </b>
+                            <p>Cadastre-se para atender nossos pacientes!</p>
+
+                            <div class="d-grid gap-2 col-6 mx-auto">
+                                <a href="cadastro_medico.html" class="btn btn-light btn-lg"
+                                    style="font:green"><b>CADASTRE-SE</b></a>
+                            </div>
+                    </div>
+                </center>
+                </div>
+            </th>
+            <th class="block">
+                <img class="img2" src="img/Medicos2.jpg" alt="Bootstrap" width="500px">
+            </th>
+        </tr>
+    </table>
+    <br>
+    <hr>
+    <br>
+    <div class="info" style="background-image:url(img/bg_info.jpg);">
         <br>
         <h2>Como funciona a consulta online?</h2>
         <p>
         <h3>Receber apoio profissional para sua saúde está mais acessivel do que nunca </h3>
         </p>
         <br>
-        <p><i><h5>* Escolha sua modalidade de atendimento, sendo o plantão ou agendamento com o médico da especialidade de
-                sua escolha;</p>
+        <p><i>
+                <h5>* Escolha sua modalidade de atendimento, sendo o plantão ou agendamento com o médico da
+                    especialidade de
+                    sua escolha;</p>
         <p>* Caso opte pelo agendamento, escolha o horário que gostaria de ser atendido;</p>
         <p>* No momento do atendimento, certique-se de que está em um local com bom sinal de wi-fi, microfone e câmera
             funcionando, e inicie a sua sessão.</h4></i></p>
