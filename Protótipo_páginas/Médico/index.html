@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pesquisa de Pacientes</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Pesquisa de Pacientes</h1>
+    <div class="search-container">
+      <input type="text" id="name-input" placeholder="Digite o nome do paciente">
+      <select id="specialty-select">
+        <option value="nome">Nome</option>
+        <option value="especialidade">Especialidade</option>
+        <option value="cidade">Cidade</option>
+        <!-- Adicione outros critérios de pesquisa aqui -->
+      </select>
+      <button onclick="searchPatients()" class="btn-search">Pesquisar</button>
+    </div>
+    <div id="search-results"></div>
+
+    <div class="doctor-area">
+      <h2>Área do Médico</h2>
+      <table id="patient-table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Especialidade</th>
+            <th>Cidade</th>
+          </tr>
+        </thead>
+        <tbody id="patient-table-body">
+          <!-- Linhas da tabela serão adicionadas dinamicamente -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pesquisa de Médicos</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Pesquisa de Médicos</h1>
+    <div class="search-container">
+      <input type="text" id="name-input" placeholder="Digite o nome do médico">
+      <select id="specialty-select">
+        <option value="nome">Nome</option>
+        <option value="especialidade">Especialidade</option>
+        <option value="cidade">cidade</option>
+        
+        <!-- Adicione outras especialidades aqui -->
+      </select>
+      <button onclick="searchDoctors()">Pesquisar</button>
+    </div>
+    <div id="search-results"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
