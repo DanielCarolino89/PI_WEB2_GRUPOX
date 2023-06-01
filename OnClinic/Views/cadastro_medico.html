@@ -75,7 +75,7 @@
                     <!-- Endereço médico -->
                     <div class="col-md-2">
                         <label for="cep" class="form-label">CEP:</label>
-                        <input name="cep" type="number" class="form-control" id="cep" required>
+                        <input name="cep" type="text" class="form-control" id="cep" required>
                     </div>
                     <div class="col-md-6">
                         <label for="log" class="form-label">Logradouro:</label>
@@ -106,27 +106,27 @@
                     <!-- inicio sobre médico -->
 
                     <div class="col-md-6">
-                        <label for="validationCustom02" class="form-label">Sobre:</label>
+                        <label for="sobre" class="form-label">Sobre:</label>
                         <textarea name="sobre" class="form-control" rows="9" cols="50" id="sobre"
                             required></textarea>
                     </div>
 
                     <div class="col-md-6">
-                        <label for="validationCustom02" class="form-label">Especialidades:</label>
+                        <label for="especialidade" class="form-label">Especialidades:</label>
                         <table>
                             <tr>
-                                <th><input name="especialidades" type="text" class="form-control"
-                                        id="validationCustom02" style="width:246px" required> </th>
+                                <th><input name="especialidade" type="text" class="form-control"
+                                        id="especialidade" style="width:246px" required> </th>
                                 <th><select class="form-select" id="subespecialidade" aria-label="Default select example" style="margin-left:10px">
-                                        <option value="Clínico Geral" selected>Geral</option>
+                                        <option value="Geral" selected>Geral</option>
                                         <option value="Pediátrico">Pediátrico</option>
                                         <option value="Geriátrico">Geriátrico</option>
                                     </select>
                                 </th>
-                                <th><a href="" class="btn btn-success" style="margin-left:15px"><b>Inserir</b></a>
+                                <th><a class="btn btn-success" id="inserir" style="margin-left:15px"><b>Inserir</b></a>
                                 </th>
                             </tr>
-                        </table><br> <textarea name="especialidades" rows="6" cols="60" id="especialidade"></textarea></td>
+                        </table><br> <textarea name="especialidades" readonly rows="6" cols="60" id="especialidades"></textarea></td>
 
                     </div>
 
@@ -135,17 +135,17 @@
                     <div class="Loginsenha row g-3">
                         <h2>Acesso ao sistema:</h2>
                         <div class="col-md-4">
-                            <label for="validationCustom02" class="form-label">Insira um login:</label>
+                            <label for="login" class="form-label">Insira um login:</label>
                             <input name="login" type="text" class="form-control" id="login" required>
 
                         </div>
                         <div class="col-md-4">
-                            <label for="validationCustom02" class="form-label">Insira uma senha:</label>
+                            <label for="senha" class="form-label">Insira uma senha:</label>
                             <input name="senha" type="password" class="form-control" id="senha" required>
 
                         </div>
                         <div class="col-md-4">
-                            <label for="validationCustom02" class="form-label">Confirmação de Senha:</label>
+                            <label for="resenha" class="form-label">Confirmação de Senha:</label>
                             <input name="senha" type="password" class="form-control" id="resenha" required>
 
                         </div>

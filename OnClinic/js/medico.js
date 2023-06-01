@@ -2,10 +2,21 @@ btn_Cadastrar = document.getElementById('cadastrar');
 
 btn_Cadastrar.addEventListener('click', function(event)
 {    
-    if(!validarCampos())
-    {
-      event.preventDefault();
-    }
+    validarCampos();
+});
+
+btn_Especialidade = document.getElementById('inserir');
+
+btn_Especialidade.addEventListener('click', function(event){
+
+  var espec = document.getElementById('especialidade').value.toUpperCase();
+  var subespec = document.getElementById('subespecialidade').value.toUpperCase();
+
+  if(espec !== '')
+  {
+    var sobre = document.getElementById('especialidades');
+    sobre.value = sobre.value + espec + '\t\t' + subespec + '\n';
+  }
 });
 
 function validarCampos()
@@ -15,8 +26,7 @@ function validarCampos()
     {
         swal("Campo obrigatório!", "Por favor, informe seu nome.", "warning");
         nome.focus();
-
-        return false;
+        event.preventDefault();
     }
 
     validarCRM(document.getElementById('crm').value);
@@ -34,30 +44,92 @@ function validarCampos()
     {
       swal("Campo obrigatório!", "Por favor, informe sua data de nascimento.", "warning");
       nascimento.focus();
-      return false;
+      event.preventDefault();
+    }
+
+    validarContatos();
+    
+    validarEndereco();   
+   
+    if(document.getElementById('sobre').value == '')
+    {
+      swal("Campo obrigatório!", "Por favor, informe uma descrição.", "warning");
+      event.preventDefault();
+      sobre.focus();
     }
     
-    validarEndereco();    
-
-    //Sobre o médico
-    var sobre = document.getElementById('sobre');
-    var especialidade = document.getElementById('especialidade');
+    if(document.getElementById('especialidades').value == '')
+    {
+      swal("Campo obrigatório!", "Por favor, adicione ao menos uma especialidade.", "warning");
+      especialidade.focus();
+      event.preventDefault();
+    }
 
     //login
-    var login = document.getElementById('login');
-    var senha = document.getElementById('senha');
-    var resenha = document.getElementById('resenha');
+    if(document.getElementById('login').value == '')
+    {
+        swal("Campo obrigatório!", "Por favor, informe um usuário para login", "warning");
+        login.focus();
+        event.preventDefault();
+    }
+    
+    var senha = document.getElementById('senha').value;
+    var resenha = document.getElementById('resenha').value;
 
+    if(senha == '' || resenha == '')
+    {
+        swal("Campo obrigatório!", "Por favor, informe uma senha, e depois confirme-a!", "warning");
+        senha.focus();
+        event.preventDefault();
+    }
+    else
+    {
+      if(senha !== resenha)
+      {
+        swal("Campo Inválido!", "As senhas não são iguais", "warning");
+        senha.focus();
+        event.preventDefault();
+      }
+    }
 }
 
 function validarContatos()
 {
-    var principal = document.getElementById('principal');
-    var whatsapp = document.getElementById('whatsapp');
-    var email = document.getElementById('email');
+    var principal = document.getElementById('principal').value;
+    var whatsapp = document.getElementById('whatsapp').value;
+    var email = document.getElementById('email').value;
   
-    //if(principal)
+    if(principal == '' && whatsapp == '' && email =='')
+    {
+        swal("Campo obrigatório!", "Por favor, informe ao menos um contato.", "warning");
+        event.preventDefault();
+        document.getElementById('principal').focus();
+    }
+    else
+    {
+      principal = principal.replace(/[^\d]+/g, ''); 
 
+      if(principal != '')
+      {
+         if(principal.length != 10 && principal.length != 11)
+         {
+            swal("Campo Inválido!", "Por favor, informe um número de telefone válido", "warning");
+            event.preventDefault();
+            document.getElementById('principal').focus();
+         }       
+      }
+
+      if(whatsapp != '')
+      {
+         if(principal.length != 11)
+         {
+            swal("Campo Inválido!", "Por favor, informe um número de whatsapp válido", "warning");
+            event.preventDefault();
+            document.getElementById('whatsapp').focus();
+         }       
+      }
+
+    }
 }
 
 function validarCRM(crm)
@@ -69,16 +141,16 @@ function validarCRM(crm)
     if (crm.length !== 6) 
     {
       swal("Campo Inválido!", "Por favor, um CRM válido", "warning");
-      return false;
+      event.preventDefault();
     }
     
 
     // Verificar se todos os dígitos são iguais (CPF inválido)
-    var digits = cpf.split('').map(Number);
+    var digits = crm.split('').map(Number);
     if (digits.every(digit => digit === digits[0])) 
     {
       swal("Campo Inválido!", "Por favor, um CRM válido", "warning");
-      return false;
+      event.preventDefault();
     }
 }
 
@@ -137,24 +209,19 @@ function validarCPF(cpf)
 
 function validarEndereco()
 {  
-  var cidade = document.getElementById('cidade');
-  var UF = document.getElementById('UF');
-
-  var cep = document.getElementById('cep').value;
-  // Remover caracteres não numéricos
-  cep = cep.replace(/[^\d]+/g, ''); 
-  if(cep.length == 8)
+  var cep = document.getElementById('cep').value.replace(/[^\d]+/g, '');
+ 
+  if(cep.length !== 8)
   {
       swal("Campo Inválido!", "Por favor, informe um CEP válido", "warning");
-      cep.focus();
-      return false;
+      event.preventDefault();
   }
-
+  
   if(document.getElementById('log').value =='')
   {
       swal("Campo Obrigatório!", "Por favor, informe um logradouro", "warning");
       log.focus();
-      return false;
+      event.preventDefault();
   }
  
   //Verifica se possui apenas numeros
@@ -162,35 +229,35 @@ function validarEndereco()
   {
       swal("Campo Inválido!", "Por favor, informe um número válido", "warning");
       numero.focus();
-      return false;
+      event.preventDefault();
   }
 
   if(document.getElementById('bairro').value == '')
   {
       swal("Campo Obrigatório!", "Por favor, informe um bairro", "warning");
       bairro.focus();
-      return false;
+      event.preventDefault();
   }
 
   if(document.getElementById('cidade').value == '')
   {
       swal("Campo Obrigatório!", "Por favor, informe um cidade", "warning");
       cidade.focus();
-      return false;
+      event.preventDefault();
   }
 
-  if(!document.getElementById('UF').value.length == 2)
+  if(document.getElementById('UF').value.length !== 2)
   {
     swal("Campo Inválido!", "Por favor, informe um UF válido", "warning");
     UF.focus();
-    return false;
+    event.preventDefault();
   }
 
   if(/[0-9]/.test(document.getElementById('UF').value))
   {
     swal("Campo Inválido!", "Por favor, informe um UF válido", "warning");
     UF.focus();
-    return false;
+    event.preventDefault();
   }
 
 
