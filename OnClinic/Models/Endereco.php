@@ -1,15 +1,16 @@
 <?php
+
 class Endereco
 {
     private int $id;
     private string $logradouro;
-    private int $numero;
+    private string $numero;
     private string $bairro;
     private string $cidade;
     private string $UF;
     private string $complemento;
-    private int $medicoId;
-    private int $pacienteId;
+    private ?int $medicoId = null;
+    private ?int $pacienteId = null;
 
      public function getId(): int {
         return $this->id;
@@ -19,7 +20,7 @@ class Endereco
         $this->id = $id;
     }
 
-    public function getMedicoId() : int {
+    public function getMedicoId() : ?int {
         return $this->medicoId;
     }
 
@@ -27,7 +28,7 @@ class Endereco
         $this->medicoId = $id;
     }
 
-    public function getPacienteId() : int {
+    public function getPacienteId() : ?int {
         return $this->pacienteId;
     }
 
@@ -43,11 +44,11 @@ class Endereco
         $this->logradouro = $logradouro;
     }
 
-    public function getNumero(): int {
+    public function getNumero(): string {
         return $this->numero;
     }
 
-    public function setNumero(int $numero): void {
+    public function setNumero(string $numero): void {
         $this->numero = $numero;
     }
 

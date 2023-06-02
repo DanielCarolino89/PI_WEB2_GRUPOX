@@ -1,11 +1,12 @@
 <?php
 
+
 class Especialidade
 {
     private int $id;
     private string $descricao;
     private string $faixaEtaria;
-    private int $medicoId;
+    private ?int $medicoId = null;
 
     public function getId(){
         return $this->id;
@@ -23,7 +24,7 @@ class Especialidade
         $this->descricao = $descricao;
     }
 
-    public function getMedicoId() : int {
+    public function getMedicoId() : ?int {
         return $this->medicoId;
     }
 
@@ -31,7 +32,7 @@ class Especialidade
         $this->medicoId = $medicoId;
     }
 
-    public function getFaixaEtaria() : int {
+    public function getFaixaEtaria() : string {
         return $this->faixaEtaria;
     }
 

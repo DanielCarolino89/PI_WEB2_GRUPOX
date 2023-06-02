@@ -13,10 +13,16 @@ class ContatoRepository extends Repository
             NULL, 
             '{$contato->getTipo()}',
             '{$contato->getDescricao()}',
-            {$contato->getIdMedico()},
-            {$contato->getIdPaciente()});";
+            " . ($contato->getMedicoId() ? $contato->getMedicoId() : "NULL") . ",
+            " . ($contato->getPacienteId() ? $contato->getPacienteId() : "NULL") . ");";
 
-        $this->db->executeCommand($sql);
+        try{
+            $this->db->executeCommand($sql);
+        } catch(PDOException $ex){
+            echo 'Ocorreu um erro ao cadastrar contato.';
+            echo "<br><br> SQL Executada: {$sql}<br>";
+            throw $ex;
+        }
     }
 
     public function atualizarContato(Contato $contato)

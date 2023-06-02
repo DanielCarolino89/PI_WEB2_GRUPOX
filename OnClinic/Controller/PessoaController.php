@@ -2,49 +2,64 @@
 
 abstract class PessoaController
 {
-    protected LoginRepository $loginRepository;
+    
 
     protected function registrarDadosPessoais(Pessoa $pessoa, Database $db)
     {
-        $this->loginRepository->cadastrarLogin($pessoa->getLogin());
+        
 
-        $enderecoRepository = new EnderecoRepository($db);
-        $enderecoRepository->cadastrarEndereco($pessoa->getEndereco());
-
-        $contatoRepository = new ContatoRepository($db);
-        $contatoRepository->cadastrarContato($pessoa->getContato());
+        $this->registrarEndereco($pessoa, $db);
+        $this->registrarContatos($pessoa, $db);
+        
     }
-
-    protected function validarDadosPessoais($dados, $tipoUsuario)
+    
+    protected function registrarLogin(Pessoa $pessoa, Database $db)
     {
-        $errors = [];
-
-        if (empty(trim($dados['nome'])) || strlen($dados['nome']) <= 3){
-            $errors['nome'] = "O Nome do {$tipoUsuario} não pode ser vazio ou em branco!";
-        }
-
-        if (empty(trim($dados['cpf'])) || strlen($dados['cpf'] != 11)){
-            $errors['cpf'] = "CPF do {$tipoUsuario} é inválido!";
-        }
-
-        if (empty(trim($dados['rg'])) || strlen($dados['rg'] != 9)){
-            $errors['rg'] = "RG do {$tipoUsuario} é inválido!";
-        }
-
-        if (empty(trim($dados['usuario'])) || strlen($dados['usuario']) <= 4){
-            $errors['usuario'] = "O Usuário não pode ser vazio ou em branco. Mínimo de caracteres: 4";
-        }
-
-        if (empty(trim($dados['senha'])) || strlen($dados['senha']) <= 4){
-            $errors['senha'] = "A Senha não pode ser vazio ou em branco. Mínimo de caracteres: 4";
-        }
-
-        if (!isset($errors['usuario']) && $this->loginRepository->consultaSeUsuarioJaExiste($dados['usuario'])){
-            $errors['usuario'] = "O usuário {$dados['usuario']} já existe!";
-        }
-
-        return $errors;
+        require_once('../Repositories/LoginRepository.php');
+        $loginRepository = new LoginRepository($db);
+        $loginRepository->cadastrarLogin($pessoa->getLogin());
     }
+
+    protected function registrarEndereco(Pessoa $pessoa, Database $db)
+    {
+        require_once('../Repositories/EnderecoRepository.php');
+        $enderecoRepository = new EnderecoRepository($db);
+
+        $endereco = $pessoa->getEndereco();
+        if ($pessoa instanceof Medico){
+            $endereco->setMedicoId($pessoa->getId());
+        } 
+        else {
+            $endereco->setPacienteId($pessoa->getId());
+        }
+
+        $enderecoRepository->cadastrarEndereco($pessoa->getEndereco());
+    }
+
+    protected function registrarContatos(Pessoa $pessoa, Database $db)
+    {
+        require_once('../Repositories/ContatoRepository.php');
+        $contatoRepository = new ContatoRepository($db);
+
+        $definirIdFunction = null;
+        if ($pessoa instanceof Medico){
+            $definirIdFunction = function($contato) use ($pessoa){
+                $contato->setMedicoId($pessoa->getId());
+            };
+        } 
+        else {
+            $definirIdFunction = function($contato) use ($pessoa){
+                $contato->setPacienteId($pessoa->getId());
+            };
+        }
+
+        foreach($pessoa->getContatos() as $contato)
+        {
+            $definirIdFunction($contato);
+            $contatoRepository->cadastrarContato($contato);
+        }
+    }
+
 }
 
 ?>

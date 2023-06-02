@@ -1,5 +1,7 @@
 <?php
 
+require_once('Repository.php');
+
 class MedicoRepository extends Repository
 {
     public function __construct(Database $db){
@@ -7,19 +9,27 @@ class MedicoRepository extends Repository
     }
 
     public function cadastrarMedico(Medico $medico)
-    {       
+    {   
         $sql = "INSERT INTO MEDICO VALUES(
             null,
             '{$medico->getNome()}',
             '{$medico->getCRM()}',
             '{$medico->getCPF()}',
             '{$medico->getRG()}',
-            '{$medico->getDataNascimento()}',
+            '{$medico->getDataNascimento()->format("yyyy/MM/dd")}',
             '{$medico->getAtendimentoRemoto()}',
             '{$medico->getSobre()}',
             '{$medico->getLogin()->getUsuario()}');";
 
-        $this->db->executeCommand($sql);
+        try{
+            $this->db->executeCommand($sql);
+            $idInserido = $this->getLastInsertId();
+            $medico->setId($idInserido);
+        } catch(PDOException $ex){
+            echo 'Ocorreu um erro ao cadastrar médico.';
+            echo "<br><br> SQL Executada: {$sql}<br>";
+            throw $ex;
+        }
     }
 
     public function consultaSeCPFJaExiste(string $cpf) : bool

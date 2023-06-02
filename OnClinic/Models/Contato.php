@@ -5,8 +5,8 @@ class Contato
     private int $id;
     private string $tipo;
     private string $descricao;
-    private int $idMedico;
-    private int $idPaciente;
+    private ?int $medicoId = null;
+    private ?int $pacienteId = null;
 
     public function getId(){
         return $this->id;
@@ -16,28 +16,28 @@ class Contato
         $this->id = $id;
     }
 
-    public function getIdMedico(){
-        return $this->idMedico;
+    public function getMedicoId(){
+        return $this->medicoId;
     }
 
-    public function setIdMedico(int $id){
-        if (isset($this->idPaciente)){
+    public function setMedicoId(int $id){
+        if (isset($this->medicoId)){
             return;
         }
 
-        $this->idMedico = $id;
+        $this->medicoId = $id;
     }
 
-    public function getIdPaciente(){
-        return $this->idPaciente;
+    public function getPacienteId(){
+        return $this->pacienteId;
     }
 
-    public function setIdPaciente(int $id){
-        if (isset($this->idMedico)){
+    public function setPacienteId(int $id){
+        if (isset($this->pacienteId)){
             return;
         }
             
-        $this->idPaciente = $id;
+        $this->pacienteId = $id;
     }
 
     public function getTipo(){

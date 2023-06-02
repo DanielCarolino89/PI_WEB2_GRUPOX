@@ -1,20 +1,18 @@
 <?php
 
+require('PessoaController.php');
+require('../Models/Medico.php');
+require('../Repositories/MedicoRepository.php');
+require_once('../Models/Database.php');
+
 class MedicoController extends PessoaController
 {
     private MedicoRepository $medicoRepository;
 
     public function cadastrarNovoMedico($dados)
-    {
+    {     
         $db = new Database();
         $this->medicoRepository = new MedicoRepository($db);
-        parent::$loginRepository = new LoginRepository($db);
-
-        $validationResult = $this->validarDadosDoMedico($dados);
-
-        if(!$validationResult['success']){
-            //to do: Error view
-        }
 
         $medico = new Medico($dados);
 
@@ -22,56 +20,42 @@ class MedicoController extends PessoaController
 
         try
         {
-            $this->registrarDadosPessoais($medico, $db);
-            $this->registrarEspecialidades($medico, $db);
-           
+            var_dump($db);
+            echo '<br><br>';
+            $this->registrarLogin($medico, $db);
             $this->medicoRepository->CadastrarMedico($medico);
+            $this->registrarEspecialidades($medico, $db);
+            $this->registrarEndereco($medico, $db);
+            $this->registrarContatos($medico, $db);
+           
 
             $db->Commit();
+            echo 'comitado';
         }
         catch(Exception $ex)
         {
             $db->Rollback();
+            echo $ex->getMessage();
         }
-    }
-
-    private function validarDadosDoMedico($dados)
-    {
-        $errors = $this->validarDadosPessoais($dados, "Medico");
-
-        if (empty(trim($dados['crm'])) || strlen($dados['crm']) != 7){
-            $errors['crm'] = "O CRM do Médico é inválido";
-        }
-
-        if (empty(trim($dados['especialidade'])) || strlen($dados['especialidade']) <= 4){
-            $errors['especialidade'] = "A especialidade do Médico não pode ser vazia ou em branco!";
-        }
-
-        if (!isset($errors['cpf']) && $this->medicoRepository->ConsultaSeCPFJaExiste($dados['cpf'])){
-            $errors['cpf'] = "CPF do Médico já cadastrado!";
-        }
-
-        if (!empty($errors)){
-            return [
-                'success' => false,
-                'errors' => $errors
-            ];
-        }
-        return ['success' => true];
     }
 
     private function registrarEspecialidades($medico, $db)
     {
+        require_once('../Repositories/EspecialidadeRepository.php');
         $especialidadeRepository = new EspecialidadeRepository($db);
-        foreach($medico->getEspecialidades as $especialidade)
+
+        foreach($medico->getEspecialidades() as $especialidade)
         {
+            $especialidade->setMedicoId($medico->getId());
             $especialidadeRepository->registrarEspecialidade($especialidade);
         }
     }
 
     public function consultarMedico(string $nome)
     {
+        
         $db = new Database();
+        
         $medicoRepository = new MedicoRepository($db, $nome);
 
         $medicosEncontrados = $medicoRepository->buscarMedico($nome);

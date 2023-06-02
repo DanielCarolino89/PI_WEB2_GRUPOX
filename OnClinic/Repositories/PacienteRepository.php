@@ -15,18 +15,24 @@ class PacienteRepository extends Repository
             '{$paciente->getCPF()}',
             '{$paciente->getRG()}',
             '{$paciente->getDataNascimento()}',
-             {$paciente->getContato()->getId()},
-             {$paciente->getEndereco()->getId()},
             '{$paciente->getLogin()->getUsuario()}');";
 
-        $this->db->executeCommand($sql);
+        try{
+
+            $this->db->executeCommand($sql);
+            
+        }catch(PDOException $ex){
+            echo 'Ocorreu um erro ao cadastrar paciente.';
+            echo "<br><br> SQL Executada: {$sql}<br>";
+            throw $ex;
+        }
     }
 
     public function consultaSeCPFJaExiste(string $cpf) : bool
     {
         $sql = "SELECT 1 from Paciente where CPF = '{$cpf}'";
 
-        return $this->QueryFirstValue($sql);
+        return $this->queryFirstValue($sql);
     }
 }
 

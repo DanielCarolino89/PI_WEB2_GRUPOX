@@ -6,7 +6,7 @@ class Database
     private $servername = "127.0.0.1";
     private $username = "root";
     private $password = "";
-    private $dbname="vestibular";
+    private $dbname="onClinic";
     private $conn;
 
     public function __construct()
@@ -32,33 +32,23 @@ class Database
         $this->conn->commit();
     }
 
-    public function Rollback()
+    public function rollback()
     {
         $this->conn->rollback();
     }
 
     public function executeCommand($sql)
     {
-        try
-        {
-            return $this->conn->exec($sql);           
-        }
-        catch(PDOException $e)
-        {
-            return $e->getMessage();
-        }
+
+        return $this->conn->exec($sql);           
+
     }
 
     public function executeQuery($sql)
     {
-        try
-        {
-            return $this->conn->query($sql);           
-        }
-        catch(PDOException $e)
-        {
-            return $e->getMessage();
-        }
+
+        return $this->conn->query($sql);           
+
     }
 
 

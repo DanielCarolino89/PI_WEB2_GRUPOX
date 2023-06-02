@@ -1,5 +1,6 @@
 <?php
 
+
 class EnderecoRepository extends Repository
 {
 
@@ -13,13 +14,21 @@ class EnderecoRepository extends Repository
         $sql = "INSERT INTO ENDERECO VALUES (
             NULL,
             '{$endereco->getLogradouro()}',
-            {$endereco->getNumero()},      
+            '{$endereco->getNumero()}',      
             '{$endereco->getBairro()}',
             '{$endereco->getCidade()}',
             '{$endereco->getUF()}',
-            '{$endereco->getComplemento()}');";
+            '{$endereco->getComplemento()}',
+            " . ($endereco->getMedicoId() ? $endereco->getMedicoId() : "NULL") . ",
+            " . ($endereco->getPacienteId() ? $endereco->getPacienteId() : "NULL") . ");";
 
-        $this->db->executeCommand($sql);
+        try{
+            $this->db->executeCommand($sql);
+        } catch(PDOException $ex){
+            echo 'Ocorreu um erro ao cadastrar endereço.';
+            echo "<br><br> SQL Executada: {$sql}<br>";
+            throw $ex;
+        }
     }
 }
 ?>

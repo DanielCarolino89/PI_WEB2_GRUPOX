@@ -7,21 +7,43 @@ abstract class Pessoa
     protected string $cpf;
     protected string $rg;
     protected DateTime $nascimento;
-    protected Contato $contato;
     protected Endereco $endereco;
     protected Login $login;
+    protected $contatos = [];
 
     protected function atribuirDados($dados)
     {
         $this->nome = $dados['nome'];
         $this->cpf = $dados['cpf'];
         $this->rg = $dados['rg'];
-        $this->nascimento = $dados['nascimento'];
+        $this->nascimento = new DateTime($dados['nascimento']);
         
-        $this->contato = new Contato();
-        $this->contato->setTipo($dados['tipoContato']);
-        $this->contato->setDescricao($dados['descricaoContato']);
+        $this->atribuirContatos($dados);
+        $this->atribuirEndereco($dados);
+        $this->atribuirLogin($dados);
+    }
 
+    private function atribuirContatos($dados)
+    {
+        $dadosContatos = $dados['contato'];
+        foreach($dadosContatos as $tipoContato => $conteudo)
+        {
+            if (empty($conteudo)){
+                continue;
+            }
+
+            require_once('Contato.php');
+            $contato = new Contato();
+            $contato->setTipo($tipoContato);
+            $contato->setDescricao($conteudo);
+
+            $this->addContato($contato);
+        }
+    }
+
+    private function atribuirEndereco($dados)
+    {
+        require_once('Endereco.php');
         $this->endereco = new Endereco();
         $this->endereco->setLogradouro($dados['logradouro']);
         $this->endereco->setNumero($dados['numero']);
@@ -29,7 +51,11 @@ abstract class Pessoa
         $this->endereco->setCidade($dados['cidade']);
         $this->endereco->setUF($dados['uf']);
         $this->endereco->setComplemento($dados['complemento']);
+    }
 
+    private function atribuirLogin($dados)
+    {
+        require_once('Login.php');
         $this->login = new Login();
         $this->login->setUsuario($dados['usuario']);
         $this->login->setSenha($dados['senha']);
@@ -38,6 +64,10 @@ abstract class Pessoa
 
     public function getId(){
         return $this->id;
+    }
+
+    public function setId(int $id){
+        $this->id = $id;
     }
 
     public function getNome(){
@@ -56,10 +86,6 @@ abstract class Pessoa
         return $this->nascimento;
     }
 
-    public function getContato(){
-        return $this->contato;
-    }
-
     public function getEndereco(){
         return $this->endereco;
     }
@@ -67,6 +93,14 @@ abstract class Pessoa
     public function getLogin(){
         return $this->login;
     }  
+
+    public function addContato(Contato $contato){
+        $this->contatos[] = $contato;
+    }
+
+    public function getContatos(){
+        return $this->contatos;
+    }
 }
 
 ?>

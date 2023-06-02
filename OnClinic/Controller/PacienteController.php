@@ -1,4 +1,5 @@
 <?php
+
 class PacienteController extends PessoaController
 {
     private PacienteRepository $pacienteRepository;
@@ -7,13 +8,7 @@ class PacienteController extends PessoaController
     {
         $db = new Database();
         $this->pacienteRepository = new PacienteRepository($db);
-        parent::$loginRepository = new LoginRepository($db);
-
-        $validationResult = $this->validarDadosDoPaciente($dados);
-
-        if (!$validationResult['success']){
-            //to do: Error View
-        }
+        $this->loginRepository = new LoginRepository($db);
 
         $paciente = new Paciente($dados);
 

@@ -13,7 +13,15 @@ class LoginRepository extends Repository
             '{$login->getUsuario()}',
             '{$login->getSenha()}');";
 
-        $this->db->executeCommand($sql);
+        try{
+
+            $this->db->executeCommand($sql);
+
+        } catch(PDOException $ex){
+            echo 'Ocorreu um erro ao cadastrar login';
+            echo "<br><br> SQL Executada: {$sql}<br>";
+            throw $ex;
+        }
     }
 
     public function consultaSeUsuarioJaExiste(string $usuario) : bool

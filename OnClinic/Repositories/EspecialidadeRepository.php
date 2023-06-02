@@ -14,7 +14,15 @@ class EspecialidadeRepository extends Repository
             '{$especialidade->getFaixaEtaria()}',
             {$especialidade->getMedicoId()});";
 
-        $this->db->executeCommand($sql);
+        try{
+
+            $this->db->executeCommand($sql);
+
+        } catch(PDOException $ex){
+            echo 'Ocorreu um erro ao cadastrar especialidade.';
+            echo "<br><br> SQL Executada: {$sql}<br>";
+            throw $ex;
+        }
     }
 
     public function excluirEspecialidade(int $id)
