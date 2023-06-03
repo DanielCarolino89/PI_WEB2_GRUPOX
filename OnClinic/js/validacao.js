@@ -1,23 +1,8 @@
 btn_Cadastrar = document.getElementById('cadastrar');
 
 btn_Cadastrar.addEventListener('click', function(event)
-{        
-    validarCampos();    
-    validarCamposMedico();
-});
-
-btn_Especialidade = document.getElementById('inserir');
-
-btn_Especialidade.addEventListener('click', function(event){
-
-  var espec = document.getElementById('especialidade').value.toUpperCase();
-  var subespec = document.getElementById('subespecialidade').value.toUpperCase();
-
-  if(espec !== '')
-  {
-    var sobre = document.getElementById('especialidades');
-    sobre.value = sobre.value + espec + '\t\t' + subespec + '\n';
-  }
+{    
+    validarCampos();
 });
 
 function validarCampos()
@@ -222,23 +207,4 @@ function validarEndereco()
     UF.focus();
     event.preventDefault();
   }
-}
-
-function validarCamposMedico()
-{
-  validarCRM(document.getElementById('crm').value);
-
-  if(document.getElementById('sobre').value == '')
-  {
-    swal("Campo obrigatório!", "Por favor, informe uma descrição.", "warning");
-    event.preventDefault();
-    sobre.focus();
-  }
-  
-  if(document.getElementById('especialidades').value == '')
-  {
-    swal("Campo obrigatório!", "Por favor, adicione ao menos uma especialidade.", "warning");
-    especialidade.focus();
-    event.preventDefault();
-  }  
 }
