@@ -51,7 +51,7 @@ function validarCampos()
     validarEndereco();     
 
     //login
-    if(document.getElementById('login').value == '')
+    if(document.getElementById('usuario').value == '')
     {
         swal("Campo obrigatório!", "Por favor, informe um usuário para login", "warning");
         login.focus();
