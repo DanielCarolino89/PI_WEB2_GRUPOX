@@ -3,6 +3,7 @@
 require('PessoaController.php');
 require('../Models/Medico.php');
 require('../Repositories/MedicoRepository.php');
+require_once('../Models/Uteis.php');
 require_once('../Models/Database.php');
 
 class MedicoController extends PessoaController
@@ -14,23 +15,26 @@ class MedicoController extends PessoaController
         $db = new Database();
         $this->medicoRepository = new MedicoRepository($db);
 
+        if ($this->medicoRepository->consultaSeCPFJaExiste($dados['cpf'])){
+            Uteis::ShowAlert('CPF já cadastrado', 'Caso esqueceu a senha, clique em Esqueci senha');
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+        }
+
         $medico = new Medico($dados);
 
         $db->BeginTransaction();
 
         try
         {
-            var_dump($db);
-            echo '<br><br>';
             $this->registrarLogin($medico, $db);
             $this->medicoRepository->CadastrarMedico($medico);
             $this->registrarEspecialidades($medico, $db);
             $this->registrarEndereco($medico, $db);
             $this->registrarContatos($medico, $db);
            
-
             $db->Commit();
-            echo 'comitado';
+            Uteis::ShowInfo('Sucesso', 'Medico cadastrado com sucesso');
+            
         }
         catch(Exception $ex)
         {

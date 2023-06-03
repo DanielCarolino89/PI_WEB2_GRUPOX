@@ -2,17 +2,6 @@
 
 abstract class PessoaController
 {
-    
-
-    protected function registrarDadosPessoais(Pessoa $pessoa, Database $db)
-    {
-        
-
-        $this->registrarEndereco($pessoa, $db);
-        $this->registrarContatos($pessoa, $db);
-        
-    }
-    
     protected function registrarLogin(Pessoa $pessoa, Database $db)
     {
         require_once('../Repositories/LoginRepository.php');

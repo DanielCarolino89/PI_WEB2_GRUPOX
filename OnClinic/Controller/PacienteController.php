@@ -1,46 +1,36 @@
 <?php
 
+require('PessoaController.php');
+require('../Models/Paciente.php');
+require('../Repositories/PacienteRepository.php');
+require_once('../Models/Database.php');
+
 class PacienteController extends PessoaController
 {
-    private PacienteRepository $pacienteRepository;
-
     public function cadastrarNovoPaciente($dados)
     {
         $db = new Database();
-        $this->pacienteRepository = new PacienteRepository($db);
-        $this->loginRepository = new LoginRepository($db);
+        $pacienteRepository = new PacienteRepository($db);
+        if ($pacienteRepository->consultaSeCPFJaExiste($dados['cpf'])){
 
+        }
+        
         $paciente = new Paciente($dados);
 
         $db->beginTransaction();
 
         try{
-            $this->registrarDadosPessoais($paciente, $dados);            
-            $this->pacienteRepository->registrarPaciente($paciente);
+            $this->registrarLogin($paciente, $db);            
+            $pacienteRepository->registrarPaciente($paciente);
+            $this->registrarEndereco($paciente, $db);
+            $this->registrarContatos($paciente, $db);
 
             $db->Commit();
         }
         catch(Exception $ex)
         {
             $db->Rollback();
+            echo $ex->getMessage();
         }
-    }
-
-    private function validarDadosDoPaciente($dados)
-    {
-        $errors = $this->validarDadosPessoais($dados, "Paciente");
-
-        if (!isset($errors['cpf']) && $this->pacienteRepository->consultaSeCPFJaExiste($dados['cpf'])){
-            $errors['cpf'] = "CPF do Paciente já cadastrado!";
-        }
-
-        if (!empty($errors)){
-            return [
-                'success' => false,
-                'errors' => $errors
-            ];
-        }
-
-        return ['success' => true];
     }
 }

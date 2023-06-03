@@ -18,10 +18,11 @@ class PacienteRepository extends Repository
             '{$paciente->getLogin()->getUsuario()}');";
 
         try{
-
             $this->db->executeCommand($sql);
+            $idInserido = $this->getLastInsertId();
+            $paciente->setId($idInserido);
             
-        }catch(PDOException $ex){
+        } catch(PDOException $ex){
             echo 'Ocorreu um erro ao cadastrar paciente.';
             echo "<br><br> SQL Executada: {$sql}<br>";
             throw $ex;
