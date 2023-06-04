@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Classe responsável pelos comandos SQL da tabela Login
+ * Classe responsável pela exceução dos comandos SQL da tabela Login
  */
 class LoginRepository extends Repository
 {

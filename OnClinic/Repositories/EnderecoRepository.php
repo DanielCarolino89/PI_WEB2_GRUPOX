@@ -1,6 +1,8 @@
 <?php
 
-
+/**
+ * Classe responsável pela exceução dos comandos SQL da tabela Endereço
+ */
 class EnderecoRepository extends Repository
 {
 

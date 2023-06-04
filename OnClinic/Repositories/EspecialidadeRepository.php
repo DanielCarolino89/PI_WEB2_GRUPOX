@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Classe responsável pela exceução dos comandos SQL da tabela Especialidade
+ */
 class EspecialidadeRepository extends Repository
 {
     public function __construct(Database $db){

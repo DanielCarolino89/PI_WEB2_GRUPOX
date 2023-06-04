@@ -7,6 +7,19 @@ require_once('../Models/Database.php');
 
 class PacienteController extends PessoaController
 {
+    /**
+     * Inicia conexão com banco de dados e abre uma transação para cadastrar todas as informações do paciente através dos repositórios.
+     * @param array $dados conjunto que deve conter todos os dados do paciente.
+     * @description As informações que serão cadastradas são:
+     * - Login
+     * - Paciente
+     * - Endereco
+     * - Contato
+     * @criteria Os critérios para cadastrar são:
+     * - Todos os dados do paciente deverão estar informado no array $dados.
+     * - CPF não pode estar associado a outro cadastro.
+     * - Login não pode estar associado a outro cadastro.
+     */
     public function cadastrarNovoPaciente($dados)
     {
         $db = new Database();
