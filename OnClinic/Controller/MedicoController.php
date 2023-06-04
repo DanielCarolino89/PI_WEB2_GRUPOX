@@ -6,6 +6,9 @@ require('../Repositories/MedicoRepository.php');
 require_once('../Models/Uteis.php');
 require_once('../Models/Database.php');
 
+/**
+ * Classe responsável por todas as operações relacionadas ao Médico
+ */
 class MedicoController extends PessoaController
 {
     private MedicoRepository $medicoRepository;
@@ -63,6 +66,7 @@ class MedicoController extends PessoaController
             $medicosEncontrados = $medicoRepository->buscarMedico($nome, $filtro);
             print_r($medicosEncontrados);
     
+            $medicos = [];
             foreach($medicosEncontrados as $medicoDados)
             {
                 echo '<br><br>';

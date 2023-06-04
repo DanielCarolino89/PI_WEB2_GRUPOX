@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Classe abstrata responsável por todas operações em comum a Pessoa
+ */
 abstract class PessoaController
 {
     protected function registrarLogin(Pessoa $pessoa, Database $db)
