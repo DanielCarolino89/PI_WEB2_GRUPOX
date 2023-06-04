@@ -5,6 +5,23 @@
  */
 abstract class PessoaController
 {
+        /**
+     * Consulta se já existe cadastro para o usuário informado através do repositório utilizando uma conexão do banco de dados ativa.
+     * @param string $usuario usuario informado.
+     * @param Database $db Gerenciador de conexão do banco de dados
+     */
+    protected function consultaSeUsuarioJaExiste(string $usuario, Database $db)
+    {
+        require_once('../Repositories/LoginRepository.php');
+        $loginRepository = new LoginRepository($db);
+        return $loginRepository->consultaSeUsuarioJaExiste($usuario);
+    }
+
+    /**
+     * Cadastra usuário através do repositório utilizando uma conexão do banco de dados ativa.
+     * @param Pessoa $pessoa Modelo que contém as informações do login.
+     * @param Database $db Gerenciador de conexão do banco de dados
+     */
     protected function registrarLogin(Pessoa $pessoa, Database $db)
     {
         require_once('../Repositories/LoginRepository.php');
@@ -12,6 +29,11 @@ abstract class PessoaController
         $loginRepository->cadastrarLogin($pessoa->getLogin());
     }
 
+        /**
+     * Cadastra endereço através do repositório utilizando uma conexão do banco de dados ativa.
+     * @param Pessoa $pessoa Modelo que contém as informações do endereço.
+     * @param Database $db Gerenciador de conexão do banco de dados
+     */
     protected function registrarEndereco(Pessoa $pessoa, Database $db)
     {
         require_once('../Repositories/EnderecoRepository.php');
@@ -28,6 +50,11 @@ abstract class PessoaController
         $enderecoRepository->cadastrarEndereco($pessoa->getEndereco());
     }
 
+    /**
+     * Cadastra contato através do repositório utilizando uma conexão do banco de dados ativa.
+     * @param Pessoa $pessoa Modelo que contém as informações do contato.
+     * @param Database $db Gerenciador de conexão do banco de dados
+     */
     protected function registrarContatos(Pessoa $pessoa, Database $db)
     {
         require_once('../Repositories/ContatoRepository.php');
@@ -51,7 +78,6 @@ abstract class PessoaController
             $contatoRepository->cadastrarContato($contato);
         }
     }
-
 }
 
 ?>

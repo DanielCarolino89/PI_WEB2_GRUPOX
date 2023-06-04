@@ -9,6 +9,11 @@ class EspecialidadeRepository extends Repository
         parent::__construct($db);
     }
 
+    /**
+     * Cadastra a Especialidade do Médico no banco de dados.
+     * @param Especialidade $especialidade Modelo que contém os dados da especialidade do médico.
+     * @throws PDOException caso ocorrer erro de sql.
+     */
     public function registrarEspecialidade(Especialidade $especialidade)
     {
         $sql = "INSERT INTO ESPECIALIDADE VALUES (

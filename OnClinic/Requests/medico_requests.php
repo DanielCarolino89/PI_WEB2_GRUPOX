@@ -1,7 +1,5 @@
 <?php
 
-print_r($_POST);
-
 require_once('../Controller/MedicoController.php');
 $medicoControlador = new MedicoController();
 
@@ -10,10 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     $action = $_POST['action'];
     if ($action == 'Cadastrar')
     {
+        include("../views/cadastro_medico.html");
         $medicoControlador->cadastrarNovoMedico($_POST);
-        header("Location: ../views/index.html");
-        Uteis::ShowAlert('CPF já cadastrado', 'Caso esqueceu a senha, clique em Esqueci senha');
-        
     }
     else if ($action == 'Editar')
     {
@@ -36,7 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
     {
         $conteudo = $_GET['conteudo'];
         $filtro = $_GET['filtro'];
-        $medicoControlador->consultarMedicos($conteudo, $filtro);
+        $medicos = $medicoControlador->consultarMedicos($conteudo, $filtro);
+        
+        include('../views/buscar.php');
+
     }
     else if ($action == 'Detalhar')
     {

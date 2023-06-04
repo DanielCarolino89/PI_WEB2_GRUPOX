@@ -3,6 +3,7 @@
 require('PessoaController.php');
 require('../Models/Paciente.php');
 require('../Repositories/PacienteRepository.php');
+require_once('../Models/Uteis.php');
 require_once('../Models/Database.php');
 
 class PacienteController extends PessoaController
@@ -25,7 +26,13 @@ class PacienteController extends PessoaController
         $db = new Database();
         $pacienteRepository = new PacienteRepository($db);
         if ($pacienteRepository->consultaSeCPFJaExiste($dados['cpf'])){
+            Uteis::ShowAlert('CPF já cadastrado', 'Não é permitido ter mais de um cadastro por CPF');
+            return;
+        }
 
+        if ($this->consultaSeUsuarioJaExiste($dados['usuario'], $db)){
+            Uteis::ShowAlert('Usuário já cadastrado!', 'Por favor informe outro usuário para cadastrar-se');
+            return;
         }
         
         $paciente = new Paciente($dados);
@@ -39,6 +46,7 @@ class PacienteController extends PessoaController
             $this->registrarContatos($paciente, $db);
 
             $db->Commit();
+            Uteis::ShowAlert('Usuário cadastrado com sucesso!', '');
         }
         catch(Exception $ex)
         {

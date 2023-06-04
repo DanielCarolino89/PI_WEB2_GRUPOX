@@ -78,34 +78,51 @@
     <div class="div1">
         <center>
             <div class="cadastro bg-light">
-
                 <br>
-                <div class="row" style="border:outset;padding:15px ">
-                    <table>
-                        <tr>
-                            <td>
-                                <h4>Médico:</h4>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <h4>Especialidade:</h4>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <h4>Cidade:</h4>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <h4>Descrição:</h4>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <br>
-
+                <?php if (empty($medicos)): ?>
+                    <h1>Nenhum médico encontrado!</h1>
+                <?php else: ?>
+                    <?php foreach($medicos as $medico): ?>
+                        <div class="row" style="border:outset;padding:15px ">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <h4>Médico:</h4>
+                                    </td>
+                                    <td>
+                                        <h4><?php echo $medico['nome']; ?></h4>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h4>Especialidade(s):</h4>
+                                    </td>
+                                    <td>
+                                        <h4><?php echo $medico['especialidades']; ?></h4>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h4>Cidade(s):</h4>
+                                    </td>
+                                    <td>
+                                        <h4><?php echo $medico['cidades']; ?></h4>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h4>Descrição:</h4>
+                                    </td>
+                                    <td>
+                                        <h4><?php echo $medico['sobre']; ?></h4>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
         </center>
     </div>
 

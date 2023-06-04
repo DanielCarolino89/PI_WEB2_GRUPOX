@@ -1,5 +1,7 @@
 <?php
 
+require_once('Repository.php');
+
 /**
  * Classe responsável pela exceução dos comandos SQL da tabela Paciente
  */
@@ -22,7 +24,7 @@ class PacienteRepository extends Repository
             '{$paciente->getNome()}',
             '{$paciente->getCPF()}',
             '{$paciente->getRG()}',
-            '{$paciente->getDataNascimento()}',
+            '{$paciente->getDataNascimento()->format("yyyy/MM/dd")}',
             '{$paciente->getLogin()->getUsuario()}');";
 
         try{

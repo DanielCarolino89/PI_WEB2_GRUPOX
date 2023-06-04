@@ -65,6 +65,7 @@ class MedicoRepository extends Repository
      */
     public function buscarMedico(string $conteudo, string $filtro)
     {
+        $conteudo = strtoupper($conteudo);
         if ($filtro == 'Nome'){
             $filtro = 'M.NOME';
         }
@@ -72,7 +73,7 @@ class MedicoRepository extends Repository
             $filtro = 'END.CIDADE';
         }
         else if ($filtro == 'Especialidade'){
-            $filtro = 'EPS.DESCRICAO';
+            $filtro = 'ESP.DESCRICAO';
         }
         else{
             throw new Exception("Filtro {$filtro} não implementado na busca do médico");
@@ -80,12 +81,14 @@ class MedicoRepository extends Repository
 
         $sql = "SELECT m.id,
          m.nome,
-         GROUP_CONCAT(DISTINCT CONCAT(esp.descricao, ' (', esp.complemento, ')') SEPARATOR ', ') as Especialidades,
-         GROUP_CONCAT(DISTINCT end.cidade SEPARATOR ', ') as EnderecoContato,
+         GROUP_CONCAT(DISTINCT CONCAT(esp.descricao, ' (', esp.complemento, ')') SEPARATOR ', ') as especialidades,
+         GROUP_CONCAT(DISTINCT CONCAT(end.cidade, ' (', end.UF, ')') SEPARATOR ' / ') as cidades,
          m.sobre FROM MEDICO m
          JOIN ESPECIALIDADE esp ON esp.medico = m.id
          JOIN ENDERECO end ON end.medico = m.id
-         WHERE {$filtro} LIKE '{$conteudo}%'";
+         WHERE UPPER({$filtro}) LIKE '{$conteudo}%'
+         GROUP BY 1,2,5
+         LIMIT 15";
 
         return $this->db->executeQuery($sql);
     }

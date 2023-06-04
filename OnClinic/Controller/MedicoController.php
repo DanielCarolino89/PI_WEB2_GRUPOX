@@ -34,8 +34,13 @@ class MedicoController extends PessoaController
         $this->medicoRepository = new MedicoRepository($db);
 
         if ($this->medicoRepository->consultaSeCPFJaExiste($dados['cpf'])){
-            //Uteis::ShowAlert('CPF já cadastrado', 'Caso esqueceu a senha, clique em Esqueci senha');
-           return false; //header('Location: ' . $_SERVER['HTTP_REFERER']);
+            Uteis::ShowAlert('CPF já cadastrado', 'Não é permitido ter mais de um cadastro por CPF');
+            return;
+        }
+
+        if ($this->consultaSeUsuarioJaExiste($dados['usuario'], $db)){
+            Uteis::ShowAlert('Usuário já cadastrado!', 'Por favor informe outro usuário para cadastrar-se');
+            return;
         }
 
         $medico = new Medico($dados);
@@ -51,6 +56,7 @@ class MedicoController extends PessoaController
             $this->registrarContatos($medico, $db);
            
             $db->Commit();
+            Uteis::ShowAlert('Usuário cadastrado com sucesso!', '');
             
         }
         catch(Exception $ex)
@@ -61,9 +67,9 @@ class MedicoController extends PessoaController
     }
 
     /**
-     * Inicia conexão com banco de dados e cadastra todas as especialidades associadas ao médico.
-     * @param Medico $medico Modelo que contém as informações das especialidades através do repositório
-     * @param Database $db Gerenciador do banco de dados
+     * Cadastra todas as especialidades associadas ao médico através do repositório utilizando uma conexão do banco de dados ativa.
+     * @param Medico $medico Modelo que contém as informações das especialidades.
+     * @param Database $db Gerenciador de conexões do banco de dados
      */
     private function registrarEspecialidades(Medico $medico, Database $db)
     {
@@ -90,29 +96,14 @@ class MedicoController extends PessoaController
     {       
         $db = new Database();
         $medicoRepository = new MedicoRepository($db);
-        echo 'here';
-        try{
-            $medicosEncontrados = $medicoRepository->buscarMedico($nome, $filtro);
-            print_r($medicosEncontrados);
-    
-            $medicos = [];
-            foreach($medicosEncontrados as $medicoDados)
-            {
-                echo '<br><br>';
-                echo $medicoDados['Especialidades'];
-                echo '<br><br>';
-                echo $medicoDados['EnderecoContato'];
-               // print_r($medicoDados['Especialidades']);
-               // print_r($medicoDados['EnderecoContato']);
-                
-            }
-    
-            return $medicos;
+        $medicosEncontrados = $medicoRepository->buscarMedico($nome, $filtro);
+
+        $medicos = [];
+        foreach($medicosEncontrados as $medicoDados){
+            $medicos[] = $medicoDados;
         }
-        catch (Exception $ex)
-        {
-            echo $ex->getMessage();
-        }
+
+        return $medicos;
     }
 
     /**

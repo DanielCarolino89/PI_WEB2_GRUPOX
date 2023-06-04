@@ -11,6 +11,11 @@ class EnderecoRepository extends Repository
         parent::__construct($db); 
     }
 
+    /**
+     * Cadastra o Endereço no banco de dados.
+     * @param Endereco $endereco Modelo que contém os dados do endereço.
+     * @throws PDOException caso ocorrer erro de sql.
+     */
     public function cadastrarEndereco(Endereco $endereco)
     {
         $sql = "INSERT INTO ENDERECO VALUES (
