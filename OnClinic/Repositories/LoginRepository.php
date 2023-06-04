@@ -47,7 +47,7 @@ class LoginRepository extends Repository
      * @return Id do Medico ou Paciente encontrado. Apenas um dos campos possuirá valor.
      * @throws PDOException caso ocorrer erro de sql.
      */
-    public function Logar(string $usuario, string $senha)
+    public function Autenticar(string $usuario, string $senha)
     {
         $sql = "SELECT M.Id AS Medico, P.Id AS Paciente FROM LOGIN L
         LEFT JOIN Medico M on M.Login = L.Usuario
