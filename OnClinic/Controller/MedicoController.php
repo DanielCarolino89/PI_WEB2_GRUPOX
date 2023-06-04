@@ -63,7 +63,6 @@ class MedicoController extends PessoaController
             $medicosEncontrados = $medicoRepository->buscarMedico($nome, $filtro);
             print_r($medicosEncontrados);
     
-            $medicos = [];
             foreach($medicosEncontrados as $medicoDados)
             {
                 echo '<br><br>';
@@ -72,7 +71,7 @@ class MedicoController extends PessoaController
                 echo $medicoDados['EnderecoContato'];
                // print_r($medicoDados['Especialidades']);
                // print_r($medicoDados['EnderecoContato']);
-                $medicos[] = new Medico($medicoDados);
+                
             }
     
             return $medicos;

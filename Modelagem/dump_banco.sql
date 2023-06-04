@@ -44,12 +44,12 @@ CREATE TABLE IF NOT EXISTS `endereco` (
   `UF` char(2) DEFAULT NULL,
   `Complemento` varchar(50) DEFAULT NULL,
   `Medico` int(11) DEFAULT NULL,
-  `Campo` int(11) DEFAULT NULL,
+  `Paciente` int(11) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   KEY `FK_Endereco_2` (`Medico`),
-  KEY `FK_Endereco_3` (`Campo`),
+  KEY `FK_Endereco_3` (`Paciente`),
   CONSTRAINT `FK_Endereco_2` FOREIGN KEY (`Medico`) REFERENCES `medico` (`Id`),
-  CONSTRAINT `FK_Endereco_3` FOREIGN KEY (`Campo`) REFERENCES `paciente` (`Id`)
+  CONSTRAINT `FK_Endereco_3` FOREIGN KEY (`Paciente`) REFERENCES `paciente` (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 -- Copiando estrutura para tabela onclinic.especialidade
