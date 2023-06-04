@@ -16,7 +16,7 @@ abstract class Repository
 
     protected function queryFirstValue($sql)
     {
-        return $this->db->executeQuery($sql)->fetch()[0];
+        return $this->db->executeQuery($sql)->fetchColumn() ?? null;
     }
 }
 

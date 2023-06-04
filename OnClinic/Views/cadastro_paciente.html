@@ -53,15 +53,15 @@
                     </div>
                     <div class="col-md-4">
                         <label for="principal" class="form-label">Telefone Principal:</label>
-                        <input name="principal" type="numb" class="form-control" id="principal" required>
+                        <input name="contato[telefone]" type="numb" class="form-control" id="principal" required>
                     </div>
                     <div class="col-md-4">
                         <label for="whatsapp" class="form-label">Whatsapp:</label>
-                        <input name="whatsapp" type="numb" class="form-control" id="whatsapp" required>
+                        <input name="contato[whatsapp]" type="numb" class="form-control" id="whatsapp" required>
                     </div>
                     <div class="col-md-4">
                         <label for="email" class="form-label">E-mail:</label>
-                        <input name="email" type="mail" class="form-control" id="email"  autocomplete="on" required>
+                        <input name="contato[email]" type="mail" class="form-control" id="email"  autocomplete="on" required>
                     </div>
                     <h2>Endereço:</h2><br>
                     <!-- Endereço paciente -->
@@ -120,7 +120,7 @@
                         </div>
                     </div><br>
                     <div class="col-12">
-                        <a href="" type="submit" class="btn btn-success" id="cadastrar"><b>CADASTRAR</b></a>
+                        <input type="submit" class="btn btn-success" id="cadastrar" value="CADASTRAR"></input>
                     </div>
                 </form>
             </div>

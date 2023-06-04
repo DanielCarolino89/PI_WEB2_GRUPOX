@@ -14,8 +14,8 @@ abstract class Pessoa
     protected function atribuirDados($dados)
     {
         $this->nome = $dados['nome'];
-        $this->cpf = $dados['cpf'];
-        $this->rg = $dados['rg'];
+        $this->cpf = $dados['cpf'] ?? "";
+        $this->rg = $dados['rg'] ?? "";
         $this->nascimento = new DateTime($dados['nascimento']);
         
         $this->atribuirContatos($dados);

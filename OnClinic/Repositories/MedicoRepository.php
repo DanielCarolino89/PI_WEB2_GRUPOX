@@ -39,18 +39,36 @@ class MedicoRepository extends Repository
         return $this->queryFirstValue($sql);
     }
 
-    public function buscarMedico(string $nome)
+    public function buscarMedico(string $nome, string $filtro)
     {
-        $sql = "SELECT M.NOME, E.DESCRICAO, M.CIDADE FROM MEDICO M
-        LEFT JOIN ESPECIALIDADE E ON E.MEDICOID = M.ID
-         WHERE NOME LIKE '{$nome}'";
+        if ($filtro == 'Nome'){
+            $filtro = 'M.NOME';
+        }
+        else if ($filtro == 'Cidade'){
+            $filtro = 'END.CIDADE';
+        }
+        else if ($filtro == 'Especialidade'){
+            $filtro = 'EPS.DESCRICAO';
+        }
+        else{
+            throw new Exception("Filtro {$filtro} não implementado na busca do médico");
+        }
+
+        $sql = "SELECT m.id,
+         m.nome,
+         GROUP_CONCAT(DISTINCT CONCAT(esp.descricao, ' (', esp.complemento, ')') SEPARATOR ', ') as Especialidades,
+         GROUP_CONCAT(DISTINCT end.cidade SEPARATOR ', ') as EnderecoContato,
+         m.sobre FROM MEDICO m
+         JOIN ESPECIALIDADE esp ON esp.medico = m.id
+         JOIN ENDERECO end ON end.medico = m.id
+         WHERE {$filtro} LIKE '{$nome}%'";
 
         return $this->db->executeQuery($sql);
     }
 
     public function consultarDetalhesDoMedico(int $id)
     {
-        $sql = "SELECT M.NOME, M.CRM, M.REMOTO, M.SOBRE, M.NASCIMENTO,
+        $sql = "SELECT M.ID, M.NOME, M.CRM, M.REMOTO, M.SOBRE, M.NASCIMENTO,
         E.DESCRICAO,
         C.TIPO, C.DESCRICAO, 
         E.LOGRADOURO, E.NUMERO, E.BAIRRO, E.CIDADE, E.UF, E.COMPLEMENTO

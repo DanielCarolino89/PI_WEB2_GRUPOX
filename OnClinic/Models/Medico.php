@@ -17,9 +17,9 @@ class Medico extends Pessoa
 
     protected function atribuirDados($dados)
     {
-        $this->crm = $dados['crm'];
+        $this->crm = $dados['crm'] ?? "";
         $this->atendimentoRemoto = $dados['remoto'] ?? false;
-        $this->sobre = $dados['sobre'];
+        $this->sobre = $dados['sobre'] ?? "";
         
         $this->atribuirEspecialidades($dados);
 
@@ -28,6 +28,10 @@ class Medico extends Pessoa
 
     private function atribuirEspecialidades($dados)
     {
+        if (!isset($dados['especialidades'])){
+            return;
+        }
+
         $linha = explode("\n", $dados['especialidades']);
         foreach($linha as $conteudo)
         {

@@ -16,8 +16,8 @@ class MedicoController extends PessoaController
         $this->medicoRepository = new MedicoRepository($db);
 
         if ($this->medicoRepository->consultaSeCPFJaExiste($dados['cpf'])){
-            Uteis::ShowAlert('CPF já cadastrado', 'Caso esqueceu a senha, clique em Esqueci senha');
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            //Uteis::ShowAlert('CPF já cadastrado', 'Caso esqueceu a senha, clique em Esqueci senha');
+           return false; //header('Location: ' . $_SERVER['HTTP_REFERER']);
         }
 
         $medico = new Medico($dados);
@@ -33,7 +33,6 @@ class MedicoController extends PessoaController
             $this->registrarContatos($medico, $db);
            
             $db->Commit();
-            Uteis::ShowInfo('Sucesso', 'Medico cadastrado com sucesso');
             
         }
         catch(Exception $ex)
@@ -55,22 +54,40 @@ class MedicoController extends PessoaController
         }
     }
 
-    public function consultarMedico(string $nome)
-    {
-        
+    public function consultarMedicos(string $nome, string $filtro)
+    {       
         $db = new Database();
-        
-        $medicoRepository = new MedicoRepository($db, $nome);
-
-        $medicosEncontrados = $medicoRepository->buscarMedico($nome);
-
-        $medicos = [];
-        foreach($medicosEncontrados as $medicoDados)
-        {
-            $medicos[] = new Medico($medicoDados);
+        $medicoRepository = new MedicoRepository($db);
+        echo 'here';
+        try{
+            $medicosEncontrados = $medicoRepository->buscarMedico($nome, $filtro);
+            print_r($medicosEncontrados);
+    
+            $medicos = [];
+            foreach($medicosEncontrados as $medicoDados)
+            {
+                echo '<br><br>';
+                echo $medicoDados['Especialidades'];
+                echo '<br><br>';
+                echo $medicoDados['EnderecoContato'];
+               // print_r($medicoDados['Especialidades']);
+               // print_r($medicoDados['EnderecoContato']);
+                $medicos[] = new Medico($medicoDados);
+            }
+    
+            return $medicos;
         }
+        catch (Exception $ex)
+        {
+            echo $ex->getMessage();
+        }
+    }
 
-        return $medicos;
+    public function consultarDetalhesMedico(int $idMedico){
+        $db = new Database();
+        $medicoRepository = new MedicoRepository($db);
+
+        $dadosMedico = $medicoRepository->consultarDetalhesMedico($idMedico);
     }
 }
 

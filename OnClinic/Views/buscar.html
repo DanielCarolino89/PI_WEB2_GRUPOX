@@ -37,33 +37,34 @@
             <div class="cadastro bg-light">
                 <h2>Encontre seu médico:</h2><br>
                 <!--Inicio Dados do médico -->
-                <form class="row g-3 needs-validation" novalidate>
+                <form action="../Requests/medico_requests.php" method="get" class="row g-3 needs-validation" novalidate>
                     <center>
-                        <input name="uf" type="text" style="width:900px;" class="form-control" id="" required><br>
+                        <input type="hidden" name="action" value="Pesquisar">
+                        <input name="conteudo" type="text" style="width:900px;" class="form-control" id="" required><br>
                         <table>
                             <tr>
-                                <th class="thb"> <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                <th class="thb"> <input class="form-check-input" type="radio" name="filtro" value="Nome"
                                         id="flexRadioDefault2" checked>
                                     <label class="form-check-label" for="flexRadioDefault2">
                                         Nome
                                     </label>
                                 </th>
                                 <th class="thb">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                    <input class="form-check-input" type="radio" name="filtro" value="Especialidade"
                                         id="flexRadioDefault2">
                                     <label class="form-check-label" for="flexRadioDefault2">
                                         Especialidade
                                     </label>
                                 </th>
                                 <th class="thb">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                    <input class="form-check-input" type="radio" name="filtro" value="Cidade"
                                         id="flexRadioDefault2">
                                     <label class="form-check-label" for="flexRadioDefault2">
                                         Cidade
                                     </label>
                                 </th>
                                 <th class="thb">
-                                    <a href="" type="submit" class="btn btn-success btn-sm"><b>BUSCAR</b></a>
+                                    <input type="submit" class="btn btn-success btn-sm" value="BUSCAR">
                                 </th>
                             </tr>
                         </table>
