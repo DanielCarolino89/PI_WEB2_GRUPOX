@@ -56,7 +56,7 @@ class LoginRepository extends Repository
 
         try{
 
-        $this->db->executeCommand($sql);
+            return $this->db->executeCommand($sql);
 
         } catch(PDOException $ex){
             echo 'Ocorreu um erro ao cadastrar login';
@@ -64,4 +64,6 @@ class LoginRepository extends Repository
             throw $ex;
         }
     }
+
+    
 }
