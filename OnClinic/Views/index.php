@@ -1,3 +1,43 @@
+<?php  
+    
+    require_once('../Repositories/LoginRepository.php');
+    
+    if($_SERVER["REQUEST_METHOD"] == "POST")
+    {
+        session_start();
+
+        $login = Autenticar($POST['login'],$POST['senha']);
+
+        if(empty($login))
+        {
+            $_SESSION['loggedin'] = FALSE;
+            ?> <script>
+                swal("Login Inválido", "Por favor, informe um usuário e senha existentes.", "warning");
+                nome.focus();
+            </script><?php
+        }
+        else
+        {
+            if(isset($login['Medico']))
+            {
+                $_SESSION['loggedin'] = TRUE;
+                $_SESSION["id"] = $login['Medico'];
+                header("Location: home_medico.php");
+                exit;
+            }
+            else
+            {
+                $_SESSION['loggedin'] = TRUE;
+                $_SESSION["id"] = $login['Paciente'];
+                header("Location: home_paciente.php");
+                exit;
+            }
+        }
+    }
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -19,7 +59,7 @@
             <img src="../img/Logo.png" alt="Bootstrap" width="250px">
         </div>
         <div id="navform">
-            <form class="nav navbar d-flex">
+            <form class="nav navbar d-flex" action="index.php" method="post">
                 <label class="navcolor"><b>Login:</b></label>
                 <input class=" navform form-control me-2" name="login" id="login" style="width: 250px;" type="text" placeholder=""
                     aria-label="">
