@@ -1,6 +1,5 @@
-## PI_WEB2_GRUPOX
 
-## PI - DESENVOLVIMENTO WEB II
+## PI - GRUPO X - DESENVOLVIMENTO WEB II
 
 ## Como Realizar esta avaliação ?
 
