@@ -33,6 +33,23 @@ class EspecialidadeRepository extends Repository
         }
     }
 
+    /**
+     * Consulta especialidade do médico no banco de dados.
+     * @param int $id Id do médico que será realizada a consulta.
+     * @return array dados da especialidade.
+     */
+    public function consultarEspecialidadesDoMedico(int $id)
+    {
+        $sql = "SELECT ID, DESCRICAO, COMPLEMENTO FROM ESPECIALIDADE
+        WHERE MEDICO =  $id";
+
+        return $this->db->executeQuery($sql); 
+    }
+
+    /**
+     * Excluir especialidade do médico no banco de dados.
+     * @param int $id Id do médico que será realizada a consulta.
+     */
     public function excluirEspecialidade(int $id)
     {
         $sql = "DELETE FROM ESPECIALIDADE WHERE ID = {$id};";

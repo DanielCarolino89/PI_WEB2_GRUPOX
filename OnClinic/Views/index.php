@@ -6,7 +6,10 @@
     {
         session_start();
 
-        $login = Autenticar($POST['login'],$POST['senha']);
+        require_once('../Models/Database.php');
+        $db = new Database();
+        $loginRepository = new LoginRepository($db);
+        $login = $loginRepository->Autenticar($_POST['login'],$_POST['senha']);
 
         if(empty($login))
         {
@@ -59,7 +62,7 @@
             <img src="../img/Logo.png" alt="Bootstrap" width="250px">
         </div>
         <div id="navform">
-            <form class="nav navbar d-flex" action="index.php" method="post">
+            <form class="nav navbar d-flex" action="index.php" method="POST">
                 <label class="navcolor"><b>Login:</b></label>
                 <input class=" navform form-control me-2" name="login" id="login" style="width: 250px;" type="text" placeholder=""
                     aria-label="">

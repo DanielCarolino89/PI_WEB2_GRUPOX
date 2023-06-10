@@ -25,6 +25,10 @@ abstract class Pessoa
 
     private function atribuirContatos($dados)
     {
+        if (!isset($dados['contato'])){
+            return;
+        }
+
         $dadosContatos = $dados['contato'];
         foreach($dadosContatos as $tipoContato => $conteudo)
         {

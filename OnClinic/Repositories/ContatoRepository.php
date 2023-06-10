@@ -48,6 +48,38 @@ class ContatoRepository extends Repository
     }
 
     /**
+     * Consulta contatos do médico no banco de dados.
+     * @param int $id Id do médico que será realizada a consulta.
+     * @return array dados do contato.
+     */
+    public function consultarContatosDoMedico(int $id)
+    {
+        return $this->consultarContatos('MEDICO', $id);
+    }
+
+        /**
+     * Consulta contatos do paciente no banco de dados.
+     * @param int $id Id do médico que será realizada a consulta.
+     * @return array dados do contato.
+     */
+    public function consultarContatosDoPaciente(int $id)
+    {
+        return $this->consultarContatos('PACIENTE', $id);
+    }
+
+    /**
+     * Consulta contatos no banco de dados.
+     * @param int $id Id do médico que será realizada a consulta.
+     * @return array dados do contato.
+     */
+    private function consultarContatos(string $pessoa, int $id)
+    {
+        $sql = "SELECT * FROM CONTATO WHERE {$pessoa} = {$id}";
+
+        return $this->db->executeQuery($sql)->fetch();
+    }
+
+    /**
      * Exclui o Contato no banco de dados.
      * @param int $id código chave de contato.
      * @throws PDOException caso ocorrer erro de sql.

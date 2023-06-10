@@ -101,17 +101,11 @@ class MedicoRepository extends Repository
      */
     public function consultarDetalhesDoMedico(int $id)
     {
-        $sql = "SELECT M.ID, M.NOME, M.CRM, M.REMOTO, M.SOBRE, M.NASCIMENTO,
-        E.DESCRICAO,
-        C.TIPO, C.DESCRICAO, 
-        E.LOGRADOURO, E.NUMERO, E.BAIRRO, E.CIDADE, E.UF, E.COMPLEMENTO
+        $sql = "SELECT M.ID, M.NOME, M.CRM, M.REMOTO, M.SOBRE, M.NASCIMENTO 
         FROM MEDICO
-        LEFT JOIN ESPECIALIDADE E ON E.MEDICOID = M.ID 
-        LEFT JOIN CONTATO C ON C.MEDICOID = M.ID 
-        LEFT JOIN ENDERECO E ON E.MEDICOID = M.ID 
         WHERE ID = {$id};";
 
-        return $this->db->executeQuery($sql);
+        return $this->queryFirstValue($sql);
     }
 }
 

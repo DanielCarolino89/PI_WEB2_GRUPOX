@@ -4,7 +4,7 @@ class Uteis
 {
     public static function ShowAlert(string $title, string $content)
     {
-        echo ' AHHHHHHHHHHHH
+        echo '
         <script src=\'https://unpkg.com/sweetalert/dist/sweetalert.min.js\'></script>
         <script>
             swal("' . $title . '", "' . $content . '", "warning");

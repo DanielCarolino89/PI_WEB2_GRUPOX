@@ -1,5 +1,7 @@
 <?php
 
+require_once('Repository.php');
+
 /**
  * Classe responsável pela exceução dos comandos SQL da tabela Login
  */
@@ -52,14 +54,14 @@ class LoginRepository extends Repository
         $sql = "SELECT M.Id AS Medico, P.Id AS Paciente FROM LOGIN L
         LEFT JOIN Medico M on M.Login = L.Usuario
 		LEFT JOIN paciente P ON P.Login = L.Usuario
-        WHERE USUARIO = {$usuario} and SENHA = {$senha}";
+        WHERE USUARIO = '{$usuario}' and SENHA = '{$senha}'";
 
         try{
 
-            return $this->db->executeCommand($sql);
+            return $this->db->executeQuery($sql)->fetch();
 
         } catch(PDOException $ex){
-            echo 'Ocorreu um erro ao cadastrar login';
+            echo 'Ocorreu um erro ao autenticar login';
             echo "<br><br> SQL Executada: {$sql}<br>";
             throw $ex;
         }

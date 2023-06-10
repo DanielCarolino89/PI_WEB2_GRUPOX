@@ -78,6 +78,24 @@ abstract class PessoaController
             $contatoRepository->cadastrarContato($contato);
         }
     }
+
+    private function carregarContatos(Medico $medico, Database $db)
+    {
+        require_once('../Repositories/ContatoRepository.php');
+        $contatoRepository = new ContatoRepository($db);
+
+        $contatos = $contatoRepository->consultarContatosDoMedico($medico->getId());
+        foreach($contatos as $dados)
+        {
+            $contato = new Contato();
+            $contato->setId($dados['id']);
+            $contato->setMedicoId($dados['medico'] ?? null);
+            $contatos->setTipo($dados['tipo'])
+
+        }
+
+        
+    }
 }
 
 ?>

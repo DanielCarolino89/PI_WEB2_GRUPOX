@@ -37,5 +37,19 @@ class EnderecoRepository extends Repository
             throw $ex;
         }
     }
+
+    /**
+     * Consulta endereço do médico no banco de dados.
+     * @param int $medicoId Id do médico que será realizada a consulta.
+     * @return array dados do endereço
+     */
+    public function consultarEnderecoDoMedico(int $medicoId)
+    {
+        $sql = "SELECT ID, LOGRADOURO, NUMERO, BAIRRO, CIDADE, UF, COMPLEMENTO
+        FROM ENDERECO
+        WHERE MEDICO = {$medicoId}";
+
+        return $this->queryFirstValue($sql);
+    }
 }
 ?>
