@@ -1,7 +1,6 @@
 <?php
 
 require_once('../Controller/PacienteController.php');
-
 $pacienteControlador = new PacienteController();
 
 

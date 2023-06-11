@@ -59,7 +59,7 @@ class ContatoRepository extends Repository
 
         /**
      * Consulta contatos do paciente no banco de dados.
-     * @param int $id Id do médico que será realizada a consulta.
+     * @param int $id Id do paciente que será realizada a consulta.
      * @return array dados do contato.
      */
     public function consultarContatosDoPaciente(int $id)
@@ -69,14 +69,15 @@ class ContatoRepository extends Repository
 
     /**
      * Consulta contatos no banco de dados.
-     * @param int $id Id do médico que será realizada a consulta.
+     * @param string $pessoa nome do campo que será realizada a consulta (Medico ou Paciente).
+     * @param int $id Id da pessoa que será realizada a consulta.
      * @return array dados do contato.
      */
     private function consultarContatos(string $pessoa, int $id)
     {
         $sql = "SELECT * FROM CONTATO WHERE {$pessoa} = {$id}";
 
-        return $this->db->executeQuery($sql)->fetch();
+        return $this->db->executeQuery($sql)->fetchAll();
     }
 
     /**

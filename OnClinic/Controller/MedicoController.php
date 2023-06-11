@@ -119,34 +119,46 @@ class MedicoController extends PessoaController
 
         try{
             $dadosMedico = $medicoRepository->consultarDetalhesDoMedico($idMedico);
+            
             $medico = new Medico($dadosMedico);
+            $medico->setId($dadosMedico['ID']);
 
             $this->carregarEspecialidades($medico, $db);
+            $this->carregarContatos($medico, $db);
+            $this->carregarEnderecoPrincipal($medico, $db);
 
+            return $medico;
             
         }
         catch(Exception $ex)
         {
+            $db->Rollback();
+            echo $ex->getMessage();
         }
     }
 
+    /**
+     * Carrega especialidades do médico através do repositório utilizando uma conexão do banco de dados ativa.
+     * @param Medico $medico instancia do médico que será atribuída as especialidades
+     * @param Database $db Gerenciador de conexão do banco de dados
+     */
     private function carregarEspecialidades(Medico $medico, Database $db)
     {
         require_once('../Repositories/EspecialidadeRepository.php');
         $especialidadeRepository = new EspecialidadeRepository($db);
 
         $especialidades = $especialidadeRepository->consultarEspecialidadesDoMedico($medico->getId());
+        
         foreach ($especialidades as $dados)
         {
             $especialidade = new Especialidade();
             $especialidade->setId($dados['id']);
             $especialidade->setDescricao($dados['descricao']);
-            $especialidade->setFaixaEtaria($dados['Complemento']);
+            $especialidade->setFaixaEtaria($dados['complemento']);
             $especialidade->setMedicoId($medico->getId());
 
             $medico->addEspecialidade($especialidade);
         }
-        
     }
 }
 

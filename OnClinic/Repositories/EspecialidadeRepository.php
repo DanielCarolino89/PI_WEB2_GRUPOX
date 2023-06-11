@@ -40,10 +40,10 @@ class EspecialidadeRepository extends Repository
      */
     public function consultarEspecialidadesDoMedico(int $id)
     {
-        $sql = "SELECT ID, DESCRICAO, COMPLEMENTO FROM ESPECIALIDADE
+        $sql = "SELECT id, descricao, complemento FROM ESPECIALIDADE
         WHERE MEDICO =  $id";
 
-        return $this->db->executeQuery($sql); 
+        return $this->db->executeQuery($sql)->fetchAll(); 
     }
 
     /**

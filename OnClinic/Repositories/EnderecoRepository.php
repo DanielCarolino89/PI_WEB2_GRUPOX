@@ -38,18 +38,41 @@ class EnderecoRepository extends Repository
         }
     }
 
+
     /**
      * Consulta endereço do médico no banco de dados.
      * @param int $medicoId Id do médico que será realizada a consulta.
-     * @return array dados do endereço
+     * @return Endereco dados do endereço
      */
     public function consultarEnderecoDoMedico(int $medicoId)
     {
-        $sql = "SELECT ID, LOGRADOURO, NUMERO, BAIRRO, CIDADE, UF, COMPLEMENTO
-        FROM ENDERECO
-        WHERE MEDICO = {$medicoId}";
+        return $this->consultarEnderecoPrincipal('MEDICO', $medicoId);
+    }
 
-        return $this->queryFirstValue($sql);
+    /**
+     * Consulta endereço do paciente no banco de dados.
+     * @param int $pacienteId Id do paciente que será realizada a consulta.
+     * @return Endereco dados do endereço
+     */
+    public function consultarEnderecoDoPaciente(int $pacienteId)
+    {
+        return $this->consultarEnderecoPrincipal('PACIENTE', $pacienteId);
+    }
+
+
+    /**
+     * Consulta endereço principal no banco de dados.
+     * @param string $pessoa nome do campo que será realizada a consulta (Medico ou Paciente).
+     * @param int $id Id da pessoa que será realizada a consulta.
+     * @return Endereco dados do endereço.
+     */
+    private function consultarEnderecoPrincipal(string $pessoa, int $id)
+    {
+        $sql = "SELECT id, logradouro, numero, bairro, cidade, uf, complemento
+        FROM ENDERECO
+        WHERE {$pessoa} = {$id}";
+
+        return $this->db->executeQuery($sql)->fetch();
     }
 }
 ?>

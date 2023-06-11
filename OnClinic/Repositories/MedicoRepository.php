@@ -101,12 +101,11 @@ class MedicoRepository extends Repository
      */
     public function consultarDetalhesDoMedico(int $id)
     {
-        $sql = "SELECT M.ID, M.NOME, M.CRM, M.REMOTO, M.SOBRE, M.NASCIMENTO 
+        $sql = "SELECT ID, NOME as nome, CRM as crm, REMOTO as remoto, SOBRE as sobre, NASCIMENTO as nascimento
         FROM MEDICO
         WHERE ID = {$id};";
 
-        return $this->queryFirstValue($sql);
+        return $this->db->executeQuery($sql)->fetch();
     }
 }
-
 ?>

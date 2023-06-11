@@ -51,6 +51,27 @@ abstract class PessoaController
     }
 
     /**
+     * Carrega endereço princiapl da Pessoa através do repositório utilizando uma conexão do banco de dados ativa.
+     * @param Pessoa $pessoa instancia que será atribuído o endereço
+     * @param Database $db Gerenciador de conexão do banco de dados
+     */
+    public function carregarEnderecoPrincipal(Pessoa $pessoa, Database $db)
+    {
+        require_once('../Repositories/EnderecoRepository.php');
+        $enderecoRepository = new EnderecoRepository($db);
+        
+        $endereco = null;
+        if ($pessoa instanceof Medico){
+            $endereco = $enderecoRepository->consultarEnderecoDoMedico($pessoa->getId());
+        }
+        else {
+            $endereco = $enderecoRepository->consultarEnderecoDoPaciente($pessoa->getId());
+        }
+
+        $pessoa->atribuirEndereco($endereco);
+    }
+
+    /**
      * Cadastra contato através do repositório utilizando uma conexão do banco de dados ativa.
      * @param Pessoa $pessoa Modelo que contém as informações do contato.
      * @param Database $db Gerenciador de conexão do banco de dados
@@ -79,22 +100,36 @@ abstract class PessoaController
         }
     }
 
-    private function carregarContatos(Medico $medico, Database $db)
+    /**
+     * Carrega contatos da Pessoa através do repositório utilizando uma conexão do banco de dados ativa.
+     * @param Pessoa $pessoa instancia que será atribuído os contatos
+     * @param Database $db Gerenciador de conexão do banco de dados
+     */
+    public function carregarContatos(Pessoa $pessoa, Database $db)
     {
         require_once('../Repositories/ContatoRepository.php');
         $contatoRepository = new ContatoRepository($db);
 
-        $contatos = $contatoRepository->consultarContatosDoMedico($medico->getId());
-        foreach($contatos as $dados)
-        {
-            $contato = new Contato();
-            $contato->setId($dados['id']);
-            $contato->setMedicoId($dados['medico'] ?? null);
-            $contatos->setTipo($dados['tipo'])
-
+        $contatos = [];
+        if ($pessoa instanceof Medico){
+            $contatos = $contatoRepository->consultarContatosDoMedico($pessoa->getId());
+        }
+        else {
+            $contatos = $contatoRepository->consultarContatosDoPaciente($pessoa->getId());
         }
 
-        
+        require_once '../Models/Contato.php';
+        foreach($contatos as $dados)
+        {
+
+            $contato = new Contato();
+            $contato->setId($dados['Id']);
+            $contato->setMedicoId($dados['Medico'] ?? null);
+            $contato->setTipo($dados['Tipo']);
+            $contato->setDescricao($dados['Descricao']);
+
+            $pessoa->addContato($contato);
+        }
     }
 }
 

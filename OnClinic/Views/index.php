@@ -1,45 +1,8 @@
 <?php  
     
-    require_once('../Repositories/LoginRepository.php');
-    
-    if($_SERVER["REQUEST_METHOD"] == "POST")
-    {
-        session_start();
-
-        require_once('../Models/Database.php');
-        $db = new Database();
-        $loginRepository = new LoginRepository($db);
-        $login = $loginRepository->Autenticar($_POST['login'],$_POST['senha']);
-
-        if(empty($login))
-        {
-            $_SESSION['loggedin'] = FALSE;
-            ?> <script>
-                swal("Login Inválido", "Por favor, informe um usuário e senha existentes.", "warning");
-                nome.focus();
-            </script><?php
-        }
-        else
-        {
-            if(isset($login['Medico']))
-            {
-                $_SESSION['loggedin'] = TRUE;
-                $_SESSION["id"] = $login['Medico'];
-                header("Location: home_medico.php");
-                exit;
-            }
-            else
-            {
-                $_SESSION['loggedin'] = TRUE;
-                $_SESSION["id"] = $login['Paciente'];
-                header("Location: home_paciente.php");
-                exit;
-            }
-        }
-    }
+   require '..\Requests\Sessao.php';
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -154,7 +117,20 @@
     </footer>
     <!-- fim footer --></div>
     <script src="../js/login.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js">
+        
+
+    </script>
+    <?php echo $loginFalhou; ?>
+    <?php if ($loginFalhou): ?>
+        <script>
+            swal("Login Inválido", "Por favor, informe um usuário e senha existentes.", "warning");
+            login.focus();
+        </script>
+    <?php endif; ?>
+    
+
 </body>
 
 </html>
+

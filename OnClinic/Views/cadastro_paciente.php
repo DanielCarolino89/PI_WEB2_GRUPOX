@@ -1,3 +1,9 @@
+<?php
+
+require '..\Requests\medico_requests.php';
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -9,7 +15,6 @@
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/style.css">
     <title>ON CLINIC</title>
-
 </head>
 
 <body>
@@ -21,7 +26,7 @@
         </div>
         <div id="navform">
             <div class="navbar d-flex">
-                <h2>Cadastro de Médicos e especialistas</h2>
+                <h2>Cadastro de Paciente</h2>
                 <a href="index.html"><button class="btn btn-outline-success">Voltar</button></a>
             </div>
         </div>
@@ -35,16 +40,15 @@
         <center>
             <div class="cadastro bg-light">
                 <h2>Insira seus dados para realizar o cadastro:</h2><br>
-                <!--Inicio Dados do médico -->
-                <form action="../Requests/medico_requests.php" method="post" class="row g-3 needs-validation" novalidate>
+                <form method="post" class="row g-3 needs-validation" novalidate>
                     <div class="col-md-8">
                         <input type="hidden" name="action" value="Cadastrar">
                         <label for="nome" class="form-label">Nome:</label>
                         <input name="nome" type="text" class="form-control" id="nome" required>
                     </div>
                     <div class="col-md-4">
-                        <label for="crm" class="form-label">CRM:</label>
-                        <input name="crm" type="text" class="form-control" id="crm" required>
+                        <label for="nascimento" class="form-label">Data de Nascimento:</label>
+                        <input name="nascimento" type="date" class="form-control" id="nascimento" required>
                     </div>
                     <div class="col-md-4">
                         <label for="rg" class="form-label">RG:</label>
@@ -53,11 +57,6 @@
                     <div class="col-md-4">
                         <label for="cpf" class="form-label">CPF:</label>
                         <input name="cpf" type="text" class="form-control" id="cpf" required>
-                    </div>
-
-                    <div class="col-md-4">
-                        <label for="nascimento" class="form-label">Data de Nascimento:</label>
-                        <input name="nascimento" type="date" class="form-control" id="nascimento" required>
                     </div>
                     <div class="col-md-4">
                         <label for="principal" class="form-label">Telefone Principal:</label>
@@ -69,17 +68,16 @@
                     </div>
                     <div class="col-md-4">
                         <label for="email" class="form-label">E-mail:</label>
-                        <input name="contato[email]" type="e-mail" class="form-control" id="email" autocomplete="on" required>
+                        <input name="contato[email]" type="mail" class="form-control" id="email"  autocomplete="on" required>
                     </div>
-                    <!-- Fim dados do médico --><br>
                     <h2>Endereço:</h2><br>
-                    <!-- Endereço médico -->
+                    <!-- Endereço paciente -->
                     <div class="col-md-2">
                         <label for="cep" class="form-label">CEP:</label>
                         <input name="cep" type="text" class="form-control" id="cep" required>
                     </div>
                     <div class="col-md-6">
-                        <label for="log" class="form-label">Logradouro:</label>
+                        <label for="logradouro" class="form-label">Logradouro:</label>
                         <input name="logradouro" type="text" class="form-control" id="log" required>
                     </div>
                     <div class="col-md-1">
@@ -99,60 +97,37 @@
                         <input name="cidade" type="text" class="form-control" id="cidade" required>
                     </div>
                     <div class="col-md-2">
-                        <label for="UF" class="form-label">UF:</label>
+                        <label for="uf" class="form-label">UF:</label>
                         <input name="uf" type="text" class="form-control" id="UF" required>
                     </div>
 
-                    <!-- Fim endereço médico -->
-                    <!-- inicio sobre médico -->
-
-                    <div class="col-md-6">
-                        <label for="sobre" class="form-label">Sobre:</label>
-                        <textarea name="sobre" class="form-control" rows="9" cols="50" id="sobre"
-                            required></textarea>
-                    </div>
-
-                    <div class="col-md-6">
-                        <label for="especialidade" class="form-label">Especialidades:</label>
-                        <table>
-                            <tr>
-                                <th><input name="especialidade" type="text" class="form-control"
-                                        id="especialidade" style="width:246px" required> </th>
-                                <th><select class="form-select" id="subespecialidade" aria-label="Default select example" style="margin-left:10px">
-                                        <option value="Geral" selected>Geral</option>
-                                        <option value="Pediátrico">Pediátrico</option>
-                                        <option value="Geriátrico">Geriátrico</option>
-                                    </select>
-                                </th>
-                                <th><a class="btn btn-success" id="inserir" style="margin-left:15px"><b>Inserir</b></a>
-                                </th>
-                            </tr>
-                        </table><br> <textarea name="especialidades" readonly rows="6" cols="60" id="especialidades"></textarea></td>
-
-                    </div>
-
-                    ''
-                    <!-- inicio sobre médico -->
+                    <!-- Fim endereço paciente -->
                     <div class="Loginsenha row g-3">
                         <h2>Acesso ao sistema:</h2>
                         <div class="col-md-4">
-                            <label for="usuario" class="form-label">Insira um login:</label>
+                            <label for="usuario" class="form-label">Login:</label>
                             <input name="usuario" type="text" class="form-control" id="usuario" required>
-
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
                         </div>
                         <div class="col-md-4">
-                            <label for="senha" class="form-label">Insira uma senha:</label>
+                            <label for="senha" class="form-label">Senha:</label>
                             <input name="senha" type="password" class="form-control" id="senha" required>
-
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <label for="resenha" class="form-label">Confirmação de Senha:</label>
-                            <input name="senha" type="password" class="form-control" id="resenha" required>
-
+                            <input name="resenha" type="password" class="form-control" id="resenha" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
                         </div>
                     </div><br>
                     <div class="col-12">
-                        <input type="submit" value="CADASTRAR" class="btn btn-success" id="cadastrar"></input>
+                        <input type="submit" class="btn btn-success" id="cadastrar" value="CADASTRAR"></input>
                     </div>
                 </form>
             </div>
@@ -170,7 +145,6 @@
     <!-- fim footer --></div>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="../js/validacao.js"></script>
-    <script src="../js/medico.js"></script>
 </body>
 
 </html>

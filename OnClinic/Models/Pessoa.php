@@ -45,8 +45,12 @@ abstract class Pessoa
         }
     }
 
-    private function atribuirEndereco($dados)
+    public function atribuirEndereco($dados)
     {
+        if (!isset($dados['logradouro'])){
+            return;
+        }
+
         require_once('Endereco.php');
         $this->endereco = new Endereco();
         $this->endereco->setLogradouro($dados['logradouro']);
@@ -59,6 +63,10 @@ abstract class Pessoa
 
     private function atribuirLogin($dados)
     {
+        if (!isset($dados['usuario'])){
+            return;
+        }
+
         require_once('Login.php');
         $this->login = new Login();
         $this->login->setUsuario($dados['usuario']);

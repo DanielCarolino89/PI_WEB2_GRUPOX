@@ -1,11 +1,10 @@
 <?php 
 
-session_start();
+require '..\Requests\Sessao.php';
+ValidaAcesso();
 
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    header("location: index.php");
-    exit;
-}
+require '..\Requests\medico_requests.php';
+$medicos = $medicoControlador->consultarMedicos("", "Nome");
 
 ?>
 
@@ -48,7 +47,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             <div class="cadastro bg-light">
                 <h2>Encontre seu médico:</h2><br>
                 <!--Inicio Dados do médico -->
-                <form action="../Requests/medico_requests.php" method="get" class="row g-3 needs-validation" novalidate>
+                <form method="get" class="row g-3 needs-validation" novalidate>
                     <center>
                         <input type="hidden" name="action" value="Pesquisar">
                         <input name="conteudo" type="text" style="width:900px;" class="form-control" id="" required><br>
@@ -102,6 +101,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                     </td>
                                     <td>
                                         <h4><?php echo $medico['nome']; ?></h4>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary" href="<?php echo "..\Requests\medico_requests.php?action=Detalhar&Id={$medico['id']}" ?>">Mais detalhes</a>
                                     </td>
                                 </tr>
                                 <tr>
