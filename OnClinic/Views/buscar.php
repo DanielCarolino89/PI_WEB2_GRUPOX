@@ -35,11 +35,9 @@ if (count($_GET) == 0){
         <div id="navform">
             <div class="navbar d-flex">
                 <h2>Buscar Médicos ou especialistas</h2>
-                <a href="index.html"><button class="btn btn-outline-success">Sair</button></a>
+                <a href="perfil_paciente.php"><button class="btn btn-outline-success">Voltar</button></a>
             </div>
-        </div>
-        </div>
-        </div>
+        </div>       
     </nav><br>
     <!-- fim navbar -->
 

@@ -1,7 +1,5 @@
-<?php  
-    
+<?php      
    require '..\Requests\Sessao.php';
-
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +21,7 @@
     <nav class="nav navbar bg-light">
         <div id="navlogo">
             <img src="../img/Logo.png" alt="Bootstrap" width="250px">
-        </div>
+        </div>                 
         <div id="navform">
             <form class="nav navbar d-flex" action="index.php" method="POST">
                 <label class="navcolor"><b>Login:</b></label>
@@ -33,10 +31,8 @@
                 <input class=" navform form-control me-2" name="senha" id="senha" style="width: 250px;" type="password"
                     placeholder="" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit" id="btn_entrar">Entrar</button>
-            </form>
-        </div>
-        </div>
-        </div>
+            </form>        
+        </div>       
     </nav>
     <!-- fim navbar -->
     <br>
@@ -55,7 +51,7 @@
                         <p>Bem-estar para toda sua familia!</p>
 
                         <div class="d-grid gap-2 col-6 mx-auto">
-                            <a href="cadastro_paciente.html" class="btn btn-light btn-lg"><b>CADASTRE-SE</b></a>
+                            <a href="cadastro_paciente.php" class="btn btn-light btn-lg"><b>CADASTRE-SE</b></a>
                         </div>
 
                     </div>
@@ -76,7 +72,7 @@
                             <p>Cadastre-se para atender nossos pacientes!</p>
 
                             <div class="d-grid gap-2 col-6 mx-auto">
-                                <a href="cadastro_medico.html" class="btn btn-light btn-lg"
+                                <a href="cadastro_medico.php" class="btn btn-light btn-lg"
                                     style="font:green"><b>CADASTRE-SE</b></a>
                             </div>
                     </div>

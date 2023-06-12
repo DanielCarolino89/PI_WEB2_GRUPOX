@@ -1,9 +1,3 @@
-<?php
-
-require '..\Requests\medico_requests.php';
-
-?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -27,11 +21,9 @@ require '..\Requests\medico_requests.php';
         <div id="navform">
             <div class="navbar d-flex">
                 <h2>Cadastro de Paciente</h2>
-                <a href="index.html"><button class="btn btn-outline-success">Voltar</button></a>
+                <a href="index.php"><button class="btn btn-outline-success">Voltar</button></a>
             </div>
-        </div>
-        </div>
-        </div>
+        </div>       
     </nav><br>
     <!-- fim navbar -->
 

@@ -44,9 +44,7 @@ $medico = carregarMedico($_GET['id']);
 
                 <a href="buscar.php"><button class="btn btn-outline-success">Voltar</button></a>
             </div>
-        </div>
-        </div>
-        </div>
+        </div>        
     </nav><br>
     <!-- fim navbar -->
 

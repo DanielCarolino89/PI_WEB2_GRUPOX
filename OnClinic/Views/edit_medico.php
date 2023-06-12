@@ -1,3 +1,14 @@
+<?php
+
+session_start();
+
+if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION["tipo"] !== "medico"){
+    header("location: index.php");
+    exit;
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -15,16 +26,16 @@
 <body>
 
     <!-- inicio navbar -->
-    <nav class="navbar bg-light">
+    <nav class="navbar" style="background-color: rgb(225, 225, 225);">
         <div id="navlogo">
             <img src="../img/Logo.png" alt="Bootstrap" width="250px">
         </div>
         <div id="navform">
             <div class="navbar d-flex">
-                <h2>Cadastro de Médicos e especialistas</h2>
-                <a href="index.php"><button class="btn btn-outline-success">Voltar</button></a>
+                <h2>Edição de cadastro de Médico</h2>
+                <a href="perfil_medico.php"><button class="btn btn-outline-success">Voltar</button></a>
             </div>
-        </div>       
+        </div>      
     </nav><br>
     <!-- fim navbar -->
 
@@ -32,9 +43,9 @@
     <div class="div1">
         <center>
             <div class="cadastro bg-light">
-                <h2>Insira seus dados para realizar o cadastro:</h2><br>
+                <h2>Dados para editar:</h2><br>
                 <!--Inicio Dados do médico -->
-                <form method="post" class="row g-3 needs-validation" novalidate>
+                <form action="../Requests/medico_requests.php" method="post" class="row g-3 needs-validation" novalidate>
                     <div class="col-md-8">
                         <input type="hidden" name="action" value="Cadastrar">
                         <label for="nome" class="form-label">Nome:</label>
@@ -150,7 +161,7 @@
                         </div>
                     </div><br>
                     <div class="col-12">
-                        <input type="submit" value="CADASTRAR" class="btn btn-success" id="cadastrar"></input>
+                        <input type="submit" value="EDITAR" class="btn btn-success" id="cadastrar">
                     </div>
                 </form>
             </div>

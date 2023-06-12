@@ -24,14 +24,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         {
             $_SESSION['loggedin'] = TRUE;
             $_SESSION["id"] = $login['Medico'];
-            header("Location: ..\Views\home_medico.php");
+            $_SESSION["tipo"] = 'medico';
+            header("Location: ..\Views\perfil_medico.php");
             exit;
         }
         else
         {
             $_SESSION['loggedin'] = TRUE;
             $_SESSION["id"] = $login['Paciente'];
-            header("Location: ..\Views\home_paciente.php");
+            $_SESSION["tipo"] = 'paciente';
+            header("Location: ..\Views\perfil_paciente.php");
             exit;
         }
     }
