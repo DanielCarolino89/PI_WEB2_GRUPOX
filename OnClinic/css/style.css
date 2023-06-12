@@ -56,6 +56,12 @@ hr {
     border: outset green;
 }
 
+.perfil {
+    width: 1200px;
+    padding: 30px;
+    border: outset green;
+}
+
 .navform {
     margin-left: 10px;
     width: 300px
@@ -118,6 +124,12 @@ hr {
 
 .h2{
     color: whitesmoke;
+}
+
+.dropdown{
+    align-items: center;
+    text-align: center;
+    width:auto;
 }
 
 #footer {
