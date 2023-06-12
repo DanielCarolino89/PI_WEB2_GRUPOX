@@ -4,7 +4,10 @@ require '..\Requests\Sessao.php';
 ValidaAcesso();
 
 require '..\Requests\medico_requests.php';
-$medicos = $medicoControlador->consultarMedicos("", "Nome");
+
+if (count($_GET) == 0){
+    $medicos = $medicoControlador->consultarMedicos("", "Nome");
+}
 
 ?>
 
@@ -103,7 +106,7 @@ $medicos = $medicoControlador->consultarMedicos("", "Nome");
                                         <h4><?php echo $medico['nome']; ?></h4>
                                     </td>
                                     <td>
-                                        <a class="btn btn-primary" href="<?php echo "..\Requests\medico_requests.php?action=Detalhar&Id={$medico['id']}" ?>">Mais detalhes</a>
+                                        <a class="btn btn-primary" href="<?php echo "perfil_medico_view.php?id={$medico['id']}" ?>">Mais detalhes</a>
                                     </td>
                                 </tr>
                                 <tr>

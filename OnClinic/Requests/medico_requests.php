@@ -1,5 +1,4 @@
 <?php
-
 require_once('../Controller/MedicoController.php');
 $medicoControlador = new MedicoController();
 
@@ -28,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     }
 }
 
+$medicoDetalhado = null;
 if ($_SERVER['REQUEST_METHOD'] == 'GET')
 {
     if (!isset($_GET['action'])){
@@ -42,14 +42,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
         $medicos = $medicoControlador->consultarMedicos($conteudo, $filtro);
 
     }
-    else if ($action == 'Detalhar')
-    {
-        $medico = $medicoControlador->consultarDetalhesMedico($_GET['Id']);   
-    }
+
 }
 
-function carregarMedicoDetalhado(int $id){
+function carregarMedico(int $id){
+    require_once('../Controller/MedicoController.php');
     $medicoControlador = new MedicoController();
-    return $medicoControlador->consultarDetalhesMedico($id);   
+    return $medicoControlador->consultarDetalhesMedico($_GET['id']);   
 }
 ?>

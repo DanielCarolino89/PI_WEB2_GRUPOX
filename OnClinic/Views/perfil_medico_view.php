@@ -8,6 +8,10 @@ if (!isset($_GET['id']))
     header("Location: buscar.php");
 }
 
+require '..\Requests\medico_requests.php';
+$medico = carregarMedico($_GET['id']);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +42,7 @@ if (!isset($_GET['id']))
             <div class="navbar d-flex">
                 <h2>Perfil Médico</h2>
 
-                <a href="index.html"><button class="btn btn-outline-success">Voltar</button></a>
+                <a href="buscar.php"><button class="btn btn-outline-success">Voltar</button></a>
             </div>
         </div>
         </div>
@@ -61,31 +65,25 @@ if (!isset($_GET['id']))
 
                             </th>
                             <th class="dropdown">
-                                <h1>NOME DO MÉDICO</h1>
-                                <h3>CRM</h3>
-                                <h4>especialidades</h4>
+                                <h1><?php echo $medico->getNome(); ?></h1>
+                                <h3>CRM: <?php echo $medico->getCRM(); ?></h3>
+                                <h4>Especialidades</h4>
+                                <?php foreach($medico->getEspecialidades() as $esp){
+                                    echo $esp->getDescricao();
+                                    echo ' (' . $esp->getFaixaEtaria() . ') ';
+                                    echo '<br>';
+                                } ?>
                                 <br><br><br>
                                 <!-- inicio dropdown's -->
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-success btn-lg dropdown-toggle"
                                         data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span>&#x260F;</span> Contato
+                                        <span>&#x260F;</span> Contatos
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">TELEFONE 1</a></li>
-                                        <li><a class="dropdown-item" href="#">TELEFONE 2</a></li>
-                                        <li><a class="dropdown-item" href="#">TELEFONE 3</a></li>
-                                    </ul>
-                                </div>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-dark btn-lg dropdown-toggle"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span>&#x2709;</span> Email
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">EMAIL 1</a></li>
-                                        <li><a class="dropdown-item" href="#">EMAIL 2</a></li>
-                                        <li><a class="dropdown-item" href="#">EMAIL 3</a></li>
+                                        <?php foreach ($medico->getContatos() as $contato): ?>
+                                            <li><a class="dropdown-item" href="#"><?php echo $contato->getDescricao() ?></a></li>
+                                        <?php endforeach ?>
                                     </ul>
                                 </div>
                                 <!--  dropdown's -->
@@ -94,15 +92,8 @@ if (!isset($_GET['id']))
                       
                         <tr>
                             <th class="dropdown" colspan="2" style="padding-top:30px">
-                                COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO DO
-                                MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO
-                                DO MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR A
-                                DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR
-                                A DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO
-                                COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO DO
-                                MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO
-                                DO MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR A
-                                DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO 
+                                <h2>Mais detalhes</h2>
+                                <?php echo $medico->getSobre(); ?>
                             </th>
                         </tr>
                     </table>
@@ -111,7 +102,21 @@ if (!isset($_GET['id']))
                 <h2>Locais de atendimento</h2>
                 <div style="border-style:outset;border-color:lightgreen;width:100%;">
                     <div class="block">
-                    <h3>Endereços</h3>
+                    <h3><?php 
+                    $endereco = $medico->getEndereco();
+                    echo 'Rua: ';
+                    echo $endereco->getLogradouro();
+                    echo ', ';
+                    echo 'nº ';
+                    echo $endereco->getNumero();
+                    echo '<br>';
+                    echo 'Bairro: ';
+                    echo $endereco->getBairro();
+                    echo '<br>';
+                    echo 'Complemento: ';
+                    echo $endereco->getComplemento();
+                    
+                    ?></h3>
                 </div>
                 </div>
                 <hr>
