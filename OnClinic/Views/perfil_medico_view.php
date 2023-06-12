@@ -52,8 +52,7 @@ $medico = carregarMedico($_GET['id']);
     <div class="div1">
         <center>
             <div class="perfil">
-                <!-- <a href="index.html" class="btn btn-warning" style="margin-right:15px;" ><span>&#x270E;</span> Editar</a>
-                <a href="index.html" class="btn btn-danger" style="margin-right:15px;" ><span>&#x2716;</span> Excluir</a> -->
+
                 <div>
                     <hr>
                     <table style="width:100%;">
@@ -99,21 +98,21 @@ $medico = carregarMedico($_GET['id']);
                 <hr>
                 <h2>Locais de atendimento</h2>
                 <div style="border-style:outset;border-color:lightgreen;width:100%;">
-                    <div class="block">
+                    <div class="block" >
                     <h3><?php 
                     $endereco = $medico->getEndereco();
-                    echo 'Rua: ';
+                    echo '<br><div style="text-align:left;margin-left:30px"><i>Rua: ';
                     echo $endereco->getLogradouro();
-                    echo ', ';
-                    echo 'nº ';
+                    echo '<i>, ';
+                    echo '<i>nº ';
                     echo $endereco->getNumero();
                     echo '<br>';
-                    echo 'Bairro: ';
+                    echo '<i>Bairro: ';
                     echo $endereco->getBairro();
                     echo '<br>';
-                    echo 'Complemento: ';
+                    echo '<i>Complemento: ';
                     echo $endereco->getComplemento();
-                    
+                    echo '<br>';                          
                     ?></h3>
                 </div>
                 </div>

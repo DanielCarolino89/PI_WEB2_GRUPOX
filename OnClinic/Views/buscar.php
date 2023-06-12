@@ -97,13 +97,13 @@ if (count($_GET) == 0){
                         <div class="row" style="border:outset;padding:15px ">
                             <table>
                                 <tr>
-                                    <td>
+                                    <td style="width:20px">
                                         <h4>Médico:</h4>
                                     </td>
                                     <td>
                                         <h4><?php echo $medico['nome']; ?></h4>
                                     </td>
-                                    <td>
+                                    <td rowspan="4" style="width:125px">
                                         <a class="btn btn-primary" href="<?php echo "perfil_medico_view.php?id={$medico['id']}" ?>">Mais detalhes</a>
                                     </td>
                                 </tr>
@@ -114,6 +114,7 @@ if (count($_GET) == 0){
                                     <td>
                                         <h4><?php echo $medico['especialidades']; ?></h4>
                                     </td>
+                                   
                                 </tr>
                                 <tr>
                                     <td>
@@ -122,6 +123,7 @@ if (count($_GET) == 0){
                                     <td>
                                         <h4><?php echo $medico['cidades']; ?></h4>
                                     </td>
+                                   
                                 </tr>
                                 <tr>
                                     <td>

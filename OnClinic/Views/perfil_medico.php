@@ -44,10 +44,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         <div id="navform">
             <div class="navbar d-flex">
                 <h2>Perfil Médico</h2>
-                <form action="perfil_medico.php" method="post">
-                    <button class="btn btn-outline-success">Sair</button></a>
+
+                <a href="index.html"><button class="btn btn-outline-success">Voltar</button></a>
             </div>
-        </div>       
+        </div>
+        </div>
+        </div>
     </nav><br>
     <!-- fim navbar -->
 
@@ -68,7 +70,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                                 <br><br><br>
                                 <!-- inicio dropdown's -->
                                 <div class="btn-group">
-                                    <a href="edit_medico.php" class="btn btn-warning btn-lg"><b>EDITAR</b></a>
+                                    <a href="edit_paciente.html" class="btn btn-warning btn-lg"><b>EDITAR</b></a>
                                     <a href="" class="btn btn-danger btn-lg"
                                         style="margin-left: 30px;"><b>DELETAR</b></a>
                                 </div>
