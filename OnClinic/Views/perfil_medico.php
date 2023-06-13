@@ -17,9 +17,6 @@ $medico = carregarMedico($_SESSION['id']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-        crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css/style.css">
     <title>ON CLINIC</title>
 
@@ -65,8 +62,8 @@ $medico = carregarMedico($_SESSION['id']);
                                 <!-- inicio dropdown's -->
                                 <div class="btn-group">
                                     <a href="edit_medico.php" class="btn btn-warning btn-lg"><b>EDITAR</b></a>
-                                    <a href="" class="btn btn-danger btn-lg"
-                                        style="margin-left: 30px;"><b>DELETAR</b></a>
+                                    <button class="btn btn-danger btn-lg" id="excluir"
+                                        style="margin-left: 30px;"><b>DELETAR</b></button>
                                 </div>
 
                                 <!--  dropdown's -->
@@ -98,9 +95,11 @@ $medico = carregarMedico($_SESSION['id']);
         </div>
     </footer>
     <!-- fim footer --></div>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="../js/validacao.js"></script>
-    <script src="../js/medico.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+    <script src="../js/perfil.js"></script>
 </body>
 
 </html>
