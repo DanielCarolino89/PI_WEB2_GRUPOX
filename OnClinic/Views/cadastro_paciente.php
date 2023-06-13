@@ -73,7 +73,7 @@
                         <input name="cep" type="text" class="form-control" id="cep" required>
                     </div>
                     <div class="col-md-6">
-                        <label for="logradouro" class="form-label">Logradouro:</label>
+                        <label for="log" class="form-label">Logradouro:</label>
                         <input name="logradouro" type="text" class="form-control" id="log" required>
                     </div>
                     <div class="col-md-1">
@@ -93,7 +93,7 @@
                         <input name="cidade" type="text" class="form-control" id="cidade" required>
                     </div>
                     <div class="col-md-2">
-                        <label for="uf" class="form-label">UF:</label>
+                        <label for="UF" class="form-label">UF:</label>
                         <input name="uf" type="text" class="form-control" id="UF" required>
                     </div>
 
