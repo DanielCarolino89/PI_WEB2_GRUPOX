@@ -130,7 +130,15 @@
                                 </th>
                             </tr>
                         </table><br> <textarea name="especialidades" readonly rows="6" cols="60" id="especialidades"></textarea></td>
+                        <button class="btn btn-success" onclick="limparEspecialidades()">Limpar Especialidades</button>
+                        <script>
 
+                            function limparEspecialidades()
+                            {
+                                event.preventDefault();
+                                document.getElementById('especialidades').value = '';
+                            }
+                        </script>
                     </div>
 
                     ''
