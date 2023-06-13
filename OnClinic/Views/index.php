@@ -25,10 +25,10 @@
         <div id="navform">
             <form class="nav navbar d-flex" action="index.php" method="POST">
                 <input type="hidden" name="action" value="logar">
-                <label class="navcolor"><b>Login:</b></label>
+                <label for="login" class="navcolor"><b>Login:</b></label>
                 <input class=" navform form-control me-2" name="login" id="login" style="width: 250px;" type="text" placeholder=""
                     aria-label="">
-                <label class="navcolor"><b>Senha:</b></label>
+                <label for="senha" class="navcolor"><b>Senha:</b></label>
                 <input class=" navform form-control me-2" name="senha" id="senha" style="width: 250px;" type="password"
                     placeholder="" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit" id="btn_entrar">Entrar</button>
