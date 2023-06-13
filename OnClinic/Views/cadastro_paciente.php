@@ -1,3 +1,7 @@
+<?php
+    require_once "../Requests/paciente_requests.php";
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -21,7 +25,7 @@
         <div id="navform">
             <div class="navbar d-flex">
                 <h2>Cadastro de Paciente</h2>
-                <a href="index.php"><button class="btn btn-outline-success">Voltar</button></a>
+                <a href="\OnClinic\Views\index.php" class="btn btn-outline-success">Voltar</a>
             </div>
         </div>       
     </nav><br>
@@ -32,7 +36,7 @@
         <center>
             <div class="cadastro bg-light">
                 <h2>Insira seus dados para realizar o cadastro:</h2><br>
-                <form method="post" class="row g-3 needs-validation" novalidate>
+                <form action="../Requests/paciente_requests.php" method="post" class="row g-3 needs-validation" novalidate>
                     <div class="col-md-8">
                         <input type="hidden" name="action" value="Cadastrar">
                         <label for="nome" class="form-label">Nome:</label>

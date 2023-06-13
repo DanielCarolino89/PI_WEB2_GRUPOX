@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     $action = $_POST['action'];
     if ($action == 'Cadastrar')
     {
-        include("../views/cadastro_paciente.html");
+        include("../views/cadastro_paciente.php");
         $pacienteControlador->cadastrarNovoPaciente($_POST);
     }
     else if ($action == 'Editar')

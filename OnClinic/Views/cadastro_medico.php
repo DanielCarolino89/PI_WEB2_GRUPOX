@@ -1,3 +1,7 @@
+<?php
+    require_once "../Requests/medico_requests.php";
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -22,7 +26,7 @@
         <div id="navform">
             <div class="navbar d-flex">
                 <h2>Cadastro de Médicos e especialistas</h2>
-                <a href="index.php"><button class="btn btn-outline-success">Voltar</button></a>
+                <a href="\OnClinic\Views\index.php" class="btn btn-outline-success">Voltar</a>
             </div>
         </div>       
     </nav><br>
@@ -34,7 +38,7 @@
             <div class="cadastro bg-light">
                 <h2>Insira seus dados para realizar o cadastro:</h2><br>
                 <!--Inicio Dados do médico -->
-                <form method="post" class="row g-3 needs-validation" novalidate>
+                <form action="../Requests/medico_requests.php" method="post" class="row g-3 needs-validation" novalidate>
                     <div class="col-md-8">
                         <input type="hidden" name="action" value="Cadastrar">
                         <label for="nome" class="form-label">Nome:</label>
@@ -150,7 +154,7 @@
                         </div>
                     </div><br>
                     <div class="col-12">
-                        <input type="submit" value="CADASTRAR" class="btn btn-success" id="cadastrar"></input>
+                        <input type="submit" class="btn btn-success" id="cadastrar" value="CADASTRAR"></input>
                     </div>
                 </form>
             </div>
@@ -166,8 +170,7 @@
         </div>
     </footer>
     <!-- fim footer --></div>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="../js/validacao.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>    
     <script src="../js/medico.js"></script>
 </body>
 

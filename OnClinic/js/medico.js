@@ -106,9 +106,11 @@ function validarContatos()
 
       if(whatsapp != '')
       {
-         if(principal.length != 11)
+         if(whatsapp.length != 11)
          {
+
             swal("Campo Inválido!", "Por favor, informe um número de whatsapp válido", "warning");
+            console.log(whatsapp);
             event.preventDefault();
             document.getElementById('whatsapp').focus();
          }       
@@ -126,7 +128,7 @@ function validarCPF(cpf)
     if (cpf.length !== 11) 
     {
       swal("Campo Inválido!", "Por favor, informe um CPF válido.", "warning");
-      return false;
+      event.preventDefault();
     }
 
     // Verificar se todos os dígitos são iguais (CPF inválido)
@@ -134,7 +136,7 @@ function validarCPF(cpf)
     if (digits.every(digit => digit === digits[0])) 
     {
       swal("Campo Inválido!", "Por favor, informe um CPF válido.", "warning");
-      return false;
+      event.preventDefault();
     }
 
     // Verificar o primeiro dígito verificador
@@ -149,7 +151,7 @@ function validarCPF(cpf)
     if (digit1 !== digits[9]) 
     {
       swal("Campo Inválido!", "Por favor, informe um CPF válido.", "warning");
-      return false;
+      event.preventDefault();
     }
   
     // Verificar o segundo dígito verificador
@@ -164,10 +166,9 @@ function validarCPF(cpf)
     if (digit2 !== digits[10]) 
     {
       swal("Campo Inválido!", "Por favor, informe um CPF válido.", "warning");
-      return false;
-    }
-  
-    return true;
+      event.preventDefault();
+    }  
+   
 }
 
 function validarEndereco()
@@ -226,7 +227,7 @@ function validarEndereco()
 
 function validarCamposMedico()
 {
-  validarCRM(document.getElementById('crm').value);
+  //validarCRM(document.getElementById('crm').value);
 
   if(document.getElementById('sobre').value == '')
   {
