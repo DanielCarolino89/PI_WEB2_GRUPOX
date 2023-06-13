@@ -1,20 +1,11 @@
 <?php
 
-session_start();
+require '..\Requests\Sessao.php';
+ValidaAcesso("medico");
 
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION["tipo"] !== "medico"){
-    header("location: index.php");
-    exit;
-}
+require '..\Requests\medico_requests.php';
+$medico = carregarMedico($_SESSION['id']);
 
-if($_SERVER["REQUEST_METHOD"] == "POST")
-{
-    $_SESSION['loggedin'] = FALSE;
-    $_SESSION["id"] = null;
-    $_SESSION["tipo"] = null;
-
-    header("Location: ..\Views\index.php");
-}
 ?>
 
 <!DOCTYPE html>
@@ -44,8 +35,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         <div id="navform">
             <div class="navbar d-flex">
                 <h2>Perfil Médico</h2>
-
-                <a href="index.html"><button class="btn btn-outline-success">Voltar</button></a>
+                <form method="post">
+                <input type="hidden" name="action" value="logout">
+                    <a href="index.html"><button class="btn btn-outline-success">Logout</button></a>
+                </form>
             </div>
         </div>
         </div>
@@ -66,11 +59,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 
                             </th>
                             <th class="dropdown">
-                                <h1>NOME DO MÉDICO</h1>
+                                <h1>Bem Vindo</h1>
+                                <h1><?php echo $medico->getNome(); ?></h1>
                                 <br><br><br>
                                 <!-- inicio dropdown's -->
                                 <div class="btn-group">
-                                    <a href="edit_paciente.html" class="btn btn-warning btn-lg"><b>EDITAR</b></a>
+                                    <a href="edit_medico.php" class="btn btn-warning btn-lg"><b>EDITAR</b></a>
                                     <a href="" class="btn btn-danger btn-lg"
                                         style="margin-left: 30px;"><b>DELETAR</b></a>
                                 </div>
@@ -83,15 +77,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                             <th class="dropdown" colspan="2" style="padding-top:30px">
                                 <h2>Dados do médico:</h2>
                                 <div style="border-style:outset;border-color:lightgreen;width:100%;">
-                                    COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO DO
-                                    MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO
-                                    DO MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR A
-                                    DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR
-                                    A DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO
-                                    COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO DO
-                                    MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO
-                                    DO MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO COLOCAR A
-                                    DESCRIÇÃO DO MÉDICO COLOCAR A DESCRIÇÃO DO MÉDICO 
+                                    <?php echo $medico->getSobre(); ?>
                                 </div>
                             </th>
                         </tr>

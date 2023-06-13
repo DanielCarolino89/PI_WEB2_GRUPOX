@@ -26,4 +26,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     }
 }
 
+function carregarPaciente(int $id)
+{
+    require_once '../Controller/PessoaController.php';
+    $pacienteControlador = new PacienteController();
+    return $pacienteControlador->consultarPaciente($id);
+}
+
 ?>

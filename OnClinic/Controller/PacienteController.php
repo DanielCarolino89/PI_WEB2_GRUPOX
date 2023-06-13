@@ -54,4 +54,36 @@ class PacienteController extends PessoaController
             echo $ex->getMessage();
         }
     }
+
+    /**
+     * Inicia conexão com banco de dados e consulta o paciente detalhadamente incluindo endereço, contato e usuário através do repositório
+     * @param int $id Id do paciente.
+     * @return Paciente dados completos do paciente
+     */
+    public function consultarPaciente(int $id)
+    {
+
+        $db = new Database();
+        $pacienteRepository = new PacienteRepository($db);
+
+        $db->beginTransaction();
+
+        try{
+            $dadosPaciente = $pacienteRepository->consultaPaciente($id);
+            
+            $paciente = new Paciente($dadosPaciente);
+            $paciente->setId($dadosPaciente['id']);
+
+            $this->carregarContatos($paciente, $db);
+            $this->carregarEnderecoPrincipal($paciente, $db);
+
+            return $paciente;
+            
+        }
+        catch(Exception $ex)
+        {
+            $db->Rollback();
+            echo $ex->getMessage();
+        }
+    }
 }

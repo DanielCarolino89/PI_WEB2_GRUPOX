@@ -6,43 +6,61 @@ $loginFalhou = false;
     
 if($_SERVER["REQUEST_METHOD"] == "POST")
 {
-    session_start();
-
-    require_once('../Models/Database.php');
-    $db = new Database();
-    $loginRepository = new LoginRepository($db);
-    $login = $loginRepository->Autenticar($_POST['login'],$_POST['senha']);
-
-    if(empty($login))
-    {
-        $_SESSION['loggedin'] = FALSE;
-        $loginFalhou = true;
+    
+    if (!isset($_POST['action'])){
+        return;
     }
-    else
+
+    $action = $_POST['action'];
+    if ($action == "logar")
     {
-        if(isset($login['Medico']))
+        session_start();
+
+        require_once('../Models/Database.php');
+        $db = new Database();
+        $loginRepository = new LoginRepository($db);
+        $login = $loginRepository->Autenticar($_POST['login'],$_POST['senha']);
+
+        if(empty($login))
         {
-            $_SESSION['loggedin'] = TRUE;
-            $_SESSION["id"] = $login['Medico'];
-            $_SESSION["tipo"] = 'medico';
-            header("Location: ..\Views\perfil_medico.php");
-            exit;
+            $_SESSION['loggedin'] = FALSE;
+            $loginFalhou = true;
         }
         else
         {
-            $_SESSION['loggedin'] = TRUE;
-            $_SESSION["id"] = $login['Paciente'];
-            $_SESSION["tipo"] = 'paciente';
-            header("Location: ..\Views\perfil_paciente.php");
-            exit;
+            if(isset($login['Medico']))
+            {
+                $_SESSION["loggedin"] = TRUE;
+                $_SESSION["id"] = $login['Medico'];
+                $_SESSION["tipo"] = 'medico';
+                header("Location: ..\Views\perfil_medico.php");
+                exit;
+            }
+            else
+            {
+                $_SESSION["loggedin"] = TRUE;
+                $_SESSION["id"] = $login['Paciente'];
+                $_SESSION["tipo"] = 'paciente';
+                header("Location: ..\Views\perfil_paciente.php");
+                exit;
+            }
         }
+    }
+    else if ($action == "logout")
+    {
+            session_start();
+            unset($_SESSION["loggedin"]);
+            unset($_SESSION["id"]);
+            unset($_SESSION["tipo"]);
+
+            header("Location: ..\Views\index.php");
     }
 }
 
-function ValidaAcesso(){
+function ValidaAcesso(string $tipoUsuario){
     session_start();
-
-    if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+    
+    if(!isset($_SESSION["loggedin"]) || !$_SESSION["loggedin"] || $tipoUsuario != $_SESSION['tipo']){
         header("location: index.php");
         exit;
     }

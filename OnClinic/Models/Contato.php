@@ -20,7 +20,7 @@ class Contato
         return $this->medicoId;
     }
 
-    public function setMedicoId(int $id){
+    public function setMedicoId(?int $id){
         if (isset($this->medicoId)){
             return;
         }
@@ -32,7 +32,7 @@ class Contato
         return $this->pacienteId;
     }
 
-    public function setPacienteId(int $id){
+    public function setPacienteId(?int $id){
         if (isset($this->pacienteId)){
             return;
         }

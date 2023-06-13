@@ -38,6 +38,51 @@ class EnderecoRepository extends Repository
         }
     }
 
+    /**
+     * Cadastra o Endereço no banco de dados.
+     * @param Endereco $endereco Modelo que contém os dados do endereço.
+     * @throws PDOException caso ocorrer erro de sql.
+     */
+    public function alterarEndereco(Endereco $endereco)
+    {
+        $sql = "UPDATE ENDERECO SET
+            LOGRADOURO = '{$endereco->getLogradouro()}',
+            NUMERO = '{$endereco->getNumero()}',      
+            BAIRRO = '{$endereco->getBairro()}',
+            CIDADE = '{$endereco->getCidade()}',
+            UF = '{$endereco->getUF()}',
+            COMPLEMENTO = '{$endereco->getComplemento()}',
+                " . ($endereco->getMedicoId() ? "MEDICO = " . $endereco->getMedicoId() : "NULL") . ",
+                " . ($endereco->getPacienteId() ? " PACIENTE = " . $endereco->getPacienteId() : "NULL") . "
+            WHERE ID = {$endereco->getId()}";
+
+        try{
+            $this->db->executeCommand($sql);
+        } catch(PDOException $ex){
+            echo 'Ocorreu um erro ao alterar endereço.';
+            echo "<br><br> SQL Executada: {$sql}<br>";
+            throw $ex;
+        }
+    }
+
+    /**
+     * Exclui o Endereço no banco de dados.
+     * @param int $id id do endereço.
+     * @throws PDOException caso ocorrer erro de sql.
+     */
+    public function excluirEndereco(int $id)
+    {
+        $sql = "DELETE FROM ENDERECO WHERE ID = {$id}";
+
+        try{
+            $this->db->executeCommand($sql);
+        } catch(PDOException $ex){
+            echo 'Ocorreu um erro ao alterar endereço.';
+            echo "<br><br> SQL Executada: {$sql}<br>";
+            throw $ex;
+        }
+    }
+
 
     /**
      * Consulta endereço do médico no banco de dados.
@@ -56,7 +101,7 @@ class EnderecoRepository extends Repository
      */
     public function consultarEnderecoDoPaciente(int $pacienteId)
     {
-        return $this->consultarEnderecoPrincipal('PACIENTE', $pacienteId);
+        return $this->consultarEnderecoPrincipal('Campo', $pacienteId);
     }
 
 

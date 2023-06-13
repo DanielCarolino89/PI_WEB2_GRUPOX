@@ -24,6 +24,7 @@
         </div>                 
         <div id="navform">
             <form class="nav navbar d-flex" action="index.php" method="POST">
+                <input type="hidden" name="action" value="logar">
                 <label class="navcolor"><b>Login:</b></label>
                 <input class=" navform form-control me-2" name="login" id="login" style="width: 250px;" type="text" placeholder=""
                     aria-label="">

@@ -51,6 +51,73 @@ class PacienteRepository extends Repository
 
         return $this->queryFirstValue($sql);
     }
+
+    /**
+     * Consultar paciente no banco de dados
+     * @param int $id Id do pacinete.
+     * @return Paciente dados do paciente
+     * @throws PDOException caso ocorrer erro de sql.
+     */
+    public function consultaPaciente(int $id)
+    {
+        $sql = "SELECT 
+        id, 
+        nome,
+        nascimento,
+        cpf,
+        rg,
+        usuario,
+        senha
+        FROM PACIENTE
+        RIGHT JOIN LOGIN ON PACIENTE.LOGIN = LOGIN.USUARIO
+        WHERE ID = {$id};";
+
+        return $this->db->executeQuery($sql)->fetch();
+    }
+
+    /**
+     * Exclui paciente no banco de dados
+     * @param int $id Id do pacinete.
+     * @throws PDOException caso ocorrer erro de sql.
+     */
+    public function excluirPaciente(int $id)
+    {
+        $sql = "DELETE FROM PACIENTE WHERE ID = {$id}";
+
+        try{
+            $this->db->executeCommand($sql);
+            
+        } catch(PDOException $ex){
+            echo 'Ocorreu um erro ao excluir paciente.';
+            echo "<br><br> SQL Executada: {$sql}<br>";
+            throw $ex;
+        }
+    }
+
+    /**
+     * Altera o Paciente no banco de dados.
+     * @param Paciente $paciente Modelo que contém os dados do paciente.
+     * @throws PDOException caso ocorrer erro de sql.
+     */
+    public function alterarPaciente(Paciente $paciente)
+    {
+        $sql = "UPDATE PACIENTE SET
+            NOME = '{$paciente->getNome()}',
+            CPF = '{$paciente->getCPF()}',
+            RG = '{$paciente->getRG()}',
+            NASCIMENTO = '{$paciente->getDataNascimento()->format("yyyy/MM/dd")}'
+            WHERE ID = {$paciente->getId()}";
+
+        try{
+
+            $this->db->executeCommand($sql);
+            
+        } catch(PDOException $ex){
+            echo 'Ocorreu um erro ao alterar paciente.';
+            echo "<br><br> SQL Executada: {$sql}<br>";
+            throw $ex;
+        }
+    }
 }
 
 ?>

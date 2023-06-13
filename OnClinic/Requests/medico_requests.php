@@ -48,6 +48,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
 function carregarMedico(int $id){
     require_once('../Controller/MedicoController.php');
     $medicoControlador = new MedicoController();
-    return $medicoControlador->consultarDetalhesMedico($_GET['id']);   
+    return $medicoControlador->consultarDetalhesMedico($id);   
 }
 ?>

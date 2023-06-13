@@ -41,6 +41,54 @@ class MedicoRepository extends Repository
     }
 
     /**
+     * Altera o Médico no banco de dados.
+     * @param Medico $medico Modelo que contém os dados do médico.
+     * @throws PDOException caso ocorrer erro de sql.
+     */
+    public function alterarDadosMedico(Medico $medico)
+    {
+        $sql = "UPDATE MEDICO SET
+            NOME = '{$medico->getNome()}',
+            CRM = '{$medico->getCRM()}',
+            CPF = '{$medico->getCPF()}',
+            RG = '{$medico->getRG()}',
+            NASCIMENTO = '{$medico->getDataNascimento()->format("yyyy/MM/dd")}',
+            REMOTO = '{$medico->getAtendimentoRemoto()}',
+            SOBRE = '{$medico->getSobre()}'
+            WHERE ID = {$medico->getId()}";
+
+        try{
+
+            $this->db->executeCommand($sql);
+
+        } catch(PDOException $ex){
+            echo 'Ocorreu um erro ao alterar médico.';
+            echo "<br><br> SQL Executada: {$sql}<br>";
+            throw $ex;
+        }
+    }
+
+    /**
+     * Exclui o Médico no banco de dados.
+     * @param int $id id do médico
+     * @throws PDOException caso ocorrer erro de sql.
+     */
+    public function excluirMedico(int $id)
+    {
+        $sql = "DELETE FROM MEDICO WHERE ID = {$id}";
+
+        try{
+
+            $this->db->executeCommand($sql);
+
+        } catch(PDOException $ex){
+            echo 'Ocorreu um erro ao excluir médico.';
+            echo "<br><br> SQL Executada: {$sql}<br>";
+            throw $ex;
+        }
+    }
+
+    /**
      * Consulta através do CPF se o Médico já contém cadastro.
      * @param string $cpf CPF do médico que será consultado.
      * @return true Se já existir CPF vinculado a um cadastro
@@ -101,8 +149,19 @@ class MedicoRepository extends Repository
      */
     public function consultarDetalhesDoMedico(int $id)
     {
-        $sql = "SELECT ID, NOME as nome, CRM as crm, REMOTO as remoto, SOBRE as sobre, NASCIMENTO as nascimento
+        $sql = "SELECT 
+        id, 
+        nome,
+        crm,
+        remoto,
+        sobre,
+        nascimento,
+        cpf,
+        rg,
+        usuario,
+        senha
         FROM MEDICO
+        RIGHT JOIN LOGIN ON MEDICO.LOGIN = LOGIN.USUARIO
         WHERE ID = {$id};";
 
         return $this->db->executeQuery($sql)->fetch();

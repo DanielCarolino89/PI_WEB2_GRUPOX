@@ -69,11 +69,5 @@ class Medico extends Pessoa
     public function getEspecialidades(){
         return $this->especialidades; 
     }
-
-    public function getEspecialidadesFormatada(){
-        //implementar
-    }
 }
-
-
 ?>

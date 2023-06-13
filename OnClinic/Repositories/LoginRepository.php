@@ -14,6 +14,7 @@ class LoginRepository extends Repository
 
     /**
      * Cadastra o Login no banco de dados.
+     * @param Login $login Modelo que contém informações de usuário e senha.
      * @throws PDOException caso ocorrer erro de sql.
      */
     public function cadastrarLogin(Login $login)
@@ -28,6 +29,59 @@ class LoginRepository extends Repository
 
         } catch(PDOException $ex){
             echo 'Ocorreu um erro ao cadastrar login';
+            echo "<br><br> SQL Executada: {$sql}<br>";
+            throw $ex;
+        }
+    }
+
+    /**
+     * Carrega usuário pelo banco de dados.
+     * @param string $usuario usuario Carregado.
+     * @return Login dados do usuário.
+     * @throws PDOException caso ocorrer erro de sql.
+     */
+    public function consultarUsuario(string $usuario)
+    {
+        $sql = "SELECT usuario, senha FROM USUARIO WHERE USUARIO = {$usuario}";
+
+        return $this->db->executeQuery($sql)->fetch();
+    }
+
+    /**
+     * Alterar senha do usuário no banco de dados.
+     * @param Login $login Modelo que contém informações de usuário e senha.
+     * @throws PDOException caso ocorrer erro de sql.
+     */
+    public function alterarSenha(Login $login)
+    {
+        $sql = "UPDATE LOGIN SET SENHA = '{$login->getSenha()}' WHERE USUARIO = '{$login->getUsuario()}' ";
+
+        try{
+
+            $this->db->executeCommand($sql);
+
+        } catch(PDOException $ex){
+            echo 'Ocorreu um erro ao alterar senha do usuário';
+            echo "<br><br> SQL Executada: {$sql}<br>";
+            throw $ex;
+        }
+    }
+
+    /**
+     * Deleta usuário no banco de dados.
+     * @param string $usuario usuário que será deletado
+     * @throws PDOException caso ocorrer erro de sql.
+     */
+    public function deletarUsuario(string $usuario)
+    {
+        $sql = "DELETE LOGIN WHERE USUARIO = '{$usuario}'";
+
+        try{
+
+            $this->db->executeCommand($sql);
+
+        } catch(PDOException $ex){
+            echo 'Ocorreu um erro ao deletar usuario';
             echo "<br><br> SQL Executada: {$sql}<br>";
             throw $ex;
         }

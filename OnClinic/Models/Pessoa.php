@@ -61,7 +61,7 @@ abstract class Pessoa
         $this->endereco->setComplemento($dados['complemento']);
     }
 
-    private function atribuirLogin($dados)
+    public function atribuirLogin($dados)
     {
         if (!isset($dados['usuario'])){
             return;

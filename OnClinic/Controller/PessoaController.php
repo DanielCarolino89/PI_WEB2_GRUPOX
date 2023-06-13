@@ -29,7 +29,7 @@ abstract class PessoaController
         $loginRepository->cadastrarLogin($pessoa->getLogin());
     }
 
-        /**
+    /**
      * Cadastra endereço através do repositório utilizando uma conexão do banco de dados ativa.
      * @param Pessoa $pessoa Modelo que contém as informações do endereço.
      * @param Database $db Gerenciador de conexão do banco de dados
@@ -125,6 +125,7 @@ abstract class PessoaController
             $contato = new Contato();
             $contato->setId($dados['Id']);
             $contato->setMedicoId($dados['Medico'] ?? null);
+            $contato->setPacienteId($dados['Paciente'] ?? null);
             $contato->setTipo($dados['Tipo']);
             $contato->setDescricao($dados['Descricao']);
 

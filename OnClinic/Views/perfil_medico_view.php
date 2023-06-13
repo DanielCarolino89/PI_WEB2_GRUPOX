@@ -1,7 +1,7 @@
 <?php
 
 require '..\Requests\Sessao.php';
-ValidaAcesso();
+ValidaAcesso("paciente");
 
 if (!isset($_GET['id']))
 {

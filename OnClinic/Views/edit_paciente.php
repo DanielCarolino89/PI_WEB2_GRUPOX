@@ -1,10 +1,11 @@
 <?php
-session_start();
+require '..\Requests\Sessao.php';
+ValidaAcesso("paciente");
 
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION["tipo"] !== "paciente"){
-    header("location: index.php");
-    exit;
-}
+require '..\Requests\paciente_requests.php';
+$paciente = carregarPaciente($_SESSION['id']);
+$endereco = $paciente->getEndereco();
+$contatos = $paciente->getContatos();
 
 ?>
 
@@ -46,31 +47,31 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
                     <div class="col-md-8">
                         <input type="hidden" name="action" value="Cadastrar">
                         <label for="nome" class="form-label">Nome:</label>
-                        <input name="nome" type="text" class="form-control" id="nome" required>
+                        <input name="nome" type="text" class="form-control" id="nome" value="<?php echo $paciente->getNome(); ?>" required>
                     </div>
                     <div class="col-md-4">
                         <label for="nascimento" class="form-label">Data de Nascimento:</label>
-                        <input name="nascimento" type="date" class="form-control" id="nascimento" required>
+                        <input name="nascimento" type="date" class="form-control" id="nascimento" value="<?php echo $paciente->getDataNascimento()->format("yyyy/MM/dd"); ?>"  required>
                     </div>
                     <div class="col-md-4">
                         <label for="rg" class="form-label">RG:</label>
-                        <input name="rg" type="text" class="form-control" id="rg" required>
+                        <input name="rg" type="text" class="form-control" id="rg" value="<?php echo $paciente->getRG(); ?>" required>
                     </div>
                     <div class="col-md-4">
                         <label for="cpf" class="form-label">CPF:</label>
-                        <input name="cpf" type="text" class="form-control" id="cpf" required>
+                        <input name="cpf" type="text" class="form-control" id="cpf" value="<?php echo $paciente->getCPF(); ?>" required>
                     </div>
                     <div class="col-md-4">
                         <label for="principal" class="form-label">Telefone Principal:</label>
-                        <input name="contato[telefone]" type="numb" class="form-control" id="principal" required>
+                        <input name="contato[telefone]" type="numb" class="form-control" id="principal" value="<?php echo isset($contatos[0]) ? $contatos[0]?->getDescricao() : ''; ?>" required>
                     </div>
                     <div class="col-md-4">
                         <label for="whatsapp" class="form-label">Whatsapp:</label>
-                        <input name="contato[whatsapp]" type="numb" class="form-control" id="whatsapp" required>
+                        <input name="contato[whatsapp]" type="numb" class="form-control" id="whatsapp" value="<?php echo isset($contatos[2]) ? $contatos[2]?->getDescricao() : ""; ?>" required>
                     </div>
                     <div class="col-md-4">
                         <label for="email" class="form-label">E-mail:</label>
-                        <input name="contato[email]" type="mail" class="form-control" id="email"  autocomplete="on" required>
+                        <input name="contato[email]" type="mail" class="form-control" id="email" value="<?php echo isset($contatos[1]) ? $contatos[1]->getDescricao() : ''; ?>"  autocomplete="on" required>
                     </div>
                     <h2>Endereço:</h2><br>
                     <!-- Endereço paciente -->
@@ -80,49 +81,48 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
                     </div>
                     <div class="col-md-6">
                         <label for="logradouro" class="form-label">Logradouro:</label>
-                        <input name="logradouro" type="text" class="form-control" id="log" required>
+                        <input name="logradouro" type="text" class="form-control" id="log" value="<?php echo $endereco->getLogradouro(); ?>" required>
                     </div>
                     <div class="col-md-1">
                         <label for="numero" class="form-label">Nº:</label>
-                        <input name="numero" type="number" class="form-control" id="numero" required>
+                        <input name="numero" type="number" class="form-control" id="numero" value="<?php echo $endereco->getNumero(); ?>" required>
                     </div>
                     <div class="col-md-3">
                         <label for="complemento" class="form-label">Complemento:</label>
-                        <input name="complemento" type="text" class="form-control" id="complemento" required>
+                        <input name="complemento" type="text" class="form-control" id="complemento" value="<?php echo $endereco->getComplemento(); ?>" required>
                     </div>
                     <div class="col-md-5">
                         <label for="bairro" class="form-label">Bairro:</label>
-                        <input name="bairro" type="text" class="form-control" id="bairro" required>
+                        <input name="bairro" type="text" class="form-control" id="bairro" value="<?php echo $endereco->getBairro(); ?>" required>
                     </div>
                     <div class="col-md-5">
                         <label for="cidade" class="form-label">Cidade:</label>
-                        <input name="cidade" type="text" class="form-control" id="cidade" required>
+                        <input name="cidade" type="text" class="form-control" id="cidade" value="<?php echo $endereco->getCidade(); ?>" required>
                     </div>
                     <div class="col-md-2">
                         <label for="uf" class="form-label">UF:</label>
-                        <input name="uf" type="text" class="form-control" id="UF" required>
+                        <input name="uf" type="text" class="form-control" id="UF" value="<?php echo $endereco->getUF(); ?>" required>
                     </div>
 
                     <!-- Fim endereço paciente -->
                     <div class="Loginsenha row g-3">
                         <h2>Acesso ao sistema:</h2>
                         <div class="col-md-4">
-                            <label for="usuario" class="form-label">Login:</label>
-                            <input name="usuario" type="text" class="form-control" id="usuario" required>
+                            <input name="usuario" type="hidden" class="form-control" id="usuario" value="<?php echo $paciente->getLogin()->getUsuario(); ?>" required>
                             <div class="valid-feedback">
                                 Looks good!
                             </div>
                         </div>
                         <div class="col-md-4">
                             <label for="senha" class="form-label">Senha:</label>
-                            <input name="senha" type="password" class="form-control" id="senha" required>
+                            <input name="senha" type="password" class="form-control" id="senha" value="<?php echo $paciente->getLogin()->getSenha(); ?>" required>
                             <div class="valid-feedback">
                                 Looks good!
                             </div>
                         </div>
                         <div class="col-md-4">
                             <label for="resenha" class="form-label">Confirmação de Senha:</label>
-                            <input name="resenha" type="password" class="form-control" id="resenha" required>
+                            <input name="resenha" type="password" class="form-control" id="resenha" value="<?php echo $paciente->getLogin()->getSenha(); ?>" required>
                             <div class="valid-feedback">
                                 Looks good!
                             </div>

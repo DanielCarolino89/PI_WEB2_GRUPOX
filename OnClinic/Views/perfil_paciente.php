@@ -1,20 +1,10 @@
 <?php
 
-session_start();
+require '..\Requests\Sessao.php';
+ValidaAcesso("paciente");
 
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION["tipo"] !== "paciente"){
-    header("location: index.php");
-    exit;
-}
-
-if($_SERVER["REQUEST_METHOD"] == "POST")
-{
-    $_SESSION['loggedin'] = FALSE;
-    $_SESSION["id"] = null;
-    $_SESSION["tipo"] = null;
-
-    header("Location: ..\Views\index.php");
-}
+require '..\Requests\paciente_requests.php';
+$paciente = carregarPaciente($_SESSION['id']);
 
 ?>
 
@@ -45,8 +35,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         <div id="navform">
             <div class="navbar d-flex">
                 <h2>Perfil Paciente</h2>
-                <form action="perfil_paciente.php" method="post">
-                    <button class="btn btn-outline-success">Sair</button></a>
+                <form method="post">
+                    <input type="hidden" name="action" value="logout">
+                    <button class="btn btn-outline-success">Logout</button></a>
                 </form>
             </div>
         </div>       
@@ -66,7 +57,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 
                             </th>
                             <th class="dropdown">
-                                <h1>NOME DO PACIENTE</h1>
+                                <h1>Bem Vindo</h1>
+                                <h1><?php echo $paciente->getNome(); ?></h1>
                                 <br><br><br>
                                 <!-- inicio dropdown's -->
                                 <div class="btn-group">
@@ -85,9 +77,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                             <th class="dropdown" colspan="2" style="padding-top:30px">
                                 <h2>Dados do paciente:</h2>
                                 <div style="border-style:outset;border-color:lightgreen;width:100%;">
-                                    DADOS PACIENTE DADOS PACIENTE DADOS PACIENTE DADOS PACIENTE DADOS PACIENTE DADOS
-                                    PACIENTE DADOS PACIENTE DADOS PACIENTE DADOS PACIENTE DADOS PACIENTE DADOS PACIENTE
-                                    DADOS PACIENTE DADOS PACIENTE DADOS PACIENTE DADOS PACIENTE DADOS PACIENTE
+                                    <?php
+                                        echo 'CPF: ';
+                                        echo $paciente->getCPF();
+                                        echo '<br>';
+                                        echo 'RG: ';
+                                        echo $paciente->getRG();
+                                        echo '<br>';
+                                    ?>
                                 </div>
                             </th>
                         </tr>

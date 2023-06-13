@@ -34,6 +34,26 @@ class EspecialidadeRepository extends Repository
     }
 
     /**
+     * Exclui as Especialidades do Médico no banco de dados.
+     * @param int $id id do médico.
+     * @throws PDOException caso ocorrer erro de sql.
+     */
+    public function excluirEspecialidadesDoMedico(int $id)
+    {
+        $sql = "DELETE FROM ESPECIALIDADE WHERE MEDICO = {$id}";
+
+        try{
+
+            $this->db->executeCommand($sql);
+
+        } catch(PDOException $ex){
+            echo 'Ocorreu um erro ao excluir especialidade.';
+            echo "<br><br> SQL Executada: {$sql}<br>";
+            throw $ex;
+        }
+    }
+
+    /**
      * Consulta especialidade do médico no banco de dados.
      * @param int $id Id do médico que será realizada a consulta.
      * @return array dados da especialidade.

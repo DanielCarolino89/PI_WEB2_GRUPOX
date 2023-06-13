@@ -83,6 +83,36 @@ class MedicoController extends PessoaController
         }
     }
 
+    public function editarMedico(int $id, $dados)
+    {
+        $db = new Database();
+        $this->medicoRepository = new MedicoRepository($db);
+
+        if ($this->medicoRepository->consultaSeCPFJaExiste($dados['cpf'])){
+            Uteis::ShowAlert('CPF já cadastrado', 'Não é permitido ter mais de um cadastro por CPF');
+            return;
+        }
+
+        if ($this->consultaSeUsuarioJaExiste($dados['usuario'], $db)){
+            Uteis::ShowAlert('Usuário já cadastrado!', 'Por favor informe outro usuário para cadastrar-se');
+            return;
+        }
+
+        $medico = new Medico($dados);
+
+        $db->BeginTransaction();
+
+        try
+        {
+
+        }
+        catch(Exception $ex)
+        {
+            $db->Rollback();
+            echo $ex->getMessage();
+        }
+    }
+
     /**
      * Inicia conexão com banco de dados e realiza busca de médicos conforme filtros aplicados através do repositório
      * @param string $conteudo conteúdo que será aplicado o filtro.
@@ -112,16 +142,17 @@ class MedicoController extends PessoaController
      * @return Medico dados completos do médico
      */
     public function consultarDetalhesMedico(int $idMedico){
+        
         $db = new Database();
         $medicoRepository = new MedicoRepository($db);
 
         $db->beginTransaction();
 
         try{
-            $dadosMedico = $medicoRepository->consultarDetalhesDoMedico($idMedico);
             
+            $dadosMedico = $medicoRepository->consultarDetalhesDoMedico($idMedico);
             $medico = new Medico($dadosMedico);
-            $medico->setId($dadosMedico['ID']);
+            $medico->setId($dadosMedico['id']);
 
             $this->carregarEspecialidades($medico, $db);
             $this->carregarContatos($medico, $db);

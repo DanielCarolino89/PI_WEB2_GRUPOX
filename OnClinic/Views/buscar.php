@@ -1,7 +1,7 @@
 <?php 
 
 require '..\Requests\Sessao.php';
-ValidaAcesso();
+ValidaAcesso("paciente");
 
 require '..\Requests\medico_requests.php';
 
