@@ -38,9 +38,8 @@
             <div class="cadastro bg-light">
                 <h2>Insira seus dados para realizar o cadastro:</h2><br>
                 <!--Inicio Dados do médico -->
-                <form action="../Requests/medico_requests.php" method="post" class="row g-3 needs-validation" novalidate>
+                <form method="post" class="row g-3 needs-validation" novalidate>
                     <div class="col-md-8">
-                        <input type="hidden" name="action" value="Cadastrar">
                         <label for="nome" class="form-label">Nome:</label>
                         <input name="nome" type="text" class="form-control" id="nome" required>
                     </div>
@@ -162,7 +161,7 @@
                         </div>
                     </div><br>
                     <div class="col-12">
-                        <input type="submit" class="btn btn-success" id="cadastrar" value="CADASTRAR"></input>
+                        <input type="submit" name="action" class="btn btn-success" id="cadastrar" value="Cadastrar"></input>
                     </div>
                 </form>
             </div>

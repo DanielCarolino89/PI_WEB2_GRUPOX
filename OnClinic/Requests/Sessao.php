@@ -48,12 +48,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     }
     else if ($action == "logout")
     {
-            session_start();
-            unset($_SESSION["loggedin"]);
-            unset($_SESSION["id"]);
-            unset($_SESSION["tipo"]);
+        session_start();
+        Logout();
 
-            header("Location: ..\Views\index.php");
     }
 }
 
@@ -64,6 +61,14 @@ function ValidaAcesso(string $tipoUsuario){
         header("location: index.php");
         exit;
     }
+}
+
+function Logout(){
+    unset($_SESSION["loggedin"]);
+    unset($_SESSION["id"]);
+    unset($_SESSION["tipo"]);
+
+    header("Location: ..\Views\index.php");
 }
 
 ?>

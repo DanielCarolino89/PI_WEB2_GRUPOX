@@ -4,7 +4,7 @@ $medicoControlador = new MedicoController();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
-    if (!isset($_GET['action'])){
+    if (!isset($_POST['action'])){
         return;
     }
 
@@ -15,17 +15,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     }
     else if ($action == 'Editar')
     {
-
+        $medicoControlador->editarMedico($_SESSION['id'], $_POST);
+            
     }
     else if ($action == 'Excluir')
     {
-
+        $medicoControlador->apagarMedico($_SESSION['id']);
+        Logout();
+    }
+    else if ($action == 'ExcluirEspecialidades')
+    {
+        $medicoControlador->apagarEspecialidades($_SESSION['id']);
     }
     else
     {
 
     }
 }
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 $medicoDetalhado = null;
 if ($_SERVER['REQUEST_METHOD'] == 'GET')

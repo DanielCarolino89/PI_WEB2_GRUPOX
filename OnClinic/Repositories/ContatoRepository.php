@@ -41,10 +41,17 @@ class ContatoRepository extends Repository
     public function atualizarContato(Contato $contato)
     {
         $sql = "UPDATE CONTATO SET 
-        TIPO = {$contato->getTipo()}, 
-        DESCRICAO = {$contato->getDescricao()};";
+        TIPO = '{$contato->getTipo()}', 
+        DESCRICAO = '{$contato->getDescricao()}'
+        WHERE ID = {$contato->getId()}";
 
-        $this->db->executeCommand($sql);
+        try{
+            $this->db->executeCommand($sql);
+        } catch(PDOException $ex){
+            echo 'Ocorreu um erro ao atualizar contato.';
+            echo "<br><br> SQL Executada: {$sql}<br>";
+            throw $ex;
+        }
     }
 
     /**
@@ -89,7 +96,39 @@ class ContatoRepository extends Repository
     {
         $sql = "DELETE FROM CONTATO WHERE ID = {$id};";
 
-        $this->db->executeCommand($sql);
+        try{
+            $this->db->executeCommand($sql);
+        } catch(PDOException $ex){
+            echo 'Ocorreu um erro ao excluir contato.';
+            echo "<br><br> SQL Executada: {$sql}<br>";
+            throw $ex;
+        }
+    }
+
+    public function excluirContatosDoMedico(int $id)
+    {
+        $sql = "DELETE FROM CONTATO WHERE MEDICO = {$id};";
+
+        try{
+            $this->db->executeCommand($sql);
+        } catch(PDOException $ex){
+            echo 'Ocorreu um erro ao excluir contato.';
+            echo "<br><br> SQL Executada: {$sql}<br>";
+            throw $ex;
+        }
+    }
+
+    public function excluirContatosDoPaciente(int $id)
+    {
+        $sql = "DELETE FROM CONTATO WHERE PACIENTE = {$id};";
+
+        try{
+            $this->db->executeCommand($sql);
+        } catch(PDOException $ex){
+            echo 'Ocorreu um erro ao excluir contato.';
+            echo "<br><br> SQL Executada: {$sql}<br>";
+            throw $ex;
+        }
     }
 }
 

@@ -74,7 +74,7 @@ class LoginRepository extends Repository
      */
     public function deletarUsuario(string $usuario)
     {
-        $sql = "DELETE LOGIN WHERE USUARIO = '{$usuario}'";
+        $sql = "DELETE FROM LOGIN WHERE USUARIO = '{$usuario}'";
 
         try{
 

@@ -13,7 +13,6 @@ btn_Excluir.addEventListener('click', function(event)
       if (result.isConfirmed) {
 
         // executar exclusão
-       
         Swal.fire('Excluído!', 'O registro foi excluído com sucesso.', 'success');
       } 
     });

@@ -29,6 +29,13 @@ abstract class PessoaController
         $loginRepository->cadastrarLogin($pessoa->getLogin());
     }
 
+    protected function alterarSenha(Pessoa $pessoa, Database $db)
+    {
+        require_once('../Repositories/LoginRepository.php');
+        $loginRepository = new LoginRepository($db);
+        $loginRepository->alterarSenha($pessoa->getLogin());
+    }
+
     /**
      * Cadastra endereço através do repositório utilizando uma conexão do banco de dados ativa.
      * @param Pessoa $pessoa Modelo que contém as informações do endereço.
@@ -69,6 +76,13 @@ abstract class PessoaController
         }
 
         $pessoa->atribuirEndereco($endereco);
+    }
+
+    protected function alterarEndereco(Pessoa $pessoa, Database $db)
+    {
+        require_once('../Repositories/EnderecoRepository.php');
+        $enderecoRepository = new EnderecoRepository($db);
+        $enderecoRepository->alterarEndereco($pessoa->getEndereco());
     }
 
     /**
@@ -121,7 +135,6 @@ abstract class PessoaController
         require_once '../Models/Contato.php';
         foreach($contatos as $dados)
         {
-
             $contato = new Contato();
             $contato->setId($dados['Id']);
             $contato->setMedicoId($dados['Medico'] ?? null);
@@ -130,6 +143,59 @@ abstract class PessoaController
             $contato->setDescricao($dados['Descricao']);
 
             $pessoa->addContato($contato);
+        }
+    }
+
+    protected function alterarContatos(Pessoa $pessoa, Database $db)
+    {
+        require_once('../Repositories/ContatoRepository.php');
+        $contatoRepository = new ContatoRepository($db);
+        foreach($pessoa->getContatos() as $contato){
+            $contatoRepository->atualizarContato($contato);
+        }
+    }
+
+    protected function setarIdDosContatos(Pessoa $pessoa, $dados)
+    {
+        $contatos = $pessoa->getContatos();
+        $setIdPessoa = function($contato) use($pessoa){
+            if ($pessoa instanceof Medico){
+                $contato->setMedicoId($pessoa->getId());
+            }
+            else {
+                $contato->setPacienteId($pessoa->getId());
+            }
+        };
+
+        if (isset($dados['telefoneId'])){
+            $contato = $contatos['telefone'];
+            $contato->setId($dados['telefoneId']);  
+            $setIdPessoa($contato); 
+        }
+
+        if (isset($dados['whatsappId'])){
+            $contato = $contatos['whatsapp'];
+            $contato->setId($dados['whatsappId']);   
+            $setIdPessoa($contato);     
+        }
+
+        if (isset($dados['emailId'])){
+            $contato = $contatos['email'];
+            $contato->setId($dados['emailId']);
+            $setIdPessoa($contato);        
+        }
+
+    }
+
+    protected function setarIdDoEndereco(Pessoa $pessoa, $dados)
+    {
+        $endereco = $pessoa->getEndereco();
+        $endereco->setId($dados['enderecoId']);
+
+        if ($pessoa instanceof Medico){
+            $endereco->setMedicoId($pessoa->getId());
+        } else{
+            $endereco->setPacienteId($pessoa->getId());
         }
     }
 }

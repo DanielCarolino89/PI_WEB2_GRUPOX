@@ -102,6 +102,19 @@ class MedicoRepository extends Repository
     }
 
     /**
+     * Consulta através do CPF se o Id do Médico;
+     * @param string $cpf CPF do médico que será consultado.
+     * @return int id do médico.
+     * @throws PDOException caso ocorrer erro de sql.
+     */
+    public function consultaIdPorCPF(string $cpf) : int
+    {
+        $sql = "SELECT id from Medico where CPF = '{$cpf}'";
+
+        return $this->queryFirstValue($sql);
+    }
+
+    /**
      * Realiza busca de médicos conforme filtros aplicados.
      * @param string $conteudo conteúdo que será aplicado o filtro.
      * @param string $filtro Filtro em que será realizada a busca.
@@ -165,6 +178,20 @@ class MedicoRepository extends Repository
         WHERE ID = {$id};";
 
         return $this->db->executeQuery($sql)->fetch();
+    }
+
+    public function consultarUsuarioDoMedico(int $id)
+    {
+        $sql = "SELECT Login FROM MEDICO WHERE ID = {$id}";
+
+        return $this->queryFirstValue($sql);
+    }
+
+    public function removerAssociacaoLogin(int $id)
+    {
+        $sql = "UPDATE MEDICO SET LOGIN = NULL WHERE ID = {$id}";
+
+        $this->db->executeCommand($sql);
     }
 }
 ?>

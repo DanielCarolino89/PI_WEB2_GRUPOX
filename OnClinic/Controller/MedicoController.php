@@ -88,22 +88,30 @@ class MedicoController extends PessoaController
         $db = new Database();
         $this->medicoRepository = new MedicoRepository($db);
 
-        if ($this->medicoRepository->consultaSeCPFJaExiste($dados['cpf'])){
+        if ($this->medicoRepository->consultaSeCPFJaExiste($dados['cpf']) 
+        && $id !== $this->medicoRepository->consultaIdPorCPF($dados['cpf'])){
             Uteis::ShowAlert('CPF já cadastrado', 'Não é permitido ter mais de um cadastro por CPF');
             return;
         }
 
-        if ($this->consultaSeUsuarioJaExiste($dados['usuario'], $db)){
-            Uteis::ShowAlert('Usuário já cadastrado!', 'Por favor informe outro usuário para cadastrar-se');
-            return;
-        }
-
         $medico = new Medico($dados);
+        $medico->setId($id);
 
+        $this->setarIdDoEndereco($medico, $dados);
+        $this->setarIdDosContatos($medico, $dados);
+        
         $db->BeginTransaction();
 
         try
         {
+            $this->alterarSenha($medico, $db);
+            $this->alterarContatos($medico, $db);
+            $this->alterarEndereco($medico, $db);
+            $this->alterarEspecialidades($dados['especialidadeQtd'], $medico, $db);
+
+            $this->medicoRepository->alterarDadosMedico($medico);
+
+            $db->commit();
 
         }
         catch(Exception $ex)
@@ -160,6 +168,45 @@ class MedicoController extends PessoaController
 
             return $medico;
             
+            
+        }
+        catch(Exception $ex)
+        {
+            $db->Rollback();
+            echo $ex->getMessage();
+        }
+    }
+
+    public function apagarMedico(int $id)
+    {
+        $db = new Database();
+        $this->medicoRepository = new MedicoRepository($db);
+
+        $db->beginTransaction();
+
+        try{
+            $usuario = $this->medicoRepository->consultarUsuarioDoMedico($id);
+            $this->medicoRepository->removerAssociacaoLogin($id);
+
+            require_once('../Repositories/LoginRepository.php');
+            $loginRepository = new LoginRepository($db);
+            $loginRepository->deletarUsuario($usuario);
+
+            require_once('../Repositories/EspecialidadeRepository.php');
+            $especialidadeRepository = new EspecialidadeRepository($db);
+            $especialidadeRepository->excluirEspecialidadesDoMedico($id);
+
+            require_once('../Repositories/EnderecoRepository.php');
+            $enderecoRepository = new EnderecoRepository($db);
+            $enderecoRepository->excluirEnderecoDoMedico($id);
+
+            require_once('../Repositories/ContatoRepository.php');
+            $contatoRepository = new ContatoRepository($db);
+            $contatoRepository->excluirContatosDoMedico($id);
+
+            $this->medicoRepository->excluirMedico($id);
+
+            $db->commit();
         }
         catch(Exception $ex)
         {
@@ -190,6 +237,32 @@ class MedicoController extends PessoaController
 
             $medico->addEspecialidade($especialidade);
         }
+    }
+
+    /**
+     * Apaga especialidades do médico através do repositório utilizando uma nova conexão do banco de addos
+     * @param int $id Id do médico.
+     */
+    public function apagarEspecialidades(int $id)
+    {
+        $db = new Database();
+
+        require_once('../Repositories/EspecialidadeRepository.php');
+        $especialidadeRepository = new EspecialidadeRepository($db);
+
+        $especialidadeRepository->excluirEspecialidadesDoMedico($id);
+    }
+
+    private function alterarEspecialidades(int $especialidadeQtd, Medico $medico, Database $db){
+        require_once('../Repositories/EspecialidadeRepository.php');
+        $especialidadeRepository = new EspecialidadeRepository($db);
+        
+        for ($i = $especialidadeQtd; $i < count($medico->getEspecialidades()); $i++){
+            $especialidade = $medico->getEspecialidades()[$i];
+            $especialidade->setMedicoId($medico->getId());
+            $especialidadeRepository->registrarEspecialidade($especialidade);
+        }
+        
     }
 }
 

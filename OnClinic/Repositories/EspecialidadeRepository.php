@@ -21,7 +21,6 @@ class EspecialidadeRepository extends Repository
             '{$especialidade->getDescricao()}',
             '{$especialidade->getFaixaEtaria()}',
             {$especialidade->getMedicoId()});";
-
         try{
 
             $this->db->executeCommand($sql);

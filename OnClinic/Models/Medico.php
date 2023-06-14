@@ -31,14 +31,13 @@ class Medico extends Pessoa
         if (!isset($dados['especialidades'])){
             return;
         }
-
+        
         $linha = explode("\n", $dados['especialidades']);
         foreach($linha as $conteudo)
         {
-            if (empty($conteudo)){
+            if (empty($conteudo) || trim($conteudo) == ''){
                 continue;
             }            
-
             $especialidadeDados = explode("\t\t", $conteudo);
             
             $especialidade = new Especialidade();

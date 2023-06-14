@@ -52,8 +52,8 @@ class EnderecoRepository extends Repository
             CIDADE = '{$endereco->getCidade()}',
             UF = '{$endereco->getUF()}',
             COMPLEMENTO = '{$endereco->getComplemento()}',
-                " . ($endereco->getMedicoId() ? "MEDICO = " . $endereco->getMedicoId() : "NULL") . ",
-                " . ($endereco->getPacienteId() ? " PACIENTE = " . $endereco->getPacienteId() : "NULL") . "
+            MEDICO = " . ($endereco->getMedicoId() ? $endereco->getMedicoId() : "NULL") . ",
+            CAMPO = " . ($endereco->getPacienteId() ?  $endereco->getPacienteId() : "NULL") . "
             WHERE ID = {$endereco->getId()}";
 
         try{
@@ -83,6 +83,34 @@ class EnderecoRepository extends Repository
         }
     }
 
+    public function excluirEnderecoDoMedico(int $id)
+    {
+        $sql = "DELETE FROM ENDERECO WHERE MEDICO = {$id}";
+
+        try{
+            $this->db->executeCommand($sql);
+        } catch(PDOException $ex){
+            echo 'Ocorreu um erro ao alterar endereço.';
+            echo "<br><br> SQL Executada: {$sql}<br>";
+            throw $ex;
+        }
+    }
+
+    public function excluirEnderecoDoPaciente(int $id)
+    {
+        $sql = "DELETE FROM ENDERECO WHERE PACIENTE = {$id}";
+
+        try{
+            $this->db->executeCommand($sql);
+        } catch(PDOException $ex){
+            echo 'Ocorreu um erro ao alterar endereço.';
+            echo "<br><br> SQL Executada: {$sql}<br>";
+            throw $ex;
+        }
+    }
+
+
+
 
     /**
      * Consulta endereço do médico no banco de dados.
@@ -101,7 +129,7 @@ class EnderecoRepository extends Repository
      */
     public function consultarEnderecoDoPaciente(int $pacienteId)
     {
-        return $this->consultarEnderecoPrincipal('Campo', $pacienteId);
+        return $this->consultarEnderecoPrincipal('PACIENTE', $pacienteId);
     }
 
 
@@ -113,7 +141,7 @@ class EnderecoRepository extends Repository
      */
     private function consultarEnderecoPrincipal(string $pessoa, int $id)
     {
-        $sql = "SELECT id, logradouro, numero, bairro, cidade, uf, complemento
+        $sql = "SELECT id as enderecoId, logradouro, numero, bairro, cidade, uf, complemento
         FROM ENDERECO
         WHERE {$pessoa} = {$id}";
 

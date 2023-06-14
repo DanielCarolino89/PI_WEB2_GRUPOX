@@ -36,7 +36,7 @@
         <center>
             <div class="cadastro bg-light">
                 <h2>Insira seus dados para realizar o cadastro:</h2><br>
-                <form action="../Requests/paciente_requests.php" method="post" class="row g-3 needs-validation" novalidate>
+                <form method="post" class="row g-3 needs-validation" novalidate>
                     <div class="col-md-8">
                         <input type="hidden" name="action" value="Cadastrar">
                         <label for="nome" class="form-label">Nome:</label>

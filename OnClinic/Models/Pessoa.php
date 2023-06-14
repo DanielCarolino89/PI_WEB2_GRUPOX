@@ -53,6 +53,10 @@ abstract class Pessoa
 
         require_once('Endereco.php');
         $this->endereco = new Endereco();
+        
+        if (isset($dados['enderecoId'])){
+            $this->endereco->setId($dados['enderecoId']);
+        }
         $this->endereco->setLogradouro($dados['logradouro']);
         $this->endereco->setNumero($dados['numero']);
         $this->endereco->setBairro($dados['bairro']);
@@ -107,7 +111,7 @@ abstract class Pessoa
     }  
 
     public function addContato(Contato $contato){
-        $this->contatos[] = $contato;
+        $this->contatos[$contato->getTipo()] = $contato;
     }
 
     public function getContatos(){

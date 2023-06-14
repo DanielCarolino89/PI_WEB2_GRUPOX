@@ -62,8 +62,10 @@ $medico = carregarMedico($_SESSION['id']);
                                 <!-- inicio dropdown's -->
                                 <div class="btn-group">
                                     <a href="edit_medico.php" class="btn btn-warning btn-lg"><b>EDITAR</b></a>
-                                    <button class="btn btn-danger btn-lg" id="excluir"
+                                    <form method="post">
+                                    <button type="submit" name="action" value="Excluir" class="btn btn-danger btn-lg" id="excluir"
                                         style="margin-left: 30px;"><b>DELETAR</b></button>
+                                    </form>
                                 </div>
 
                                 <!--  dropdown's -->
