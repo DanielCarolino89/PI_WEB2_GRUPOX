@@ -63,7 +63,27 @@ function ValidaAcesso(string $tipoUsuario){
     }
 }
 
+function VerificaSeJaEstaLogado()
+{
+    if (session_status() !== PHP_SESSION_ACTIVE){
+        session_start();
+    }
+
+    if (!isset($_SESSION["loggedin"]) || !$_SESSION["loggedin"]){
+        return;
+    }
+
+    if ($_SESSION["tipo"] == "medico"){
+        header("location: perfil_medico.php");
+    }
+    else if ($_SESSION["tipo"] == "paciente"){
+        header("location: perfil_paciente.php");
+    }
+}
+
 function Logout(){
+    $_SESSION["loggedin"] = false;
+    
     unset($_SESSION["loggedin"]);
     unset($_SESSION["id"]);
     unset($_SESSION["tipo"]);

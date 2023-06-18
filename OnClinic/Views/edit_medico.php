@@ -204,3 +204,9 @@ $contatos = $medico->getContatos();
 </body>
 
 </html>
+
+<?php
+    if (Notificator::ContainsMessage()){
+        Notificator::ShowMessage();
+    }
+?>

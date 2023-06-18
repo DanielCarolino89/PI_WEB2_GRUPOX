@@ -3,7 +3,6 @@
 require('PessoaController.php');
 require('../Models/Paciente.php');
 require('../Repositories/PacienteRepository.php');
-require_once('../Models/Uteis.php');
 require_once('../Models/Database.php');
 
 class PacienteController extends PessoaController
@@ -26,12 +25,12 @@ class PacienteController extends PessoaController
         $db = new Database();
         $pacienteRepository = new PacienteRepository($db);
         if ($pacienteRepository->consultaSeCPFJaExiste($dados['cpf'])){
-            Uteis::ShowAlert('CPF já cadastrado', 'Não é permitido ter mais de um cadastro por CPF');
+            Notificator::Alert('CPF já cadastrado', 'Não é permitido ter mais de um cadastro por CPF');
             return;
         }
 
         if ($this->consultaSeUsuarioJaExiste($dados['usuario'], $db)){
-            Uteis::ShowAlert('Usuário já cadastrado!', 'Por favor informe outro usuário para cadastrar-se');
+            Notificator::Alert('Usuário já cadastrado!', 'Por favor informe outro usuário para cadastrar-se');
             return;
         }
         
@@ -46,12 +45,12 @@ class PacienteController extends PessoaController
             $this->registrarContatos($paciente, $db);
 
             $db->Commit();
-            Uteis::ShowAlert('Usuário cadastrado com sucesso!', 'success');
+            Notificator::Inform('Usuário cadastrado com sucesso!', '');
         }
         catch(Exception $ex)
         {
             $db->Rollback();
-            echo $ex->getMessage();
+            Notificator::Error("Erro", "Falha ao cadastrar paciente!");
         }
     }
 
@@ -65,8 +64,6 @@ class PacienteController extends PessoaController
 
         $db = new Database();
         $pacienteRepository = new PacienteRepository($db);
-
-        $db->beginTransaction();
 
         try{
             $dadosPaciente = $pacienteRepository->consultaPaciente($id);
@@ -83,7 +80,7 @@ class PacienteController extends PessoaController
         catch(Exception $ex)
         {
             $db->Rollback();
-            echo $ex->getMessage();
+            Notificator::Error("Erro", "Falha ao consultar dados do paciente!");
         }
     }
 
@@ -94,7 +91,7 @@ class PacienteController extends PessoaController
 
         if ($pacienteRepository->consultaSeCPFJaExiste($dados['cpf']) 
         && $id !== $pacienteRepository->consultaIdPorCPF($dados['cpf'])){
-            Uteis::ShowAlert('CPF já cadastrado', 'Não é permitido ter mais de um cadastro por CPF');
+            Notificator::Alert('CPF já cadastrado', 'Não é permitido ter mais de um cadastro por CPF');
             return;
         }
 
@@ -114,12 +111,12 @@ class PacienteController extends PessoaController
             $pacienteRepository->alterarPaciente($paciente);
 
             $db->commit();
-            Uteis::ShowAlert('Cadastro alterado com sucesso!','success');
+            Notificator::Inform('Cadastro alterado com sucesso!','');
             
         }
         catch(Exception $ex){
             $db->rollback();
-            echo $ex->getMessage();
+            Notificator::Error("Erro", "Falha ao alterar dados do paciente!");
         }
     }
 
@@ -148,13 +145,16 @@ class PacienteController extends PessoaController
             $contatoRepository->excluirContatosDoPaciente($id);
 
             $pacienteRepository->excluirPaciente($id);
-
+            Notificator::Inform('Paciente excluído com sucesso!' ,'');
+            
             $db->commit();
+            
         }
         catch(Exception $ex)
         {
             $db->rollback();
-            echo $ex->getMessage();
+            Notificator::Error("Erro", "Falha ao excluir paciente!");
+            
         }
     }
 }

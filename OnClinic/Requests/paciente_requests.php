@@ -1,4 +1,5 @@
 <?php
+require_once('../Models/Notificator.php');
 
 require_once('../Controller/PacienteController.php');
 $pacienteControlador = new PacienteController();

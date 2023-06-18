@@ -3,7 +3,6 @@
 require('PessoaController.php');
 require('../Models/Medico.php');
 require('../Repositories/MedicoRepository.php');
-require_once('../Models/Uteis.php');
 require_once('../Models/Database.php');
 
 /**
@@ -35,12 +34,12 @@ class MedicoController extends PessoaController
         $this->medicoRepository = new MedicoRepository($db);
 
         if ($this->medicoRepository->consultaSeCPFJaExiste($dados['cpf'])){
-            Uteis::ShowAlert('CPF já cadastrado', 'Não é permitido ter mais de um cadastro por CPF');
+            Notificator::Alert('CPF já cadastrado', 'Não é permitido ter mais de um cadastro por CPF');
             return;
         }
 
         if ($this->consultaSeUsuarioJaExiste($dados['usuario'], $db)){
-            Uteis::ShowAlert('Usuário já cadastrado!', 'Por favor informe outro usuário para cadastrar-se');
+            Notificator::Alert('Usuário já cadastrado!', 'Por favor informe outro usuário para cadastrar-se');
             return;
         }
 
@@ -57,13 +56,13 @@ class MedicoController extends PessoaController
             $this->registrarContatos($medico, $db);
            
             $db->Commit();
-            Uteis::ShowAlert('Usuário cadastrado com sucesso!' ,'success');
+            Notificator::Inform('Usuário cadastrado com sucesso!' ,'');
             
         }
         catch(Exception $ex)
         {
             $db->Rollback();
-            echo $ex->getMessage();
+            Notificator::Error("Erro", "Falha ao cadastrar médico!");
         }
     }
 
@@ -91,7 +90,7 @@ class MedicoController extends PessoaController
 
         if ($this->medicoRepository->consultaSeCPFJaExiste($dados['cpf']) 
         && $id !== $this->medicoRepository->consultaIdPorCPF($dados['cpf'])){
-            Uteis::ShowAlert('CPF já cadastrado', 'Não é permitido ter mais de um cadastro por CPF');
+            Notificator::Alert('CPF já cadastrado', 'Não é permitido ter mais de um cadastro por CPF');
             return;
         }
 
@@ -113,13 +112,13 @@ class MedicoController extends PessoaController
             $this->medicoRepository->alterarDadosMedico($medico);
 
             $db->commit();
-            Uteis::ShowAlert('Cadastro alterado com sucesso!', 'success');
+            Notificator::Inform('Cadastro alterado com sucesso!', '');
 
         }
         catch(Exception $ex)
         {
             $db->rollback();
-            echo $ex->getMessage();
+            Notificator::Error("Erro", "Falha ao editar dados do médico!");
         }
     }
 
@@ -175,7 +174,7 @@ class MedicoController extends PessoaController
         catch(Exception $ex)
         {
             $db->Rollback();
-            echo $ex->getMessage();
+            Notificator::Error("Erro", "Falha ao consultar dados do médico!");
         }
     }
 
@@ -207,13 +206,14 @@ class MedicoController extends PessoaController
             $contatoRepository->excluirContatosDoMedico($id);
 
             $this->medicoRepository->excluirMedico($id);
+            Notificator::Inform('Médico excluído com sucesso!' ,'');
 
             $db->commit();
         }
         catch(Exception $ex)
         {
             $db->Rollback();
-            echo $ex->getMessage();
+            Notificator::Error("Erro", "Falha ao excluir cadastro do médico!");
         }
     }
 
@@ -249,10 +249,14 @@ class MedicoController extends PessoaController
     {
         $db = new Database();
 
-        require_once('../Repositories/EspecialidadeRepository.php');
-        $especialidadeRepository = new EspecialidadeRepository($db);
-
-        $especialidadeRepository->excluirEspecialidadesDoMedico($id);
+        try{
+            require_once('../Repositories/EspecialidadeRepository.php');
+            $especialidadeRepository = new EspecialidadeRepository($db);
+            $especialidadeRepository->excluirEspecialidadesDoMedico($id);
+        }
+        catch (Exception){
+            Notificator::Error("Erro", "Falha ao apagar especialidades médico!");
+        }
     }
 
     private function alterarEspecialidades(int $especialidadeQtd, Medico $medico, Database $db){

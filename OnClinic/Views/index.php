@@ -1,5 +1,8 @@
 <?php      
-   require '..\Requests\Sessao.php';
+    require_once ('../Models/Notificator.php');
+    require '..\Requests\Sessao.php';
+
+    VerificaSeJaEstaLogado();
 ?>
 
 <!DOCTYPE html>
@@ -130,4 +133,10 @@
 </body>
 
 </html>
+
+<?php
+    if (Notificator::ContainsMessage()){
+        Notificator::ShowMessage();
+    }
+?>
 

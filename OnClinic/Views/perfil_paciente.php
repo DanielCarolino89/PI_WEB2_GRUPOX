@@ -60,7 +60,7 @@ $paciente = carregarPaciente($_SESSION['id']);
                                 <!-- inicio dropdown's -->
                                 <div class="btn-group">
                                     <a href="edit_paciente.php" class="btn btn-warning btn-lg"><b>EDITAR PERFIL</b></a>
-                                    <form method="post">
+                                    <form method="post" id="formExcluir" >
                                     <button type="submit" name="action" value="Excluir" class="btn btn-danger btn-lg" id="excluir"
                                         style="margin-left: 30px;"><b>EXCLUIR PERFIL</b></button>
                                     </form>

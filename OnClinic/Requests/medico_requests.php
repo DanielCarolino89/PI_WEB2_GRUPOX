@@ -1,10 +1,8 @@
 <?php
+require_once('../Models/Notificator.php');
+
 require_once('../Controller/MedicoController.php');
 $medicoControlador = new MedicoController();
-
-$cadastradoComSucesso = false;
-$alteradoComSucesso = false;
-
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
