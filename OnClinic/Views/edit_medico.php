@@ -65,7 +65,7 @@ $contatos = $medico->getContatos();
 
                     <div class="col-md-4">
                         <label for="nascimento" class="form-label">Data de Nascimento:</label>
-                        <input name="nascimento" type="date" class="form-control" id="nascimento" value="<?php echo $medico->getDataNascimento()->format("yyyy/MM/dd"); ?>"  required>
+                        <input name="nascimento" type="date" class="form-control" id="nascimento" value="<?php echo $medico->getDataNascimento()->format("Y-m-d"); ?>"  required>
                     </div>
                     <div class="col-md-4">
                         <?php if (isset($contatos['telefone'])): ?>
@@ -94,7 +94,7 @@ $contatos = $medico->getContatos();
                     <div class="col-md-2">
                         <input type="hidden" name="enderecoId" value="<?php echo $endereco->getId(); ?>">
                         <label for="cep" class="form-label">CEP:</label>
-                        <input name="cep" type="text" class="form-control" id="cep" required>
+                        <input name="cep" type="text" class="form-control" id="cep" value="<?php echo $endereco->getCep(); ?>" required>
                     </div>
                     <div class="col-md-6">
                         <label for="log" class="form-label">Logradouro:</label>
@@ -172,12 +172,12 @@ $contatos = $medico->getContatos();
                         <input name="usuario" type="hidden" class="form-control" value="<?php echo $medico->getLogin()->getUsuario(); ?>" required>
                         <div class="col-md-4">
                             <label for="senha" class="form-label">Insira uma senha:</label>
-                            <input name="senha" type="password" class="form-control" id="senha" value="<?php $medico->getLogin()->getSenha(); ?>" required>
+                            <input name="senha" type="password" class="form-control" id="senha" value="<?php echo $medico->getLogin()->getSenha(); ?>" required>
 
                         </div>
                         <div class="col-md-4">
                             <label for="resenha" class="form-label">Confirmação de Senha:</label>
-                            <input name="senha" type="password" class="form-control" id="resenha" value="<?php $medico->getLogin()->getSenha(); ?>" required>
+                            <input name="senha" type="password" class="form-control" id="resenha" value="<?php echo $medico->getLogin()->getSenha(); ?>" required>
 
                         </div>
                     </div><br>

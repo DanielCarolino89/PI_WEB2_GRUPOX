@@ -25,7 +25,7 @@
         <div id="navform">
             <div class="navbar d-flex">
                 <h2>Cadastro de Paciente</h2>
-                <a href="\OnClinic\Views\index.php" class="btn btn-outline-success">Voltar</a>
+                <a href="index.php" class="btn btn-outline-success">Voltar</a>
             </div>
         </div>       
     </nav><br>

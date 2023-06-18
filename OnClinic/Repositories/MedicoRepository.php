@@ -24,7 +24,7 @@ class MedicoRepository extends Repository
             '{$medico->getCRM()}',
             '{$medico->getCPF()}',
             '{$medico->getRG()}',
-            '{$medico->getDataNascimento()->format("yyyy/MM/dd")}',
+            '{$medico->getDataNascimento()->format('d/m/Y')}',
             '{$medico->getAtendimentoRemoto()}',
             '{$medico->getSobre()}',
             '{$medico->getLogin()->getUsuario()}');";
@@ -102,7 +102,7 @@ class MedicoRepository extends Repository
     }
 
     /**
-     * Consulta através do CPF se o Id do Médico;
+     * Consulta Id do Médico através do CPF
      * @param string $cpf CPF do médico que será consultado.
      * @return int id do médico.
      * @throws PDOException caso ocorrer erro de sql.

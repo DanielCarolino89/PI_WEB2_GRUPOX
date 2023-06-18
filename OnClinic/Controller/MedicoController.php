@@ -116,7 +116,7 @@ class MedicoController extends PessoaController
         }
         catch(Exception $ex)
         {
-            $db->Rollback();
+            $db->rollback();
             echo $ex->getMessage();
         }
     }

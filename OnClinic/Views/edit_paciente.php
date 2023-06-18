@@ -43,7 +43,7 @@ $contatos = $paciente->getContatos();
         <center>
             <div class="cadastro bg-light">
                 <h2>Dados para editar:</h2><br>
-                <form action="../Requests/paciente_requests.php" method="post" class="row g-3 needs-validation" novalidate>
+                <form method="post" class="row g-3 needs-validation" novalidate>
                     <div class="col-md-8">
                         <input type="hidden" name="action" value="Cadastrar">
                         <label for="nome" class="form-label">Nome:</label>
@@ -51,7 +51,7 @@ $contatos = $paciente->getContatos();
                     </div>
                     <div class="col-md-4">
                         <label for="nascimento" class="form-label">Data de Nascimento:</label>
-                        <input name="nascimento" type="date" class="form-control" id="nascimento" value="<?php echo $paciente->getDataNascimento()->format("yyyy/MM/dd"); ?>"  required>
+                        <input name="nascimento" type="date" class="form-control" id="nascimento" value="<?php echo $paciente->getDataNascimento()->format("Y-m-d"); ?>"  required>
                     </div>
                     <div class="col-md-4">
                         <label for="rg" class="form-label">RG:</label>
@@ -62,22 +62,32 @@ $contatos = $paciente->getContatos();
                         <input name="cpf" type="text" class="form-control" id="cpf" value="<?php echo $paciente->getCPF(); ?>" required>
                     </div>
                     <div class="col-md-4">
+                        <?php if (isset($contatos['telefone'])): ?>
+                        <input type="hidden" name="telefoneId" value="<?php echo $contatos['telefone']->getId(); ?>">
+                        <?php endif; ?> 
                         <label for="principal" class="form-label">Telefone Principal:</label>
-                        <input name="contato[telefone]" type="numb" class="form-control" id="principal" value="<?php echo isset($contatos[0]) ? $contatos[0]?->getDescricao() : ''; ?>" required>
+                        <input name="contato[telefone]" type="numb" class="form-control" id="principal" value="<?php echo isset($contatos['telefone']) ? $contatos['telefone']?->getDescricao() : ''; ?>" required>
                     </div>
                     <div class="col-md-4">
+                        <?php if (isset($contatos['whatsapp'])): ?>
+                        <input type="hidden" name="whatsappId" value="<?php echo $contatos['whatsapp']->getId(); ?>">
+                        <?php endif; ?> 
                         <label for="whatsapp" class="form-label">Whatsapp:</label>
-                        <input name="contato[whatsapp]" type="numb" class="form-control" id="whatsapp" value="<?php echo isset($contatos[2]) ? $contatos[2]?->getDescricao() : ""; ?>" required>
+                        <input name="contato[whatsapp]" type="numb" class="form-control" id="whatsapp" value="<?php echo isset($contatos['whatsapp']) ? $contatos['whatsapp']?->getDescricao() : ""; ?>" required>
                     </div>
                     <div class="col-md-4">
+                        <?php if (isset($contatos['email'])): ?>
+                        <input type="hidden" name="emailId" value="<?php echo $contatos['email']->getId(); ?>">
+                        <?php endif; ?> 
                         <label for="email" class="form-label">E-mail:</label>
-                        <input name="contato[email]" type="mail" class="form-control" id="email" value="<?php echo isset($contatos[1]) ? $contatos[1]->getDescricao() : ''; ?>"  autocomplete="on" required>
+                        <input name="contato[email]" type="mail" class="form-control" id="email" value="<?php echo isset($contatos['email']) ? $contatos['email']->getDescricao() : ''; ?>"  autocomplete="on" required>
                     </div>
                     <h2>Endereço:</h2><br>
                     <!-- Endereço paciente -->
                     <div class="col-md-2">
+                        <input type="hidden" name="enderecoId" value="<?php echo $endereco->getId(); ?>">
                         <label for="cep" class="form-label">CEP:</label>
-                        <input name="cep" type="text" class="form-control" id="cep" required>
+                        <input name="cep" type="text" class="form-control" id="cep" value="<?php echo $endereco->getCep(); ?>" required>
                     </div>
                     <div class="col-md-6">
                         <label for="logradouro" class="form-label">Logradouro:</label>
@@ -107,6 +117,7 @@ $contatos = $paciente->getContatos();
                     <!-- Fim endereço paciente -->
                     <div class="Loginsenha row g-3">
                         <h2>Acesso ao sistema:</h2>
+                        <input name="usuario" type="hidden" class="form-control" value="<?php echo $paciente->getLogin()->getUsuario(); ?>" >
                         <div class="col-md-4">
                             <input name="usuario" type="hidden" class="form-control" id="usuario" value="<?php echo $paciente->getLogin()->getUsuario(); ?>" required>
                             <div class="valid-feedback">
@@ -129,7 +140,7 @@ $contatos = $paciente->getContatos();
                         </div>
                     </div><br>
                     <div class="col-12">
-                        <input type="submit" class="btn btn-success" id="cadastrar" value="EDITAR"></input>
+                        <input type="submit" name="action" value="Editar" class="btn btn-success" id="cadastrar"></input>
                     </div>
                 </form>
             </div>

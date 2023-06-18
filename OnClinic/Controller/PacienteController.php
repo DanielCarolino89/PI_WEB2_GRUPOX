@@ -86,4 +86,75 @@ class PacienteController extends PessoaController
             echo $ex->getMessage();
         }
     }
+
+    public function editarPaciente(int $id, $dados)
+    {
+        $db = new Database();
+        $pacienteRepository = new PacienteRepository($db);
+
+        if ($pacienteRepository->consultaSeCPFJaExiste($dados['cpf']) 
+        && $id !== $pacienteRepository->consultaIdPorCPF($dados['cpf'])){
+            Uteis::ShowAlert('CPF já cadastrado', 'Não é permitido ter mais de um cadastro por CPF');
+            return;
+        }
+
+        $paciente = new Paciente($dados);
+        $paciente->setId($id);
+
+        $this->setarIdDoEndereco($paciente, $dados);
+        $this->setarIdDosContatos($paciente, $dados);
+
+        $db->beginTransaction();
+
+        try{
+            $this->alterarSenha($paciente, $db);
+            $this->alterarContatos($paciente, $db);
+            $this->alterarEndereco($paciente, $db);
+            
+            $pacienteRepository->alterarPaciente($paciente);
+
+            $db->commit();
+            Uteis::ShowAlert('Cadastro alterado com sucesso!', '','success');
+            
+        }
+        catch(Exception $ex){
+            $db->rollback();
+            echo $ex->getMessage();
+        }
+    }
+
+    public function apagarPaciente(int $id)
+    {
+        $db = new Database();
+        $pacienteRepository = new PacienteRepository($db);
+
+        $db->beginTransaction();
+        
+        try
+        {
+            $usuario = $pacienteRepository->consultarUsuarioDoPaciente($id);
+            $pacienteRepository->removerAssociacaoLogin($id);
+
+            require_once('../Repositories/LoginRepository.php');
+            $loginRepository = new LoginRepository($db);
+            $loginRepository->deletarUsuario($usuario);
+
+            require_once('../Repositories/EnderecoRepository.php');
+            $enderecoRepository = new EnderecoRepository($db);
+            $enderecoRepository->excluirEnderecoDoPaciente($id);
+
+            require_once('../Repositories/ContatoRepository.php');
+            $contatoRepository = new ContatoRepository($db);
+            $contatoRepository->excluirContatosDoPaciente($id);
+
+            $pacienteRepository->excluirPaciente($id);
+
+            $db->commit();
+        }
+        catch(Exception $ex)
+        {
+            $db->rollback();
+            echo $ex->getMessage();
+        }
+    }
 }

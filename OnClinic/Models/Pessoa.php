@@ -14,7 +14,7 @@ abstract class Pessoa
     protected function atribuirDados($dados)
     {
         $this->nome = $dados['nome'];
-        $this->cpf = $dados['cpf'] ?? "";
+        $this->cpf = str_replace(['.', '-'], '', $dados['cpf']) ?? "";
         $this->rg = $dados['rg'] ?? "";
         $this->nascimento = new DateTime($dados['nascimento']);
         
@@ -61,6 +61,7 @@ abstract class Pessoa
         $this->endereco->setNumero($dados['numero']);
         $this->endereco->setBairro($dados['bairro']);
         $this->endereco->setCidade($dados['cidade']);
+        $this->endereco->setCep($dados['cep']);
         $this->endereco->setUF($dados['uf']);
         $this->endereco->setComplemento($dados['complemento']);
     }

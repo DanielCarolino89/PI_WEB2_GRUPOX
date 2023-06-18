@@ -27,10 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
         $medicoControlador->apagarEspecialidades($_SESSION['id']);
     }
-    else
-    {
 
-    }
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST')

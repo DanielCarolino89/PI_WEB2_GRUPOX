@@ -24,6 +24,7 @@ class EnderecoRepository extends Repository
             '{$endereco->getNumero()}',      
             '{$endereco->getBairro()}',
             '{$endereco->getCidade()}',
+            '{$endereco->getCep()}',
             '{$endereco->getUF()}',
             '{$endereco->getComplemento()}',
             " . ($endereco->getMedicoId() ? $endereco->getMedicoId() : "NULL") . ",
@@ -50,10 +51,11 @@ class EnderecoRepository extends Repository
             NUMERO = '{$endereco->getNumero()}',      
             BAIRRO = '{$endereco->getBairro()}',
             CIDADE = '{$endereco->getCidade()}',
+            CEP = '{$endereco->getCep()}',
             UF = '{$endereco->getUF()}',
             COMPLEMENTO = '{$endereco->getComplemento()}',
             MEDICO = " . ($endereco->getMedicoId() ? $endereco->getMedicoId() : "NULL") . ",
-            CAMPO = " . ($endereco->getPacienteId() ?  $endereco->getPacienteId() : "NULL") . "
+            PACIENTE = " . ($endereco->getPacienteId() ?  $endereco->getPacienteId() : "NULL") . "
             WHERE ID = {$endereco->getId()}";
 
         try{
@@ -141,7 +143,7 @@ class EnderecoRepository extends Repository
      */
     private function consultarEnderecoPrincipal(string $pessoa, int $id)
     {
-        $sql = "SELECT id as enderecoId, logradouro, numero, bairro, cidade, uf, complemento
+        $sql = "SELECT id as enderecoId, logradouro, numero, bairro, cidade, cep, uf, complemento
         FROM ENDERECO
         WHERE {$pessoa} = {$id}";
 

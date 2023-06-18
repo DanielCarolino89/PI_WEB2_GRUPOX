@@ -7,6 +7,7 @@ class Endereco
     private string $numero;
     private string $bairro;
     private string $cidade;
+    private string $cep;
     private string $UF;
     private string $complemento;
     private ?int $medicoId = null;
@@ -66,6 +67,14 @@ class Endereco
 
     public function setCidade(string $cidade) {
         $this->cidade = $cidade;
+    }
+
+    public function getCep() : string {
+        return $this->cep;
+    }
+
+    public function setCep(string $cep) {
+        $this->cep = $cep;
     }
 
     public function getUF(): string {

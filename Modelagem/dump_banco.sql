@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `endereco` (
   `Numero` varchar(10) DEFAULT NULL,
   `Bairro` varchar(100) DEFAULT NULL,
   `Cidade` varchar(100) DEFAULT NULL,
+  `CEP` varchar(8) NOT NULL,
   `UF` char(2) DEFAULT NULL,
   `Complemento` varchar(50) DEFAULT NULL,
   `Medico` int(11) DEFAULT NULL,

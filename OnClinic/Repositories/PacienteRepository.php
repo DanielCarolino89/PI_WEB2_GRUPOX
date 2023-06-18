@@ -24,7 +24,7 @@ class PacienteRepository extends Repository
             '{$paciente->getNome()}',
             '{$paciente->getCPF()}',
             '{$paciente->getRG()}',
-            '{$paciente->getDataNascimento()->format("yyyy/MM/dd")}',
+            '{$paciente->getDataNascimento()->format('Y/m/d')}',
             '{$paciente->getLogin()->getUsuario()}');";
 
         try{
@@ -105,7 +105,7 @@ class PacienteRepository extends Repository
             NOME = '{$paciente->getNome()}',
             CPF = '{$paciente->getCPF()}',
             RG = '{$paciente->getRG()}',
-            NASCIMENTO = '{$paciente->getDataNascimento()->format("yyyy/MM/dd")}'
+            NASCIMENTO = '{$paciente->getDataNascimento()->format('Y/m/d')}'
             WHERE ID = {$paciente->getId()}";
 
         try{
@@ -117,6 +117,33 @@ class PacienteRepository extends Repository
             echo "<br><br> SQL Executada: {$sql}<br>";
             throw $ex;
         }
+    }
+
+        /**
+     * Consulta Id do Paciente através do CPF;
+     * @param string $cpf CPF do paciente que será consultado.
+     * @return int id do paciente.
+     * @throws PDOException caso ocorrer erro de sql.
+     */
+    public function consultaIdPorCPF(string $cpf) : int
+    {
+        $sql = "SELECT id from PACIENTE where CPF = '{$cpf}'";
+
+        return $this->queryFirstValue($sql);
+    }
+
+    public function consultarUsuarioDoPaciente(int $id)
+    {
+        $sql = "SELECT Login FROM PACIENTE WHERE ID = {$id}";
+
+        return $this->queryFirstValue($sql);
+    }
+
+    public function removerAssociacaoLogin(int $id)
+    {
+        $sql = "UPDATE PACIENTE SET LOGIN = NULL WHERE ID = {$id}";
+
+        $this->db->executeCommand($sql);
     }
 }
 
