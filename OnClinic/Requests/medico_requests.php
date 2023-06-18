@@ -2,6 +2,10 @@
 require_once('../Controller/MedicoController.php');
 $medicoControlador = new MedicoController();
 
+$cadastradoComSucesso = false;
+$alteradoComSucesso = false;
+
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     if (!isset($_POST['action'])){
@@ -29,8 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     }
 
 }
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 $medicoDetalhado = null;
 if ($_SERVER['REQUEST_METHOD'] == 'GET')

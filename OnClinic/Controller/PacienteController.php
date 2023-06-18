@@ -46,7 +46,7 @@ class PacienteController extends PessoaController
             $this->registrarContatos($paciente, $db);
 
             $db->Commit();
-            Uteis::ShowAlert('Usuário cadastrado com sucesso!', '','success');
+            Uteis::ShowAlert('Usuário cadastrado com sucesso!', 'success');
         }
         catch(Exception $ex)
         {
@@ -114,7 +114,7 @@ class PacienteController extends PessoaController
             $pacienteRepository->alterarPaciente($paciente);
 
             $db->commit();
-            Uteis::ShowAlert('Cadastro alterado com sucesso!', '','success');
+            Uteis::ShowAlert('Cadastro alterado com sucesso!','success');
             
         }
         catch(Exception $ex){

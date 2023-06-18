@@ -17,6 +17,7 @@ class MedicoController extends PessoaController
     /**
      * Inicia conexão com banco de dados e abre uma transação para cadastrar todas as informações do médico através dos repositórios.
      * @param array $dados conjunto que deve conter todos os dados do médico.
+     * @return bool True se cadastrado com sucesso.
      * @description As informações que serão cadastradas são:
      * - Login
      * - Medico
@@ -56,7 +57,7 @@ class MedicoController extends PessoaController
             $this->registrarContatos($medico, $db);
            
             $db->Commit();
-            Uteis::ShowAlert('Usuário cadastrado com sucesso!', '','success');
+            Uteis::ShowAlert('Usuário cadastrado com sucesso!' ,'success');
             
         }
         catch(Exception $ex)
@@ -112,6 +113,7 @@ class MedicoController extends PessoaController
             $this->medicoRepository->alterarDadosMedico($medico);
 
             $db->commit();
+            Uteis::ShowAlert('Cadastro alterado com sucesso!', 'success');
 
         }
         catch(Exception $ex)

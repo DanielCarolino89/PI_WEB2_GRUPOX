@@ -24,7 +24,7 @@ class MedicoRepository extends Repository
             '{$medico->getCRM()}',
             '{$medico->getCPF()}',
             '{$medico->getRG()}',
-            '{$medico->getDataNascimento()->format('d/m/Y')}',
+            '{$medico->getDataNascimento()->format('Y/m/d')}',
             '{$medico->getAtendimentoRemoto()}',
             '{$medico->getSobre()}',
             '{$medico->getLogin()->getUsuario()}');";
@@ -52,7 +52,7 @@ class MedicoRepository extends Repository
             CRM = '{$medico->getCRM()}',
             CPF = '{$medico->getCPF()}',
             RG = '{$medico->getRG()}',
-            NASCIMENTO = '{$medico->getDataNascimento()->format("yyyy/MM/dd")}',
+            NASCIMENTO = '{$medico->getDataNascimento()->format('Y/m/d')}',
             REMOTO = '{$medico->getAtendimentoRemoto()}',
             SOBRE = '{$medico->getSobre()}'
             WHERE ID = {$medico->getId()}";
