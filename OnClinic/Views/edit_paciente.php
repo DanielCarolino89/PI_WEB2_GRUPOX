@@ -59,7 +59,7 @@ $contatos = $paciente->getContatos();
                     </div>
                     <div class="col-md-4">
                         <label for="cpf" class="form-label">CPF:</label>
-                        <input name="cpf" type="text" class="form-control" id="cpf" value="<?php echo $paciente->getCPF(); ?>" required>
+                        <input name="cpf" type="text" readonly class="form-control" id="cpf" value="<?php echo $paciente->getCPF(); ?>" required>
                     </div>
                     <div class="col-md-4">
                         <?php if (isset($contatos['telefone'])): ?>
@@ -90,7 +90,7 @@ $contatos = $paciente->getContatos();
                         <input name="cep" type="text" class="form-control" id="cep" value="<?php echo $endereco->getCep(); ?>" required>
                     </div>
                     <div class="col-md-6">
-                        <label for="logradouro" class="form-label">Logradouro:</label>
+                        <label for="log" class="form-label">Logradouro:</label>
                         <input name="logradouro" type="text" class="form-control" id="log" value="<?php echo $endereco->getLogradouro(); ?>" required>
                     </div>
                     <div class="col-md-1">
@@ -110,7 +110,7 @@ $contatos = $paciente->getContatos();
                         <input name="cidade" type="text" class="form-control" id="cidade" value="<?php echo $endereco->getCidade(); ?>" required>
                     </div>
                     <div class="col-md-2">
-                        <label for="uf" class="form-label">UF:</label>
+                        <label for="UF" class="form-label">UF:</label>
                         <input name="uf" type="text" class="form-control" id="UF" value="<?php echo $endereco->getUF(); ?>" required>
                     </div>
 

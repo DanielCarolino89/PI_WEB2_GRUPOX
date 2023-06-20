@@ -36,7 +36,7 @@ $medico = carregarMedico($_GET['id']);
     <!-- inicio navbar -->
     <nav class="navbar" style="background-color: rgb(225, 225, 225);">
         <div id="navlogo">
-            <img src="../img/Logo.png" alt="Bootstrap" width="250px">
+            <img src="../img/Logo.png" alt="Bootstrap" width="250px" alt="Logotipo di site onClinic">
         </div>
         <div id="navform">
             <div class="navbar d-flex">
@@ -58,8 +58,7 @@ $medico = carregarMedico($_GET['id']);
                     <table style="width:100%;">
                         <tr>
                             <th class="dropdown">
-                                <img src="../img/mperfil.png" width="350px" style="margin-right: 20px;"><br>
-
+                                <img src="../img/mperfil.png" width="350px" style="margin-right: 20px;" alt="Imagem de perfil do médico"><br>
                             </th>
                             <th class="dropdown">
                                 <h1><?php echo $medico->getNome(); ?></h1>
@@ -131,8 +130,6 @@ $medico = carregarMedico($_GET['id']);
     </footer>
     <!-- fim footer --></div>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="../js/validacao.js"></script>
-    <script src="../js/medico.js"></script>
 </body>
 
 </html>

@@ -60,7 +60,7 @@ $contatos = $medico->getContatos();
                     </div>
                     <div class="col-md-4">
                         <label for="cpf" class="form-label">CPF:</label>
-                        <input name="cpf" type="text" class="form-control" id="cpf" value="<?php echo $medico->getCPF(); ?>" required>
+                        <input name="cpf" type="text" readonly class="form-control" id="cpf" value="<?php echo $medico->getCPF(); ?>" required>
                     </div>
 
                     <div class="col-md-4">
@@ -146,21 +146,19 @@ $contatos = $medico->getContatos();
                                 <th><a class="btn btn-success" id="inserir" style="margin-left:15px"><b>Inserir</b></a>
                                 </th>
                             </tr>
-                        </table><br> <textarea name="especialidades" readonly rows="6" cols="60" id="especialidades">
+                        </table><br> <textarea name="especialidades" readonly rows="6" cols="60" id="especialidades">                            
                             <?php
                                 foreach($medico->getEspecialidades() as $especialidade)
                                 {
                                     echo $especialidade->getDescricao() . "\t\t" . $especialidade->getFaixaEtaria();
                                 }
                             ?>
-                        </textarea></td>
+                        </textarea></td>                       
                         <button type="submit" name="action" value="ExcluirEspecialidades" class="btn btn-success" onclick="limparEspecialidades()">Limpar Especialidades</button>
                         
                         <script>
-
                             function limparEspecialidades()
                             {
-                                //event.preventDefault();
                                 document.getElementById('especialidades').value = '';
                             }
                         </script>

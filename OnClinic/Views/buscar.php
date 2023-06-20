@@ -55,22 +55,22 @@ if (count($_GET) == 0){
                         <table>
                             <tr>
                                 <th class="thb"> <input class="form-check-input" type="radio" name="filtro" value="Nome"
-                                        id="flexRadioDefault2" checked>
-                                    <label class="form-check-label" for="flexRadioDefault2">
+                                        id="radioNome" checked>
+                                    <label class="form-check-label" for="radioNome">
                                         Nome
                                     </label>
                                 </th>
                                 <th class="thb">
                                     <input class="form-check-input" type="radio" name="filtro" value="Especialidade"
-                                        id="flexRadioDefault2">
-                                    <label class="form-check-label" for="flexRadioDefault2">
+                                        id="radioEspecialidade">
+                                    <label class="form-check-label" for="radioEspecialidade">
                                         Especialidade
                                     </label>
                                 </th>
                                 <th class="thb">
                                     <input class="form-check-input" type="radio" name="filtro" value="Cidade"
-                                        id="flexRadioDefault2">
-                                    <label class="form-check-label" for="flexRadioDefault2">
+                                        id="radioCidade">
+                                    <label class="form-check-label" for="radioCidade">
                                         Cidade
                                     </label>
                                 </th>

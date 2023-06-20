@@ -16,8 +16,9 @@ btn_Especialidade.addEventListener('click', function(event){
   if(espec !== '')
   {
     var sobre = document.getElementById('especialidades');
-    sobre.value = sobre.value + espec + '\t\t' + subespec + '\n';
+    sobre.value = sobre.value.trimStart() + espec + '\t\t' + subespec + '\n';
   }
+ 
 });
 
 function validarCampos()

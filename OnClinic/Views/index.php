@@ -19,25 +19,25 @@
 </head>
 
 <body>
-
-    <!-- inicio navbar -->
-    <nav class="nav navbar bg-light">
-        <div id="navlogo">
-            <img src="../img/Logo.png" alt="Bootstrap" width="250px">
-        </div>                 
-        <div id="navform">
-            <form class="nav navbar d-flex" action="index.php" method="POST">
-                <input type="hidden" name="action" value="logar">
-                <label for="login" class="navcolor"><b>Login:</b></label>
-                <input class=" navform form-control me-2" name="login" id="login" style="width: 250px;" type="text" placeholder=""
-                    aria-label="">
-                <label for="senha" class="navcolor"><b>Senha:</b></label>
-                <input class=" navform form-control me-2" name="senha" id="senha" style="width: 250px;" type="password"
-                    placeholder="" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit" id="btn_entrar">Entrar</button>
-            </form>        
-        </div>       
-    </nav>
+    <header>   
+        <nav class="nav navbar bg-light">
+            <div id="navlogo">
+                <img src="../img/Logo.png" alt="Bootstrap" width="250px">
+            </div>                 
+            <div id="navform">
+                <form class="nav navbar d-flex" action="index.php" method="POST">
+                    <input type="hidden" name="action" value="logar">
+                    <label for="login" class="navcolor"><b>Login:</b></label>
+                    <input class=" navform form-control me-2" name="login" id="login" style="width: 250px;" type="text" placeholder=""
+                        aria-label="">
+                    <label for="senha" class="navcolor"><b>Senha:</b></label>
+                    <input class=" navform form-control me-2" name="senha" id="senha" style="width: 250px;" type="password"
+                        placeholder="" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit" id="btn_entrar">Entrar</button>
+                </form>        
+            </div>       
+        </nav>
+    </header>
     <!-- fim navbar -->
     <br>
     <!-- inicio -->
